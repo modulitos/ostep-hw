@@ -8,6 +8,7 @@
 // * memory-mb: a size, in MB, that this program will consume.
 // * duration-sec: a duration, in seconds, for how long this program will run.
 int main(int argc, char *argv[]) {
+    printf("pid: %d\n", getpid());
     if (argc != 3) {
         fprintf(stderr, "usage: memory-user.o <memory-mb> <duration-sec>\n");
         exit(1);
