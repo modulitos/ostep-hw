@@ -1,0 +1,74 @@
+<html><h1>scatterplot10</h1><img src="scatterplot10.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif scatterplot10.htm</b>
+
+Uses data file <a href="scatterplot10.dat">scatterplot10.dat</a>.
+<hr>
+<pre>
+
+
+// read in data
+#proc getdata
+file: scatterplot10.dat
+fieldnames: strain xval xse xsd extra yval yse ysd
+
+// set up plot area 
+#proc areadef
+rectangle: 1 1 4 4
+xautorange: datafield=xval
+yautorange: datafield=yval
+xaxis.stubs: inc
+yaxis.stubs: inc
+xaxis.stubdetails: size=6
+yaxis.stubdetails: size=6
+
+// do regression curve..
+#proc curvefit
+curvetype: regression
+xfield: xval
+yfield: yval
+linedetails: color=red width=0.5
+
+// do annotation in lower right corner..
+#proc annotate
+location: max min-0.4
+textdetails: color=red align=R size=6
+text: @REGRESSION_LINE
+      r = @CORRELATION
+
+// do vertical error bars..
+#proc bars
+locfield: xval
+lenfield: yval
+errbarfield: yse
+//errbarmult: 2
+thinbarline: color=orange width=0.5
+tails: 0.02
+truncate: yes
+  
+// do horizontal error bars..
+#proc bars
+locfield: yval
+lenfield: xval
+horizontalbars: yes
+errbarfield: xse
+//errbarmult: 2
+thinbarline: color=orange width=0.5
+tails: 0.02
+truncate: yes
+
+// do point labels..
+//#proc scatterplot
+//xfield: xval
+//yfield: yval
+//labelfield: strain
+//textdetails: size=6 color=teal adjust=0,0.07
+
+// do points..
+#proc scatterplot
+xfield: xval
+yfield: yval
+symbol: shape=circle style=filled radius=0.02 fillcolor=blue
+
+

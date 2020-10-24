@@ -1,0 +1,1 @@
+scp $* fufufini,ploticus@web.sourceforge.net:/home/groups/p/pl/ploticus/htdocs/download

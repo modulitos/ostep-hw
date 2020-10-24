@@ -1,0 +1,76 @@
+<html><h1>quarters</h1><img src="quarters.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif quarters.htm
+
+In order to use date quarters notation, the X range must be specified 
+with scaletype date using a month-day-year notation such as mmddyy; 
+then before plotting bars, switch to X scaletype date nqyy (or some other
+quarters notation) using proc defineunits.
+
+It must be done this way because internally dates in quarters notation 
+are converted to a midpoint mmddyy, e.g. 1Q99 -> 2/15/99  and 
+3Q99 -> 8/15/99.  This is done for plotting and date arithmetic purposes.
+
+Kind of tricky I realize.. it is touched on in the pl dates man page.
+
+<hr></b>
+
+// <b> do areadef with X scaled in years, using <a href="../doc/areadef.html">proc areadef</a></b>
+#proc areadef
+title: Average dividend yield,\nby quarter
+rectangle: 1 1 4 2.5
+xscaletype: date mmddyy
+xrange: 010198 123101
+yrange: 3.0 6.0
+
+// <b> do year X axis using <a href="../doc/axis.html">proc xaxis</a></b>
+#proc xaxis
+stubs: inc 1 year
+stubformat: yyyy
+ticlen: 0 0.2
+location: min-0.18
+axisline: none
+stubslide: 180(s)
+
+// <b> do another X axis to show quarters, using <a href="../doc/axis.html">proc xaxis</a></b>
+#proc xaxis
+stubs: inc 3 month
+stubformat: Q
+tics: none
+stubdetails: adjust=0,+0.05
+stubslide: 45(s)
+
+// <b> do a Y axis using <a href="../doc/axis.html">proc yaxis</a></b>
+#proc yaxis
+stubs: inc 0.5
+grid: color=blue
+stubformat: %3.1f%%
+
+// <b>switch to nqyy notation... </b>
+#call $changeunits( x, "date nqyy" )
+
+// <b> specify data using <a href="../doc/getdata.html">proc getdata</a></b>
+#proc getdata
+data:	1Q98 	5.3
+	2Q98 	4.9
+	3Q98 	4.7
+	4Q98 	4.8
+	1Q99 	5.1
+	2Q99 	4.8
+	3Q99 	5.2
+	4Q99 	5.3
+	1Q00 	5.5
+	2Q00 	5.2
+	3Q00 	4.9
+	4Q00 	4.9
+	1Q01 	4.8
+	2Q01 	4.9
+
+// <b> render bars using <a href="../doc/bars.html">proc bars</a></b>
+#proc bars
+locfield: 1
+lenfield: 2
+barwidth: 0.1
+color: yelloworange
+

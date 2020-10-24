@@ -1,0 +1,46 @@
+This directory contains a set of script examples as well as scripts to 
+run prefab examples.
+
+It is assumed that pl (pl.exe on win32) is in your command PATH or else 
+copied into this directory.
+
+
+To run the script examples, type: 	run_script_test
+--------------------------
+
+  (windows users can try: run_script_test.bat  from an MSDOS window)
+
+   To erase all results, type: make clean
+
+   To view script test result images, point your browser to this
+	directory.
+
+
+
+To run the prefab examples in x11 mode, type:	run_prefabs_test
+--------------------------
+
+   There should be no error messages, other than row and field counts.
+   For other output modes, add an argument, eg:  run_prefabs_test png
+
+
+
+To test config file, do: 
+-------------------
+   PLOTICUS_CONFIG=plconfig.spanish; export PLOTICUS_CONFIG
+
+
+
+To test the libploticus API
+---------------------------
+
+   in the ../src directory, build libploticus and api_test program..
+	make clean
+	make -f Makefile_api
+	make api_test -f Makefile_api
+
+   then in this directory, do:  ../src/api_test
+
+   Results will end up in the directory ./api_test_output
+	
+   See also api_examp.c

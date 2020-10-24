@@ -1,0 +1,110 @@
+<html><h1>colorgrid</h1><img src="colorgrid.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif colorgrid.htm
+
+This demonstrates a color grid rendered directly from a data matrix.
+
+<hr></b>
+
+// the following may be modified to change point shapes, sizes, etc. 
+#set SYM = "shape=nicecircle radius=0.1 style=filled"
+#setifnotgiven CGI = "http://ploticus.sourceforge.net/cgi-bin/showcgiargs"
+
+// set black background..
+#proc page
+backgroundcolor: black
+color: white
+
+// get data..
+#proc getdata
+//showresults: yes
+data:
+	"Mammary gland"		7	23	12	8	3
+	Skin     		6	12	7	4	2
+	Lymph     		9	21	18	15	9
+	Lung			22	15	12	3	6
+	Digestive		5	11	14	7	9
+	"Female reproductive"	2	4	19	2	4
+	"Male reproductive"	1	3	8	7	1
+	"Soft tissues"		0	2	1	0	0
+	Endocrine		0	3	4	11	0
+
+// set up plotting area..
+#proc areadef
+rectangle: 3 1 5 4
+yscaletype: categories
+ycategories: datafield=1
+yaxis.stubs: usecategories
+yaxis.tics: none
+yaxis.axisline: none
+yaxis.stubdetails: adjust=0.25,0
+xrange: 0 6
+xaxis.location: max+0.08
+xaxis.stubs: list A\nB\nC\nD\nE
+xaxis.tics: none
+xaxis.axisline: none
+xaxis.label: Test Group
+xaxis.labeldetails: adjust=0,0.4
+
+
+// set up legend entries for color gradients..
+#proc legendentry
+sampletype: symbol
+details: fillcolor=orange @SYM
+label: >20
+tag: 21
+  
+#proc legendentry
+sampletype: symbol
+details: fillcolor=red @SYM
+label: 11-20
+tag: 11
+
+#proc legendentry
+sampletype: symbol
+details: fillcolor=lightpurple @SYM
+label: 6-10
+tag: 6
+
+#proc legendentry
+sampletype: symbol
+details: fillcolor=blue @SYM
+label: 1-5
+tag: 1
+ 
+#proc legendentry
+sampletype: symbol
+details: fillcolor=black @SYM style=outline linecolor=gray(0.8)
+label: None
+tag: 0
+
+
+
+// loop through the 5 groups (data fields), doing a legend-driven scatterplot
+// for each, using a fixed X location..
+
+#set FLD = 2
+#for GROUP in A,B,C,D,E
+
+  #set XLOC = $arith(@FLD-1)
+  // #set SELECT = "@" @FLD " > 0"
+
+  #proc scatterplot
+  xlocation: @XLOC(s)
+  yfield: 1
+  symrangefield: @FLD
+  clickmapurl: @CGI?group=@GROUP&site=@@1&
+  // select: @SELECT
+
+  // increment..
+  #set FLD = $arith( @FLD+1 )
+
+#endloop 
+
+
+#proc legend
+location: min-1 min-0.2
+format: singleline
+sep: 0.5
+outlinecolors: yes

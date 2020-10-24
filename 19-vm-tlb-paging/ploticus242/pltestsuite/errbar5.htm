@@ -1,0 +1,80 @@
+<html><h1>errbar5</h1><img src="errbar5.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif errbar5.htm
+
+In slide format.
+<hr></b>
+
+#set LINEWID = 0.5
+
+#proc page
+backgroundcolor: darkblue
+color: yellow
+linewidth: 2.5
+pagesize: 6.6 4.4
+#if @DEVICE in gif,png
+  scale: 0.7
+#endif
+
+
+#proc areadef:
+title:  Power of Various Sample Sizes
+titledetails: align=C size=18 adjust=0,0.5
+areaname: slide
+yrange: -0.10 0.25
+xrange: -0.05 0.20
+yaxis.stubs: inc 0.05
+yaxis.stubformat: %4.2f
+xaxis.stubs: inc 0.05
+xaxis.stubformat: %4.2f
+yaxis.label:	95% CI on p1 - p2
+yaxis.labeldistance: 0.8
+xaxis.label:	Observed Difference in Mortality ( p1 <= p2 )
+
+#proc getdata:
+data:	0	.080 .057 .046 .040 .037
+	0.05    .078 .055 .045 .039 .036
+	0.1     .075 .053 .043 .038 .034
+	0.15    .072 .051 .041 .036 .033
+
+#proc lineplot:
+xfield:	1
+yfield:	1
+linedetails: width=@LINEWID
+	
+
+#proc bars
+locfield: 1
+lenfield: 1
+errbarfield: 2
+thinbarline: color=white width=@LINEWID
+legendlabel: N = 500
+#saveas:	A
+
+#proc bars
+#clone:	A
+errbarfield: 3
+thinbarline: color=yellow width=@LINEWID
+legendlabel: N = 1000
+
+#proc bars
+#clone:	A
+errbarfield: 4
+thinbarline: color=green width=@LINEWID
+legendlabel: N = 1500
+
+#proc bars
+#clone:	A
+errbarfield:  5
+thinbarline: color=pink width=@LINEWID
+legendlabel: N = 2000
+
+#proc bars
+#clone: A
+errbarfield:  6
+thinbarline: color=red width=0.7
+legendlabel: N = 2400
+
+#proc legend
+location:  min+0.8 max-0.02

@@ -1,0 +1,71 @@
+//// chunk included by prefabs to do standard x axis
+#if bottom in @xaxis
+ #proc xaxis
+ #if @xlbl = "#usefname"
+   label: @x
+ #else
+   #ifspec xlbl label
+ #endif
+ #ifspec xlbldet labeldetails
+ #if @xinc = datematic
+   stubs: datematic
+ #else
+   stubs: inc @xinc
+ #endif
+ #ifspec stubfmt stubformat
+ #ifspec xstubfmt stubformat
+ //
+ // added 5/25/04 scg
+ #ifspec xstubdet stubdetails
+ stubrange: @XMIN
+ #ifspec xstubround stubround
+ #ifspec stubvert
+ #ifspec xgrid grid
+ #ifspec xgridblocks gridblocks
+ #ifspec xgridskip gridskip
+ #ifspec xlbldistance labeldistance
+
+ // the following added scg 12/16/08...
+ #ifspec firststub
+ #ifspec laststub
+
+#endif
+
+// added scg 8/4/04...
+#if top in @xaxis 
+  #proc xaxis
+  location: max
+  #if $def(xstubdet) = 1
+    stubdetails: adjust=0,0.2  @xstubdet
+  #else
+    stubdetails: adjust=0,0.2
+  #endif
+  ticlen: -0.08
+
+  // the rest is replicated from above..
+  #if @xlbl = "#usefname"
+    label: @x
+  #else
+    #ifspec xlbl label
+  #endif
+  #ifspec xlbldet labeldetails
+  #if @xinc = datematic
+    stubs: datematic
+  #else
+    stubs: inc @xinc
+  #endif
+  #ifspec stubfmt stubformat
+  #ifspec xstubfmt stubformat
+  //
+  // added 5/25/04 scg
+  stubrange: @XMIN
+  #ifspec xstubround stubround
+  #ifspec stubvert
+  #ifspec xgrid grid
+  #ifspec xlbldistance labeldistance
+
+  // the following added scg 12/16/08...
+  #ifspec firststub
+  #ifspec laststub
+
+#endif

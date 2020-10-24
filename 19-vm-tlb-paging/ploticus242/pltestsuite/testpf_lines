@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+DEV=$1
+OUTDIR=$2
+ARGS=$3
+if [ "$DEV" = "" ]; then
+  DEV=x11
+fi
+
+echo lines1..
+pl -prefab lines  data=data17  x=1 y=2  pointsym=none \
+	-$DEV -o ${OUTDIR}lines1.$DEV $ARGS
+
+echo lines2..
+pl  -prefab lines  data=data10 delim=tab  x=1  y=2  y2=4  step=yes \
+	yrange=0 name="Group A" name2="Group B" xlbl=Months  legendfmt=across \
+	-$DEV -o ${OUTDIR}lines2.$DEV $ARGS
+
+echo lines3..
+pl  -prefab lines  data=data10 delim=tab  x=1  y=2 err=3  y2=4 err2=5  \
+	y3=6 err3=7  y4=8 err4=9   yrange=0  xlbl=Months \
+	name="Group A" name2="Group B" name3="Group C" name4="Group D" legendfmt=across \
+	-$DEV -o ${OUTDIR}lines3.$DEV $ARGS
+
+echo lines3a..
+pl  -prefab lines  data=data10h delim=tab  x=1  y=2 err=3  y2=4 err2=5  legendfmt=across \
+	y3=6 err3=7  y4=8 err4=9   yrange=0  xlbl=Months \
+	header=yes \
+	-$DEV -o ${OUTDIR}lines3a.$DEV $ARGS
+
+echo lines4..
+pl -prefab lines data=data20  x=1  y=2 \
+	-$DEV -o ${OUTDIR}lines4.$DEV $ARGS
+
+echo lines5..
+pl -prefab lines  data=data20  x=1  y=2  fill=redorange pointsym=none  y2=2 pointsym2=none  \
+        -$DEV -o ${OUTDIR}lines5.$DEV $ARGS
+
+echo lines6..
+pl -prefab lines  data=data20  x=1  y=2  gapmissing=yes \
+        -$DEV -o ${OUTDIR}lines6.$DEV $ARGS
+
+echo lines7..
+pl -prefab lines  data=data20  x=1  y=2  fill=tan1  pointsym=none  y2=2 pointsym2=none  \
+	y3=3  pointsym3=none  linedet3=color=black yrange="0 25"  name="background" name3="interior" \
+	legendfmt=across legendsep=1.2 \
+        -$DEV -o ${OUTDIR}lines7.$DEV $ARGS
+

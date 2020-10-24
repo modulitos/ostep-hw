@@ -1,0 +1,65 @@
+<html><h1>timeline2</h1><img src="timeline2.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif timeline2.htm
+<hr></b>
+
+
+//<b> specify data using <a href="../doc/getdata.html">proc getdata</a></b>
+#proc getdata
+data:
+OWUNN 01/12/99   11/12/98 03/13/99 
+SMFWW 01/19/99   11/19/98 03/18/99
+SDUNN 01/26/99   11/26/98 03/25/99
+BAABR 01/31/99   12/01/98 04/01/99
+UBANI 02/22/99   12/22/98 04/22/99 
+
+//<b> set up plotting area using <a href="../doc/areadef.html">proc areadef</a></b>
+// Note that date format of mm/dd/yy is specified as the xscaletype.
+#proc areadef
+   title: Allowable follow-up visit time windows 
+   rectangle: 1 1 5 2
+   xscaletype: date mm/dd/yy
+   xrange: 11/01/98 05/01/99
+   yscaletype: categories
+   ycategories: datafield 1
+
+//<b> set up x and y axes using <a href="../doc/axis.html">proc axis</a></b>
+// first time- do month stubs every 3 months
+#proc xaxis
+   stubs: incremental 1 month
+   stubformat: MMMyy
+
+// run it again to do the grid at every month
+#proc xaxis
+   stubs: none
+   ticincrement: 1 month
+   grid: color=blue
+
+#proc yaxis
+   stubs: categories
+   label: Patient code
+   labeldetails: adjust=-0.2,0
+   grid: color=green
+
+//<b> render bars using <a href="../doc/bars.html">proc bars</a></b>
+// use segmentfields and tails but not lenfield
+#proc bars
+   color: green
+   barwidth: 0.05
+   horizontalbars: yes
+   segmentfields: 3 4 
+   locfield: 1
+   tails: 0.1
+
+//<b> render dots using <a href="../doc/scatterplot.html">proc scatterplot</a></b>
+#proc scatterplot
+   xfield: 2
+   yfield: 1
+   symbol: shape=circle style=filled fillcolor=red
+   legendlabel: = Target\n  date
+
+//<b> render legend using <a href="../doc/legend.html">proc legend</a></b>
+#proc legend
+   format: singleline
+   location: max-0.5 max

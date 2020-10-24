@@ -1,0 +1,18 @@
+//// chunk included by prefabs to do title...
+#if @title != ""
+  #proc annotate
+  #set XCENTER = $arith(@AREARIGHT-@AREALEFT/2.0)
+  #set XCENTER = $arith(@AREALEFT+@XCENTER)
+  #set TOP = $arith(@AREATOP+0.2)
+  location: @XCENTER @TOP
+  #ifspec titledet textdetails
+  #if $def(titledet) = 1
+    #if @titledet like "*align=left"
+      location: @AREALEFT @TOP
+    #elseif @titledet like "*align=right"
+      location: @AREARIGHT @TOP
+    #endif
+  #endif
+  text: @title
+  #endproc
+#endif

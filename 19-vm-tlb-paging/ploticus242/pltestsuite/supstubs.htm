@@ -1,0 +1,51 @@
+<html><h3>supstubs</h3><img src="supstubs.gif"><p><pre>
+
+//<b> Usage: pl -gif supstubs.htm </b>
+//
+// Superscripts and subscripts in stubs.
+// Available in versions 2.3+... 
+// Text must be rendered in a monospace font for it to work.
+
+#proc settings
+enable_suscripts: yes
+
+// define plotting area using proc areadef
+#proc areadef
+rectangle: 1 1 4 4
+xrange: 1 100000000
+xscaletype: log
+yrange: 0.000001 1 
+yscaletype: log
+
+
+// set up X axis using proc xaxis
+#proc xaxis
+label: size
+labeldetails: adjust=0,-0.1
+selflocatingstubs: text
+   1	     1
+   10	     10
+   100	     100
+   1000	     10^3^
+   10000     10^4^
+   100000    10^5^
+   1000000   10^6^
+   10000000  10^7^
+
+// set up Y axis using proc yaxis
+#proc yaxis
+label: prob
+labeldetails: adjust=-0.2,0
+selflocatingstubs: text
+   0.000001   10^-6^
+   0.00001    10^-5^
+   0.0001     10^-4^
+   0.001      10^-3^
+   0.01       0.01
+   0.1        0.1
+   1          1
+
+
+#proc line
+points: 3(s) 1(s) 3000000(s) 0.000005(s)
+

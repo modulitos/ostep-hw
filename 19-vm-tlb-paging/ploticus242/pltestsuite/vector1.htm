@@ -1,0 +1,54 @@
+<html><h1>vector1</h1><img src="vector1.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif vector1.htm
+Demonstrate proc vector.
+<hr></b>
+
+
+#proc getdata
+fieldnameheader: yes
+data:
+name x len y dir 
+Test_3	76	19	84	14
+Test_4	83	12	64	9
+Test_5	95	11	92	13
+Test_6	42	8	76	11
+Test_7	69	13	68	6
+Test_8	76	2 	22	14
+Test_9	83	15	12	9
+Test_10	-10	15	-10	9
+Test_11	-12	18	-10	3
+
+#proc areadef
+rectangle: 1 1 4 4
+xrange: 0 120
+yrange: 0 120
+frame: yes
+
+// do vectors..
+#proc vector
+xfield: x
+yfield: y
+linedetails: width=1 color=blue
+arrowheadcolor: blue
+lenunits: user
+dirfield: dir
+lenfield: len
+lenscale: 3
+dirrange: 20
+// clip: no
+
+// do red dots..
+#proc scatterplot
+xfield: x
+yfield: y
+symbol: shape=circle fillcolor=red
+
+// do labels..
+#proc scatterplot
+xfield: x
+yfield: y
+labelfield: name
+textdetails: align=L adjust=0.1,0 size=6
+

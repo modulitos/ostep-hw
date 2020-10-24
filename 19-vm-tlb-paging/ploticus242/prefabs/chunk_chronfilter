@@ -1,0 +1,32 @@
+// this filter is used by the chron prefab under certain conditions...
+
+#if @tab != "" 
+  #if @delim = tab
+    #set DELIM = "        "
+  #elseif @delim = comma
+    #set DELIM = ","
+  #else
+    #set DELIM = " "
+  #endif
+  filter:  
+     ##set DT = $ref(@x)
+  #if @timefld != ""
+     // concatenate date and time to build datetime..
+     ##set TM = $ref(@timefld)
+     ##set DT = @DT "." @TM
+  #endif
+  //
+  // do tabulation using $dategroup function..
+     ##set ADJ = $dategroup( @tab, @tabmode, @@DT )
+  #if @y != ""
+     ##set VAL = $ref(@y)
+     ##print @@ADJ@DELIM@@VAL
+     #set y = 2
+  #else
+     ##print @@ADJ
+  #endif
+  #set x = 1
+
+#endif
+
+////////////////////////

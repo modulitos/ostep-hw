@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+DEV=$1
+OUTDIR=$2
+ARGS=$3
+if [ "$DEV" = "" ]; then
+  DEV=x11
+fi
+
+
+echo "cumufrac1.."
+pl -prefab cumufrac data=cumufrac.dat x=1 x2=2 title="Cumulative fraction plot" \
+	name="set 1"  name2="set 2" header=yes \
+	-$DEV -o ${OUTDIR}cumufrac1.$DEV $ARGS
+
+echo "cumufrac2.."
+pl -prefab cumufrac data=cumufrac.dat logmode=log x=1 x2=2 title="Cumulative fraction plot w/ log scale" \
+	linedet="color=blue width=1.5" linedet2="color=orange width=1.5 style=2 dashscale=3" header=yes \
+	-$DEV -o ${OUTDIR}cumufrac2.$DEV $ARGS
+

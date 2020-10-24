@@ -1,0 +1,21 @@
+<html><h1>tree1</h1><img src="tree1.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<p>
+<a href="../gallery/ycase.newick">here's a link to ycase.newick</a>
+<p>
+
+<pre><b>Usage: pl -gif tree1.htm 
+<hr></b>
+
+// yrange is one unit per tree leaf
+// xrange depends on the distance values in your newick file
+
+#proc areadef
+  rectangle: 1 1 5 5
+  xrange: 0 1.5
+  yrange: 0 18
+
+#proc tree
+  newickfile: ycase.newick
+  // squaredoff: no

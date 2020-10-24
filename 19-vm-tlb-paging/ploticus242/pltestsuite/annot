@@ -1,0 +1,9 @@
+// this code produces an annotation in one of the chron examples
+#proc annotate
+location: 100101(s) 600(s)
+arrowhead: 111201(s) 700(s)
+textdetails: size=6 color=gray(0.6)
+arrowdetails: color=gray(0.6)
+text:	V 2.01 
+
+

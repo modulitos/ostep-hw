@@ -1,0 +1,58 @@
+
+// build legend (but don't display it yet)..
+#set ncutoffs = $count( "*", @cutofflist )
+#set i = 1
+#for h in @cutofflist
+  
+  #set color = $nmember( @i, @colorlist )
+  #proc legendentry
+  #if @symbol != ""
+    sampletype: symbol
+    details: style=filled @symbol fillcolor=@color
+  #else
+    sampletype: color
+    details: @color 
+  #endif
+  tag: @h
+  #if @i = 1
+    label: @h +
+  #else
+    #set next = $arith( @i-1 )
+    #set next = $nmember( @next, @cutofflist )
+    #if @next !like *.*
+      // only do this when not working with decimal cutoffs.. scg 3/6/06
+      #set next = $arith( @next-1 )
+    #endif
+    #if @next = @h
+      label: @h
+    #else
+      label: @h - @next
+    #endif
+  #endif
+
+  #set i = $arith( @i+1 )
+
+#endloop
+
+// use proc scatterplot to count # of instances and pick appropriate color from legend..
+#proc scatterplot
+xfield: @x
+yfield: @y
+cluster: yes
+#if @contentfield != ""
+  symrangefield: @contentfield
+#else
+  dupsleg: yes
+#endif
+#if @symbol != ""
+  symbol: @symbol
+#elseif @outline != ""
+  rectangle: @xbinsize @ybinsize outline
+  #if @outline != yes
+    linedetails: @outline
+  #endif
+#else
+  rectangle: @xbinsize @ybinsize @outline
+#endif
+#endproc
+

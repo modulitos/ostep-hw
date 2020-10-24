@@ -1,0 +1,36 @@
+//// this chunk is included by prefabs to initialize the standard prefab parameters
+//
+#if @CM_UNITS = 1
+  #setifnotgiven rectangle = "2.5 5 13.75 10"
+#else
+  #setifnotgiven rectangle = "1 2 5.5 4"
+#endif
+#setifnotgiven title = ""
+#setifnotgiven err = ""
+#setifnotgiven xrange = ""
+#setifnotgiven yrange = ""
+#setifnotgiven xinc = ""
+#setifnotgiven yinc = ""
+#setifnotgiven include1 = ""
+#setifnotgiven include2 = ""
+
+#setifnotgiven xnearest = auto
+#setifnotgiven ynearest = auto
+
+// added 5/25/04 scg
+#setifnotgiven xstubdet = ""
+#setifnotgiven ystubdet = ""
+
+// added 8/5/04 scg
+#setifnotgiven xaxis = bottom
+#setifnotgiven yaxis = left
+
+#setifnotgiven data = ""
+#setifnotgiven inlinedata = ""
+
+// following added scg 8/4/04...
+#proc settings
+  encodenames: yes
+  enable_suscripts: yes
+  #ifspec encodenames
+  #ifspec enable_suscripts

@@ -1,0 +1,133 @@
+/home/scg/bin/pl
+no -debug in /bin /usr/bin /usr/openwin/bin /usr/ccs/bin /usr/jax/bin /usr/local/bin /home/scg/bin /group/phenome/public/dev/bin /group/phenome/public/dev/bin2 /home/mpddba/util_bin ./
+Wed Nov 28 16:08:28 EST 2007
+--------- stock2...
+
+Got command line arg(s): -x11 
+Got command line arg(s): stock2.htm 
+Device code is x
+Clearing all data sets.
+Version: pl 2.40-Dec'07
+Script file is: stock2.htm
+Script file successfully opened
+Executing page
+Executing areadef
+areadef: lowerleft: 1,3  upperright: 5,5
+areadef:   xrange is 4-Apr-99 to 1-Jun-99.   yrange is 50 to 60.
+Executing getdata
+Clearing data set field names.
+
+Clearing all data sets.
+Creating dataset 1  which has 29 rows and 6 fields.
+Executing processdata
+Creating dataset 2  which has 29 rows and 6 fields.
+Executing xaxis
+Executing yaxis
+Executing bars
+pl proc bars: error 2479: No such data field (2		// open)
+pl proc bars: error 2479: No such data field (5	// close)
+Executing areadef
+areadef: lowerleft: 1,1.6  upperright: 5,2.6
+areadef:   xrange is 4-Apr-99 to 1-Jun-99.   yrange is 0 to 5000000.
+Executing xaxis
+Executing yaxis
+Executing bars
+Done with page.  Bounding box is: 0.00 , -27.86 to 8.00 , 8.00 
+--------- timely...
+
+Got command line arg(s): -x11 
+Got command line arg(s): timely.htm 
+Device code is x
+Clearing all data sets.
+Version: pl 2.40-Dec'07
+Script file is: timely.htm
+Script file successfully opened
+Executing page
+Executing annotate
+Executing line
+Executing annotate
+Executing line
+Executing getdata
+Clearing data set field names.
+
+Clearing all data sets.
+Creating dataset 1  which has 343 rows and 9 fields.
+Executing processdata
+pl proc processdata: error 7395: warning, no action specified, defaulting to action: echo 
+Clearing data set field names.
+
+Creating dataset 2  which has 343 rows and 2 fields.
+Executing areadef
+categories in y: list of size=250 malloced
+categories in y: setting up 18 categories
+areadef: lowerleft: 2.5,2  upperright: 7.5,9
+areadef:   xrange is 0 to 90.   yrange is 0 to 19.
+Executing xaxis
+Executing xaxis
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+01
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+02
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+06
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+07
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+08
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+09
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+10
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+11
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+13
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+15
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+16
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+18
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+19
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+20
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+21
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing print
+22
+Executing rangebar
+pl: error 27925: proc rangebar has been replaced with proc boxplot 
+Executing annotate

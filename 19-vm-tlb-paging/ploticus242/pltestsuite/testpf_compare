@@ -1,0 +1,55 @@
+#!/bin/sh
+#
+DEV=$1
+OUTDIR=$2
+ARGS=
+if [ "$DEV" = "" ]; then
+  DEV=x11
+fi
+
+echo "the 'compare' prefab is no longer available."
+exit
+
+
+echo compare1..
+pl -prefab compare data=dexa.dat header=yes catfields=strain \
+  y=RFbmc stubvert=yes barwidth=0.1 \
+  "title= Comparison of one variable" "titledet= adjust=0,+0.4" \
+  -$DEV -o ${OUTDIR}compare1.$DEV $ARGS 
+
+echo compare2..
+pl -prefab compare data=dexa.dat header=yes catfields=strain \
+  y=RFbmc y2=LFbmc stubvert=yes barwidth=0.1 \
+  "title= Comparison of two variables, no subcats" "titledet= adjust=0,+0.4" \
+  -$DEV -o ${OUTDIR}compare2.$DEV $ARGS 
+
+echo compare3..
+pl -prefab compare data=dexa.dat header=yes catfields=strain \
+  y=RFbmc y2=LFbmc y3=RFbmd y4=LFbmd  stubvert=yes \
+  "title= Comparison of four variables, no subcats" "titledet= adjust=0,+0.4" \
+  -$DEV -o ${OUTDIR}compare3.$DEV $ARGS 
+
+echo compare4..
+pl -prefab compare data=dexa.dat header=yes catfields=strain,sex \
+  y=RFbmc y2=LFbmc leftsub=f rightsub=m stubvert=yes \
+  "title= Comparison of two variables, with f & m subcats" "titledet= adjust=0,+0.4" \
+  -$DEV -o ${OUTDIR}compare4.$DEV $ARGS 
+
+echo compare5..
+pl -prefab compare data=dexa.dat header=yes catfields=strain,sex \
+  "rectangle= 1 2 8 4"  -pagesize 9,5 \
+  y=RFbmc y2=LFbmc y3=RFbmd y4=LFbmd leftsub=f rightsub=m stubvert=yes \
+  "title= Comparison of four variables, with f & m subcats" "titledet= adjust=0,+0.4" \
+  -$DEV -o ${OUTDIR}compare5.$DEV $ARGS 
+
+echo compare6..
+ pl -prefab compare data=data28 header=yes catfields=strain \
+    "rectangle=1 2 6 5"  \
+    y=pct_mac y2=pct_mac y3=pct_mac y4=pct_mac  \
+    "ptselect= @sactime = 0 && @inj = trt" \
+    "ptselect2= @sactime = 24 && @inj = trt" \
+    "ptselect3= @sactime = 48 && @inj = trt" \
+    "ptselect4= @sactime = 72 && @inj = trt" \
+     ptselecttags=0,24,48,72 \
+    stubvert=yes erroneway=yes  \
+  -$DEV -o ${OUTDIR}compare6.$DEV $ARGS 

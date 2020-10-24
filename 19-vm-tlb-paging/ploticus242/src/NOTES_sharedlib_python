@@ -1,0 +1,46 @@
+
+pyPloticus is a python wrapper for libploticus. On my Mandriva 2009.1 system I was having trouble 
+with an undefined symbol error after compiling libploticus 2.41 and then installing pyPloticus. 
+It all compiled and installed OK but on importing the python module from inside the python 
+interpreter I would get and "undefined symbol PLGG_pixpt" error.
+
+A small change to the ploticus Makefile has fixed this. As Steve says in his Makefile the shared 
+library part of the Makefile hasn't been tested - well on Mandriva 2009.1 at least, it now has.
+
+The key changes to Makefile are
+
+1. Select option 5 by commenting out line 28 (option 1) and uncommenting lines 74 to 78.
+
+2. Lines 223 to 226 should look like this
+libploticus-static: $(OBJ) api.o gd00files gd16files
+$(RMCOM) libploticus.$(LIBEXT)
+$(ARCOM) libploticus.$(LIBEXT) $(OBJ) api.o $(GD16) $(GD)
+
+3. Add $(FPIC) to the compilation of gd00files and gd16files [THIS HAS BEEN DONE IN THE MAKEFILE -SG]
+
+4. Now "make clean" then "make"
+
+5. Copy your squeaky new libploticus.a file to /usr/lib (or if like me you have a 64 bit machine then 
+/usr/lib64) but in the process rename the file to libploticus.so.0.0 (you have actually created a 
+shared library but I think pyPloticus compilation expects a file with a ".a" extension).
+
+6. Run ldconfig -n /usr/lib (ldconfig -n /usr/lib64 for 64 bitters)
+
+7. You can now go to pyPloticus and first edit the setup.py file changing the plot_src_path to point to 
+the location of the newly created libploticus.a file (something like plot_src_path="../pl241src/src/")
+
+8. Run "python setup.py install"
+
+You should now have it all set to go.
+Testing
+
+1. Start the python interpreter "python"
+
+2. try to import the ploticus module "import ploticus"
+You should get no errors at this point
+
+3. You can now try the pyPloticus examples "python plot.py graph.html"
+I get some errors listed but the graph srcc.png still get produced.
+
+Hope this help someone please tell me if you have other errors of if this works for you.
+

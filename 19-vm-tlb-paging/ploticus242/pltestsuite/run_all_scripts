@@ -1,0 +1,3 @@
+DEV=
+echo "bigcsv.pl ----";      pl bigcsv.pl $DEV
+echo "windbarbs.pl ----";   pl windbarbs.pl $DEV

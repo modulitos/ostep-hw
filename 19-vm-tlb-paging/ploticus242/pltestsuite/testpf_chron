@@ -1,0 +1,72 @@
+#!/bin/sh
+#
+DEV=$1
+OUTDIR=$2
+ARGS=
+if [ "$DEV" = "" ]; then
+  DEV=x11
+fi
+
+### chron1 example uses datematic defaults..
+echo "chron1 (datematic).."
+pl  -prefab chron  data=data14  x=1  y=2  datefmt=yy/mm/dd  \
+	yrange="0 25"  barwidth=line  color=red  \
+	title="# hits per day"  omitweekends=yes \
+	-$DEV -o ${OUTDIR}chron1.$DEV $ARGS
+
+
+echo chron2..
+pl  -prefab chron  data=data14  x=1  y=2  datefmt=yy/mm/dd  xinc="1 month" \
+	stubfmt=M  xyears=yyyy  color=green  tab=week title="# hits per week" \
+	-$DEV -o ${OUTDIR}chron2.$DEV $ARGS 
+
+echo chron3..
+pl  -prefab chron  data=data19  x=2  y=1  datefmt=mmddyy  xinc="1 month" \
+	stubfmt=M  xyears=yyyy  color=green  tab=week  barwidth=0.05  include2=annot \
+	title="# website visitors per week" -scale 0.7  rectangle="1 1 4 2.5"  ygrid=yes  \
+	mode=line step=yes fill=red \
+	-$DEV -o ${OUTDIR}chron3.$DEV $ARGS 
+
+echo chron4..
+pl  -prefab chron  data=data14  x=1  y=2  datefmt=yy/mm/dd  xinc="1 month"  \
+	stubfmt=M  xyears=yyyy  color=powderblue  tab=month  tabmode=first  nearest=month\
+	barwidth=0.2 curve=yes  \
+	-$DEV -o ${OUTDIR}chron4.$DEV $ARGS
+
+echo chron5..
+pl -prefab chron  data=data16  timefld=2  x=1  tab=hour datefmt=yy/mm/dd xinc="1 day" \
+	barwidth=line stubfmt=MMMdd  unittype=datetime  timefld=2 title="# hits per hour" \
+	-$DEV -o ${OUTDIR}chron5.$DEV $ARGS
+
+echo chron6..
+pl -prefab chron  data=data15  x=1  tab=hour unittype=time xinc="1 hour" nearest=hour \
+	barwidth=0.2 stubfmt=HHA title="# events per hour" color=coral \
+	-$DEV -o ${OUTDIR}chron6.$DEV $ARGS
+
+echo "chron6b (datematic).."
+pl -prefab chron  data=data15  x=1  tab=hour unittype=time  \
+	barwidth=0.2 title="# events per hour" color=coral \
+	-$DEV -o ${OUTDIR}chron6.$DEV $ARGS
+
+
+echo chron7..
+pl -prefab chron data=data22 header=yes x=1 y=2 datefmt=mm/dd/yyyy xinc="1 day" \
+	mode=line unittype=datetime  title="temperatures this week" \
+	-$DEV -o ${OUTDIR}chron7.$DEV $ARGS
+
+echo chron8
+pl -prefab chron data=data24 header=yes x=dt y=air_temp y2=soil_temp y3=water_temp ylbl=#usefname \
+	mode=line unittype=datetime datefmt=mm/dd/yyyy xinc="1 day" legendfmt=singleline \
+	-$DEV -o ${OUTDIR}chron8.$DEV $ARGS
+
+echo chron8a
+pl -prefab chron data=data24 header=yes x=dt y=air_temp y2=soil_temp y3=water_temp ylbl=#usefname \
+	mode=bars stack=yes barwidth=0.1 unittype=datetime datefmt=mm/dd/yyyy xinc="1 day" legendfmt=singleline \
+	-$DEV -o ${OUTDIR}chron8.$DEV $ARGS
+
+# chron9 added to test day-less date format fix  Jan '03 
+echo chron9
+pl  -prefab chron  data=data27  datefmt=mm/yyyy x=1 y=2 \
+     xinc="1 month" xstubfmt=Mmm ygrid=yes color=green \
+	-$DEV -o ${OUTDIR}chron8.$DEV $ARGS
+

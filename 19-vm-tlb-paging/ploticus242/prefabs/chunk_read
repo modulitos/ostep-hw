@@ -1,0 +1,61 @@
+/// this chunk is included by prefabs to read data..
+//
+#if @data = "" && @inlinedata = ""
+  #write stderr
+  Error: either 'data' or 'inlinedata' must be specified.
+  #endwrite
+  #exit
+#endif
+//
+//// read data file..
+#proc getdata
+#if @inlinedata != ""
+  #set tmpfile = $tmpfilename( inline )
+  #write stderr
+    #+ tmpfile is @tmpfile
+  #endwrite
+  #write @tmpfile
+    #+ @inlinedata
+  #endwrite
+  pathname: @tmpfile
+#elseif @data = stdin || @data = -
+  standardinput: yes
+#else
+  // changed to use pathname - scg 5/24/05
+  pathname: @data
+#endif
+
+#ifspec delim
+#ifspec header fieldnameheader
+#ifspec comment commentchar
+#ifspec select
+#ifspec echodata showresults
+#ifspec nfields
+#ifspec samplerate
+
+#if @context = chron 
+  #include $chunk_chronfilter
+#elseif @context = stack && @stackarea = yes && @y2 != ""
+  #include $chunk_stackareafilter
+#elseif @context = vdist
+  #include $chunk_vdistfilter
+#elseif @context = heatmap
+  #include $chunk_heatmapfilter
+#endif
+
+#endproc
+
+#if @inlinedata != ""
+  #shell
+    rm -rf @tmpfile
+  #endshell
+#endif
+
+#if @NRECORDS = 0
+  #exit
+#endif
+
+// #write stderr
+// Got @NRECORDS records, @NFIELDS fields per record.  
+// #endwrite
+

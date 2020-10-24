@@ -1,0 +1,14 @@
+// ploticus data display engine.  Software, documentation, and examples.  
+// Copyright 1998-2002 Stephen C. Grubb  (scg@jax.org).
+// Covered by GPL; see the file 'Copyright' for details. 
+// http://ploticus.sourceforge.net
+
+This directory contains files needed for ploticus -prefab operation.
+
+See pltestsuite to run examples.
+
+If you're looking for simple examples that demonstrate ploticus this probably
+isn't the right place.. these scripts are more complicated because they 
+implement all the functionality of prefabs (they have to accomodate all 
+possible parameter combinations that might be specified).  
+Check in ./gallery or ./pltestsuite.  

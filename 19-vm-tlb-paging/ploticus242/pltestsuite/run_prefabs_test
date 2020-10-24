@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# This script tests all prefabs.
+# If no args are given, runs in X11 mode.
+#
+# Otherwise:
+#
+# DEV is output format, eg gif, png, svgz,  etc.
+DEV=$1
+
+# OUTDIR is output directory.   MUST end in slash (/)..
+OUTDIR=$2
+
+# ARGS is any other arguments, typically "-scale 0.7" etc.
+ARGS=$3
+
+if [ "$DEV" = "" ]; then
+  DEV=x11
+fi
+
+for i in testpf_*
+do
+./$i $DEV $OUTDIR $ARGS
+done

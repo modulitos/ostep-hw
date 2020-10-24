@@ -1,0 +1,52 @@
+<html><h1>lineplot5</h1><img src="lineplot5.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif lineplot5.htm
+<hr></b>
+
+#proc getdata
+  data:
+	9807 	13000	13000
+	9808	14500	13400
+	9809	12400	13500
+	9810	13100	15000
+	9811	12700	12000
+	9812	11800	11800
+
+#proc page
+  textsize: 9
+
+#proc areadef
+  title: Collections- actual vs. budget FY99 (in thousands)
+  rectangle: 1 1 5 2
+  xscaletype: date yymm
+  xrange: 9806 9901
+  yrange: 11000 18000
+//  xaxis.stubs: list Jul\nAug\nSep\nOct\nNov\nDec
+  xaxis.stubformat: Mmm
+  xaxis.stubs: inc 1 
+  xaxis.stubrange: 9807 9812
+  yaxis.stubs: incremental 1000
+
+#proc lineplot
+  xfield: 1
+  yfield: 2
+  linedetails: color=red
+  pointsymbol: shape=diamond style=fill fillcolor=red radius=0.04 
+  legendlabel: Actual
+  
+
+#proc lineplot
+  xfield: 1
+  yfield: 3
+  linedetails: color=blue
+  pointsymbol: shape=circle style=fill fillcolor=blue radius=0.04 
+  legendlabel: Budget
+  altwhen: @@3 = @@2
+  altsymbol: shape=square fillcolor=white radius=0.04
+
+#proc legend
+  location: min+1 min-0.35
+  format: singleline
+
+

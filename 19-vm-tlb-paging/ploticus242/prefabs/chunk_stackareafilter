@@ -1,0 +1,42 @@
+// rewrite data so filled lineplots "stack"...
+#if @delim = tab
+  #set DELIM = "	"
+#elseif @delim = comma
+  #set DELIM = ","
+#else
+  #set DELIM = " "
+#endif
+
+filter:
+  ##set X = $ref(@x)
+  #if @y4 != ""
+    ##set R4 = $ref(@y4)
+    #set y4 = 5
+  #endif
+  #if @y3 != ""
+    ##set R3 = $ref(@y3)
+    #set y3 = 4
+  #endif
+  #if @y2 != ""
+    ##set R2 = $ref(@y2)
+    #set y2 = 3
+  #endif
+  ##set R1 = $ref(@y)
+  #set y = 2
+  //
+  #if @y4 != ""
+    ##set OUT4 = $arithl(@@R1+@@R2+@@R3+@@R4 )
+    ##set OUT3 = $arithl(@@R1+@@R2+@@R3 )
+    ##set OUT2 = $arithl(@@R1+@@R2 )
+    ##print @@X@DELIM@@R1@DELIM@@OUT2@DELIM@@OUT3@DELIM @@OUT4
+  #elseif @y3 != ""
+    ##set OUT3 = $arithl(@@R1+@@R2+@@R3 )
+    ##set OUT2 = $arithl(@@R1+@@R2 )
+    ##print @@X@DELIM@@R1@DELIM@@OUT2@DELIM@@OUT3
+  #elseif @y2 != ""
+    ##set OUT2 = $arithl(@@R1+@@R2 )
+    ##print @@X@DELIM@@R1@DELIM@@OUT2
+  #endif
+
+//////////////////////
+#set x = 1

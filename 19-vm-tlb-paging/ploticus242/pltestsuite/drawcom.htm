@@ -1,0 +1,33 @@
+<html><h1>drawcom</h1><img src="drawcom.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif drawcom.htm
+<hr></b>
+
+#proc page
+pagesize: 8.5 11
+
+#proc drawcommands
+commands: 
+  color blue
+  linetype 0 2 1
+  mov 1 9
+  lin 2 9
+  lin 1.5 10
+  lin 1 9
+  cblock 3 9 5 10 yelloworange 1
+  mark 2.4 9.5 sym9agreen .5
+  mov 1 9.5
+  lin 5 9.5
+
+#proc areadef
+  rectangle: 1 7 5 9
+  xrange: 0 40
+  yrange: 0 25
+
+#write stderr
+done with areadef
+#endwrite noclose
+
+#proc drawcommands
+file: drawcom.dcm

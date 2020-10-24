@@ -1,0 +1,67 @@
+<html><h1>bars3</h1><img src="bars3.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif bars3.htm
+<hr></b>
+
+#set TODATE = 9903
+
+//<b> Set up plotting area using <a href="../doc/areadef.html">proc areadef</a></b>
+#proc areadef
+  title: Monthly volume per operator
+  rectangle: 1 1 4 4
+  xscaletype: date yymm
+  xrange: 9704 9906
+  yrange: 0 1800
+  xaxis.stubs: inc 1 month
+  xaxis.stubformat: M
+  xaxis.autoyears: yes
+  yaxis.stubs: inc 500
+  yaxis.labeldetails: adjust=-0.3,0
+
+//<b> Read and process data file using <a href="../doc/getdata.html">proc getdata</a></b>
+#proc getdata
+  file: vermonth.tab
+
+//<b> draw bars for steve using <a href="../doc/bars.html">proc bars</a></b>
+#proc bars
+  lenfield: 2
+  locfield: 1
+  color: red
+  outline: no
+  barsrange: 9704 @TODATE
+  legendlabel: Steve
+  barwidth: 0.07
+  outline: yes
+  #saveas B
+
+//<b> draw bars for lisa, stacking them above steve, using <a href="../doc/bars.html">proc bars</a></b>
+#proc bars
+  #clone: B
+  lenfield: 3
+  color: yellow
+  stackfields: 2
+  legendlabel: Lisa
+
+//<b> draw bars for rob, stacking them above lisa and steve, using <a href="../doc/bars.html">proc bars</a></b>
+#proc bars
+  #clone: B
+  lenfield: 4
+  color: blue
+  stackfields: 2 3
+  legendlabel: Rob
+
+//<b> draw bars for takisha, stacking them above the others, using <a href="../doc/bars.html">proc bars</a></b>
+#proc bars
+  #clone: B
+  lenfield: 5
+  color: green
+  stackfields: 2 3 4
+  legendlabel: Takisha
+
+//<b> render legend using labels defined above <a href="../doc/legend.html">(proc legend)</a></b>
+#proc legend
+  location: min+0.3 max
+  reverseorder: yes
+  seglen: 0.3
+

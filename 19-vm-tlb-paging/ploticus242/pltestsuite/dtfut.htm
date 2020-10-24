@@ -1,0 +1,62 @@
+<img src="dtfut.gif">
+<pre>
+Usage: pl -gif propbars1.htm
+//  specify the data using proc getdata
+// Each value is an individual percentage.
+
+#proc page
+  landscape: yes
+
+#proc getdata
+file: dtfut.dat
+#endproc
+
+
+//  define plotting area using proc areadef
+#proc areadef
+  title:  Last 10 Wave Scores Over 100
+   // titledetails: size=18 align=C adjust=0,0.1 color=black 
+  rectangle: 1 1 4 5.5
+  xrange: 0 100
+  yrange: 0 35
+
+//  do y axis stubs ( score names) using proc yaxis
+#proc yaxis
+  stubs: datafields 1
+  grid: color=powderblue
+  axisline: none
+  tics: no
+ 
+//  do x axis stubs (percents) using proc xaxis
+#proc xaxis
+ stubs: inc 20
+ stubformat: %3.0f%%
+
+
+//  do green bars using proc bars
+#proc bars
+  horizontalbars: yes
+  barwidth: 0.13
+  lenfield: 2
+  color: green 
+   // (.6,.85,.8)
+  outline: no
+  legendlabel: Long position components (Green)
+  #saveas: B
+
+//  do red bars 
+// Use stackfields to position bars beyond the first set of bars
+#proc bars
+  #clone B
+  lenfield: 3
+  stackfields: 2
+  legendlabel: Short position components (Red)
+  color: red
+
+//  do legend (1st column) using proc legend
+// the noclear attribute must be specified otherwise the entries are removed
+// we need to keep them for the 2nd invocation, below..
+#proc legend
+  location: min+.02 min-0.3
+  noclear: yes
+  

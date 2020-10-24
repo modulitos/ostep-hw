@@ -1,0 +1,35 @@
+<html><h1>pie1</h1><img src="pie1.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif pie1.htm
+<hr></b>
+
+#proc page
+#if @DEVICE in gif,png
+  scale: 0.7
+#endif
+
+// <b> specify data using <a href="../doc/getdata.html">proc getdata</a></b>
+#proc getdata
+data:	Brazil 22
+	Columbia 17
+	"Costa Rica" 22
+	Guatemala 3
+	Honduras 12
+	Mexico 14
+	Nicaragua 28
+	Belize 9
+ 	United\nStates 21
+	Canada 8
+
+// <b> render the pie graph using <a href="../doc/pie.html">proc pie</a></b>
+#proc pie
+firstslice: 90
+explode: .2 0 0 0 0  .2 0
+datafield: 2
+labelfield: 1
+labelmode: line+label
+center: 4 4
+radius: 2
+colors: yellow pink pink pink pink yellow pink
+labelfarout: 1.05

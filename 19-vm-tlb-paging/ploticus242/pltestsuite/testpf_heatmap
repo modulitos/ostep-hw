@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+DEV=$1
+OUTDIR=$2
+ARGS=$3
+if [ "$DEV" = "" ]; then
+  DEV=x11
+fi
+
+echo heatmap1..
+pl -prefab heatmap data=curve1.dat y=1 x=2   title="this is heatmap1" \
+  -$DEV -o ${OUTDIR}heatmap1.$DEV $ARGS
+
+echo heatmap2..
+pl -prefab heatmap data=snpmap.dat header=yes y=1 x=2 ycats=yes xbinsize=5  \
+  colorlist=white,limegreen,green,teal,blue,purple,black title="this is heatmap2" \
+  -$DEV -o ${OUTDIR}heatmap2.$DEV $ARGS
+
+echo heatmap2a..
+pl -prefab heatmap data=snpmap.dat header=yes y=1 x=2 ycats=yes xbinsize=5  \
+  colorlist=white,limegreen,green,teal,blue,purple,black title="here's heatmap2a" titledet="size=15" \
+  cutofflist=35,25,10,1 \
+	-$DEV -o ${OUTDIR}heatmap2a.$DEV $ARGS
+
+echo heatmap3..
+pl -prefab heatmap data=data26 x=1 xcats=yes y=2 ycats=yes contentfield=3 \
+	outline="color=black width=5" title="this is heatmap3" \
+	-$DEV -o ${OUTDIR}heatmap3.$DEV $ARGS
+
+echo heatmap4..
+pl -prefab heatmap data=data26 x=1 xcats=yes y=2 ycats=yes contentfield=3 symbol="shape=circle radius=0.1" \
+	legendsep=0.2 zerocolor=white title="here's heatmap4" \
+	-$DEV -o ${OUTDIR}heatmap4.$DEV $ARGS

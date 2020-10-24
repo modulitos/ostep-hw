@@ -1,0 +1,23 @@
+filter:
+   #if @xcats = ""
+     ##set XVAL = $ref( @x )
+     ##set XGRP = $numgroup( @@XVAL, @xbinsize, mid )
+   #else
+     ##set XGRP = $ref( @x )
+     ##set XVAL = @@XGRP
+   #endif
+   #if @ycats = ""
+     ##set YVAL = $ref( @y )
+     ##set YGRP = $numgroup( @@YVAL, @ybinsize, mid )
+   #else
+     ##set YGRP = $ref( @y )
+     ##set YVAL = @@YGRP
+   #endif
+   ##print @@XGRP @@XVAL   @@YGRP @@YVAL  
+
+#set xgrp = 1
+#set x = 2
+#set ygrp = 3
+#set y = 4
+
+// note: for categories, GRP and VAL are the same

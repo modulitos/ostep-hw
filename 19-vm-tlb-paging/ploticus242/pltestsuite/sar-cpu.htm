@@ -1,0 +1,60 @@
+<html><h1>sar-cpu</h1><img src="sar-cpu.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+<pre><b>
+// Plot CPU utilization data as produced by sar(1) utility.
+// Contributed by Pablo Marques (pmarques@herald.com)
+
+// Usage: pl -gif sar-cpu.htm
+// Uses the data file <a href="sar-cpu.dat">sar-cpu.dat</a> 
+<hr></b>
+
+#proc page
+#if @DEVICE in png,gif
+   scale: 0.6
+#endif
+
+#proc getdata
+file: sar-cpu.dat
+fieldnames: time usr sys wio idle
+ 
+#proc areadef
+   title: % CPU Utilization
+   titledetails: size=14  align=C
+   rectangle: 1 1 8 4
+   xscaletype: time hh:mm:ss
+   xrange: 00:00:00 23:59:59
+   yrange: 0 100
+ 
+#proc xaxis
+   stubs: inc 2 hours
+   minorticinc: 30 minutes
+   stubformat: hhA
+ 
+ 
+#proc yaxis
+   stubs: inc 10
+//  grid: color=orange
+  gridskip: min
+  ticincrement: 100 1000
+ 
+#proc curvefit
+xfield: time
+yfield: wio
+linedetails: color=blue width=.5
+legendlabel: wio
+ 
+#proc curvefit
+xfield: time
+yfield: sys
+linedetails: color=red width=.5
+legendlabel: sys
+ 
+#proc curvefit
+xfield: time
+yfield: usr
+linedetails: color=green width=.5
+legendlabel: usr
+ 
+#proc legend
+location: max-1 max
+seglen: 0.2

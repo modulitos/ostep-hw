@@ -1,0 +1,23 @@
+#if @delim = tab
+    #set DELIM = "	"
+#elseif @delim = comma
+    #set DELIM = ","
+#else
+    #set DELIM = " "
+#endif
+
+filter:
+   ##set VAL = $ref(@y)
+ #if @id != ""
+   ##set ID = $ref(@id)
+ #else
+   ##set ID = =
+ #endif
+   ##set GRP = $numgroup( @@VAL, @binsize, mid )
+   ##print @@GRP@DELIM@@VAL@DELIM@@ID
+
+/////////////////
+#set y = 1
+#if @id != ""
+  #set id = 3
+#endif

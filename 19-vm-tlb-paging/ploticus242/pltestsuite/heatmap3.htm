@@ -1,0 +1,89 @@
+<html><h1>heatmap3</h1><img src="heatmap3.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif [-map] heatmap3.htm
+
+This color grid involves processing raw data by 
+counting occurances within ranges, then mapping counts to colors by range.
+
+Uses data file <a href="snpmap.dat">snpmap.dat</a> .
+For brevity, only chromosomes 1-7 and X are represented in this example.
+
+<hr></b>
+
+#set SYM = "radius=0.08 shape=square style=filled"
+#setifnotgiven CGI = "http://ploticus.sourceforge.net/cgi-bin/showcgiargs"
+
+#proc page
+pagesize: 10 4
+
+// read in the SNP map data file..
+#proc getdata
+fieldnameheader: yes
+file: strainz.dat
+
+#proc categories
+  axis: x
+  datafield: 2
+
+#proc categories
+  axis: y
+  datafield: 1
+
+// set up the plotting area
+#proc areadef
+rectangle: 1 1 9 3.5
+xscaletype: categories
+yscaletype: categories
+yaxis.stubs: usecategories
+yaxis.stubdetails: adjust=0.7,0
+yaxis.axisline: none
+yaxis.tics: none
+xaxis.stubs: usecategories
+xaxis.axisline: none
+xaxis.tics: none
+xaxis.location: max+0.3
+
+
+// set up legend for color gradients..
+#proc legendentry
+sampletype: color
+details: dullyellow
+label: 1 or more SD above normal
+tag: 1
+
+#proc legendentry
+sampletype: color
+details: white
+label: within 1 SD of normal
+tag: -1
+
+#proc legendentry
+sampletype: color
+details: skyblue
+label: 1 or more SD below normal
+tag: -99
+  
+
+// use proc scatterplot to count # of instances and pick appropriate color from legend..
+#proc scatterplot
+xfield: meas
+yfield: strain
+cluster: no
+symrangefield: zscore
+rectangle: 1 1 outline
+
+// overlay the values..
+#proc scatterplot
+xfield: meas
+yfield: strain
+cluster: no
+labelfield: value
+textdetails: size=6
+  
+
+// display legend..
+#proc legend
+location: min+0.7 min-0.2
+textdetails: size=6
+

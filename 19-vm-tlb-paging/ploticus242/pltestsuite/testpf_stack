@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+DEV=$1
+OUTDIR=$2
+ARGS=$3
+if [ "$DEV" = "" ]; then
+  DEV=x11
+fi
+
+echo stack1..
+pl -prefab stack data=data10 x=1 y=2 y2=4 y3=6 y4=8 xlbl=Months \
+	name="Group A" name2="Group B" name3="Group C" name4="Group D" \
+	-$DEV -o ${OUTDIR}stack1.$DEV $ARGS
+
+echo stack2..
+pl -prefab stack data=data10h x=1 y=2 y2=4 y3=6 y4=8 xlbl=Months \
+	header=yes  reverseleg=yes \
+	-$DEV -o ${OUTDIR}stack2.$DEV $ARGS
+
+echo "stack3.."
+pl -prefab stack data=data5 delim=tab  x=1 y=2 y2=3 y3=4 y4=5  \
+	stackarea=yes stubvert=yes \
+	name=eastern name2=central name3=mountain name4=pacific \
+	-$DEV -o ${OUTDIR}stack3.$DEV $ARGS

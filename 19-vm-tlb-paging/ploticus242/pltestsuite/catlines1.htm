@@ -1,0 +1,51 @@
+<html><h1>catlines1</h1><img src="catlines1.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+<p>
+<a href="hgb.dat">List input data set hdb.dat</a>
+
+<pre><b>Usage: pl -gif catlines1.htm
+<hr></b>
+
+#proc page
+  pagesize: 14 8
+  scale: 0.6
+
+#proc getdata
+  file: hgb.dat
+  commentchar: //
+
+#proc categories
+  axis: x
+  datafield: 1
+
+#proc areadef
+  rectangle: 1 2 12 5
+  xscaletype: categories
+  yautorange: datafield=3,4 combomode=hilo
+  catbinsadjust: 1
+  // yaxis.stubs: inc
+  xaxis.tics: none
+  xaxis.ticincrement: 1
+  xaxis.grid: color=gray(0.7)
+  frame: color=gray(0.7) width=0.5
+
+#proc categories
+  axis: x
+  slideamount: -0.5
+
+#proc xaxis
+  stubs: usecategories
+  tics: none
+  stubvert: yes
+
+#proc catlines
+  // subcats:  M06 M12 M18 
+  subcats: auto
+  catfield: 1
+  subcatfield: 2
+  valfield: 3
+  errfield: 4
+  linedetails: color=red width=1.0
+  dpsymbol: color=gray(0.5) radius=0.03 style=filled
+  errbardetails: color=gray(0.7)
+  plotwidth: 0.6

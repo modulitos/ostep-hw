@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+DEV=$1
+OUTDIR=$2
+ARGS=
+if [ "$DEV" = "" ]; then
+  DEV=x11
+fi
+
+echo dist1..
+pl -prefab dist x=1  data=data6  curve=yes  binsize=0.05 barwidth=0.08  ygrid=yes \
+     title="Distribution of responses" \
+	-$DEV -o ${OUTDIR}dist1.$DEV $ARGS
+
+echo dist2..
+pl -prefab dist x=1  data=data8  cats=yes  yrange=0  stubvert=yes  barwidth=0.05  \
+	ylbl="# Hits"   order=rev   \
+	-$DEV -o ${OUTDIR}dist2.$DEV $ARGS

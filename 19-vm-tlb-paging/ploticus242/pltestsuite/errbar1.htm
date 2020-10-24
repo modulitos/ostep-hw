@@ -1,0 +1,246 @@
+<html><h1>errbar1</h1><img src="errbar1.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif errbar1.htm
+or for postscript: pl -ps errbar1.htm | lp
+
+In this example the means and standard deviations were already calculated,
+so proc bars is used to render the bars.  An alternative is to use proc
+rangebar with meanmode option to calculate mean & standard deviation
+and render bars.
+
+Categories are used to position bars in X; proc catslide is used to
+adjust the positioning slightly so that pairs of bars may be displayed
+for each category.
+<hr></b>
+
+#set TAILLEN = 0.05
+
+#proc Page:
+pagesize: 8.5 11
+#if @DEVICE in gif,png
+  scale: 0.4
+#endif
+Title: Mean FES Scores 
+	For Families in Emergency Shelters vs.
+	Families in Transitional Housing 
+
+/////////////////////////////
+////// Top Panel
+/////////////////////////////
+
+
+///////// Left bars
+
+// specify data for top panel, left of each pair
+// (must be done before areadef because areadef uses data to set up category names)
+#Proc Getdata:
+Data: 
+// E (1-5)
+//categ  n obs   mean  stdev   pval
+//====  =====  =====  =====    =====
+  coh     23   37.83  18.66    p<.05 
+  exp     23   42.17   9.00    p<.05
+  conf    23   54.48  13.67    p>.05
+  ind     23   42.52  14.71    p>.05
+  achiev  23   54.48   8.44    p>.05
+
+// set up plot area
+#Proc Areadef:
+areaname: 2hi
+xscaletype: categories
+xcategories: datafield=1
+yrange: 0 100
+Xaxis.stubs:  text
+	Cohesion
+	Expressiveness
+	Conflict
+	Independence
+	Achievement\nOrientation
+
+yaxis.stubs: inc 10
+Yaxis.label: Standard Score
+
+
+// do horizontal lines..
+#Proc Line
+linedetails: width=0.4 dashscale=5
+notation: locval
+points: min 50(s) max 50(s)
+
+#Proc Line
+linedetails: width=0.4 dashscale=5 style=1
+notation: locval
+Points: min 40(s) max 40(s)
+	min 60(s) max 60(s)
+
+// do centered p values
+#Proc Scatterplot
+Xfield: 1
+ylocation: 5(s)
+labelfield: 5
+
+// prepare to do left bars
+#proc catslide
+axis: x
+amount: -0.1
+
+// render points
+#Proc Scatterplot:
+Xfield: 1
+Yfield: 3
+symbol: shape=pixdiamond style=solid color=black radius=0.05
+
+// render bars
+#Proc bars
+locfield: 1
+lenfield: 3
+errbarfields: 4
+tails: @TAILLEN
+
+////////// Right bars ////////////////
+
+// prepare to do right bars
+#proc catslide
+axis: x
+amount: 0.1
+
+// specify data for right bars
+#Proc Getdata:
+// T (1-5)
+// cat  n obs   mean  stdev 
+//===== =====  =====  =====  
+Data:
+  coh    39   52.38  15.44  
+  exp    39   48.90   8.94  
+  conf   39   50.90  10.99  
+  ind    39   44.62   9.59  
+  achiev 39   54.92   8.59  
+
+// render points
+#Proc Scatterplot:
+Xfield: 1
+Yfield: 3
+symbol: shape=pixsquare style=solid color=black radius=0.05
+
+// render bars
+#proc bars
+locfield: 1
+lenfield: 3
+errbarfields: 4
+tails: @TAILLEN
+
+
+/////////////////////////////////////////////////
+//// Bottom row
+/////////////////////////////////////////////////
+
+// specify data for left bars
+#proc getdata:
+// E (6-10)
+//cat    n obs   mean  stdev   pval
+//=====  =====  =====  =====  =====
+data:
+  int    23   45.78  14.30   p<.05 
+  act    23   45.00  12.30   p>.05 
+  mor    23   53.26   9.11   p<.05 
+  org    23   49.17  10.43   p<.05 
+  con    23   59.48  10.40   p>.05 
+
+#proc areadef:
+areaname: 2lo
+xscaletype: categories
+xcategories: datafield 1
+yrange: 0 100
+
+#proc xaxis
+stubs text
+	Intellectual-\nCultural\nOrientation
+	Active-\nRecreational\nOrientation
+	Moral-\nReligious\nEmphasis
+	Organization
+	Control
+
+#proc yaxis
+stubs: inc 10
+label: Standard Score
+
+// do horiz. lines
+#Proc line
+notation: locvalues
+linedetails: width=0.4
+Points: min 50(s) max 50(s)
+
+#proc line:
+notation: locvalues
+linedetails: style=1 dashscale=5 width=0.4
+Points: min 40(s) max 40(s)
+	min 60(s) max 60(s)
+
+// do centered P values
+#Proc Scatterplot
+Xfield: 1
+ylocation: 5(s)
+labelfield: 5
+
+#proc catslide
+axis: X
+amount: -0.1
+
+// render points
+#Proc Scatterplot:
+Xfield: 1
+Yfield: 3
+symbol: shape=pixdiamond style=solid color=black radius=0.05
+
+// render bars
+#Proc bars
+locfield: 1
+lenfield: 3
+errbarfields: 4
+tails: @TAILLEN
+
+
+//////////// Right bars
+
+#proc catslide
+axis: x
+amount: 0.1
+
+#proc getdata:
+// T (6-10)
+// cat  n obs   mean  stdev   
+//====  =====  =====  =====  
+Data:
+   int     39   53.51   9.78  
+   act     39   47.54  11.50  
+   mor     39   58.67   6.34  
+   org     39   55.33   9.86  
+   con     39   56.31   8.97  
+
+// render points
+#Proc Scatterplot:
+Xfield: 1
+Yfield: 3
+symbol: shape=pixsquare style=solid color=black radius=0.05
+
+// render bars
+#proc bars
+locfield: 1
+lenfield: 3
+errbarfields: 4
+tails: @TAILLEN
+
+// Define legend entries explicitly
+#proc legendentry
+sampletype: symbol
+label: Emergency Shelters (N = 23)
+details: shape=diamond style=filled fillcolor=black radius=0.05
+
+#proc legendentry
+sampletype: symbol
+label: Transitional Housing (N = 39)
+details: shape=square style=filled fillcolor=black radius=0.05
+
+#proc legend:
+location: 5.5 9

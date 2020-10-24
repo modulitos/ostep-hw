@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+DEV=$1
+OUTDIR=$2
+ARGS=
+if [ "$DEV" = "" ]; then
+  DEV=x11
+fi
+
+echo multidist1..
+pl -prefab multidist overlay=yes data=data21 rotate=yes xrange="0 2000" yrange="0 20" \
+	-$DEV -o ${OUTDIR}multidist1.$DEV $ARGS 
+

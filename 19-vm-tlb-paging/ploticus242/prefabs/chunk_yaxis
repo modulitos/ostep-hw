@@ -1,0 +1,46 @@
+/// chunk included by prefabs to do standard Y axis...
+#if left in @yaxis
+  #proc yaxis
+  stubs: inc @yinc
+  stubcull: yes
+  #if @ylbl = "#usefname"
+    label: @y
+  #else
+    #ifspec ylbl label
+  #endif
+  #ifspec ystubfmt stubformat
+  #ifspec ylbldet labeldetails
+  #ifspec ygrid grid
+  #ifspec ygridblocks gridblocks
+  #ifspec ygridskip gridskip
+  #ifspec ylbldistance labeldistance
+  //
+  // added 5/25/04 scg
+  #ifspec ystubdet stubdetails
+#endif
+
+//
+// added 5/25/04 scg
+#if right in @yaxis 
+  #proc yaxis
+  location: max
+  #if $def(ystubdet) = 1
+    stubdetails: align=left adjust=0.3,0  @ystubdet
+  #else
+    stubdetails: align=left  adjust=0.3,0
+  #endif
+  ticlen: -0.08
+  // the rest is replicated from above..
+  stubs: inc @yinc
+  stubcull: yes
+  #if @ylbl = "#usefname"
+    label: @y
+  #else
+    #ifspec ylbl label
+  #endif
+  #ifspec ystubfmt stubformat
+  #ifspec ylbldet labeldetails
+  #ifspec ygrid grid
+  #ifspec ylbldistance labeldistance
+
+#endif

@@ -1,0 +1,68 @@
+<html><h3>legends232</h3><img src="legends232.gif"><p><pre>
+
+//<b> Usage: pl -gif legends232.htm </b>
+//
+// Demonstrate some new legend features available with ploticus 2.32
+
+
+// set up some legend entries...
+#proc legendentry
+  sampletype: color
+  label: this is a test
+  details: red
+
+#proc legendentry
+  sampletype: color
+  label: this is another test
+  details: blue
+
+#proc legendentry
+  sampletype: color
+  label: this is \n another test
+  details: green
+
+#proc legendentry
+  sampletype: color
+  label: this is another test
+  details: orange
+
+#proc legendentry
+  sampletype: color
+  label: this is another test
+  details: lavender
+
+#proc legendentry
+  sampletype: color
+  label: this is another test
+  details: dullyellow
+
+
+// render the bottom legend using the above entries..
+#proc legend
+  #saveas L
+  textdetails: size=6
+  location: 1.4 6.5
+  format: down
+  extent: 1.4
+  separation: 0.1
+  wraplen: 15
+  frame: bevel
+  title: Multi-column legends now supported
+  noclear: yes  // this just allows us to show the same set of entries again..
+
+// render the middle legend using the above entries..
+#proc legend
+  #clone L
+  location 1.4 4.3
+  frame: no
+  backcolor: dullyellow
+  title: You can add legend title \n and do wordwrap on legend entries
+
+// render the top legend using the above entries..
+#proc legend
+  #clone L
+  format: across
+  extent: 4.0
+  location 1 2.3
+  frame: yes
+  title: This legend uses the 'across' format

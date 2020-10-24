@@ -1,0 +1,5 @@
+// an example ploticus config file with Spanish used for dates
+months: ene feb mar abr pue jun jul ago sep oct nov dic
+months.abbrev: Ene Feb Mar Abr Pue Jun Jul Ago Sep Oct Nov Dic
+months.full: Enero Febrero Marcha Abril Pueda Junio Julio Agosto Septiembre Octubre Noviembre Diciembre
+weekdays: Dom Lun Mar Mie Jue Vie Sab

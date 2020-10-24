@@ -1,0 +1,100 @@
+<html><h1>stock</h1><img src="stock.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+<a href="stock.eps">Download the PostScript equivalent</a><pre><b>
+
+Usage: pl -gif stock.htm
+Data source: http://quote.yahoo.com  "Spreadsheet format"
+<hr></b>
+
+#proc page
+#if @DEVICE in gif,png
+  scale: 0.7
+#endif
+
+//<b> read data file using <a href="../doc/getdata.html">proc getdata</a></b>
+#proc getdata
+file: stock.csv
+delimit: comma
+// showresults: yes
+
+
+//<b> reverse the record order, since the data is provided in reverse chronological
+// order, using <a href="../doc/transform.html">proc transform</a></b>
+#proc transform
+action: reverse
+
+//<b> define top plotting area using <a href="../doc/areadef.html">proc areadef</a></b>
+#proc areadef
+title: Trailer Tongue Technologies Corp.
+rectangle: 1 3 5 5
+xscaletype: date dd-mmm-yy
+xrange: 01-Jan-99 01-Jun-99
+yrange: 45 65
+yscaletype: log
+#saveas: A
+
+//<b> set up X axis using <a href="../doc/xaxis.html">proc xaxis</a></b>
+#proc xaxis
+stubs: inc 1 month
+stubformat: Mmmyy
+grid: color=skyblue
+
+//<b> set up Y axis using <a href="../doc/yaxis.html">proc yaxis</a></b>
+#proc yaxis
+stubs: inc 5
+grid: color=skyblue
+
+
+//<b> draw hi low bars using <a href="../doc/bars.html">proc bars</a></b>
+#proc bars
+locfield: 1
+segmentfields: 3 4
+thinbarline: color=gray(0.8)
+
+//<b> draw closing price curve using <a href="../doc/lineplot.html">proc lineplot</a></b>
+#proc lineplot
+xfield: 1
+yfield: 5
+linedetails: width=0.3 color=green
+
+//<b> compute and render moving average curve using <a href="../doc/curvefit.html">proc curvefit</a></b>
+#proc curvefit
+xfield: 1
+yfield: 5
+order: 50
+legendlabel: 50 day\nmoving avg
+linedetails: color=orange
+
+//<b> render legend <a href="../doc/legend.html">proc legend</a></b>
+#proc legend
+location: max-2 max
+
+// do volume
+
+//<b> define bottom plotting area using <a href="../doc/areadef.html">proc areadef</a></b>
+#proc areadef
+#clone: A
+rectangle: 1 1.6 5 2.6
+yrange: 0 30000000
+yscaletype: linear
+title:
+
+//<b> set up X axis using <a href="../doc/xaxis.html">proc xaxis</a></b>
+#proc xaxis
+ticincrement: 1 month
+grid: color=skyblue
+label: Volume (1000s)
+labeldetails: adjust=0,0.2 size=8
+
+//<b> set up Y axis using <a href="../doc/yaxis.html">proc yaxis</a></b>
+#proc yaxis
+stubs: inc 10000 1000
+grid: color=skyblue
+
+//<b> render histogram using <a href="../doc/bars.html">proc bars</a></b>
+#proc bars
+barwidth: 0.001
+locfield: 1
+lenfield: 6
+thinbarline: color=green
+

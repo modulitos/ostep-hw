@@ -1,0 +1,92 @@
+#!/usr/bin/pl
+
+// Setup drawing area
+#proc page
+  pagesize: 8 6
+  landscape: yes
+
+#proc areadef
+  rectangle: 0.55 0.80 7.6 5.95
+  frame: color=grey(0.9)
+  xscaletype: datetime yyyy-mm-dd.hh:mm:ss
+  xrange: 2003-05-07.11:00:00 2003-05-09.12:00:00
+  yrange: 0 2500
+
+#proc xaxis
+  stubs: incremental 4 hour
+  stubformat: hh:mm
+  stubcull: yes
+  stubrange: 2003-05-07.11:00:00
+  minorticinc: 1 hour
+  grid: color=grey(0.9)
+  gridskip: min
+
+#proc xaxis
+  location: min-0.25
+  stubs: incremental 1 day
+  stubrange: 2003-05-07.24:00:00
+  stubformat: yyyy-mm-dd
+  minorticinc: 1 day
+  stubcull: yes
+  label: Time/Temp (min)
+
+#proc yaxis
+  stubs: incremental 200
+  minorticinc: 100
+  stubdetails: size=8
+  labeldetails: size=10
+  grid: color=grey(0.9) width=1
+  gridskip: min
+  label: Elevation/Élévation (m)
+  minorticlen: 0.05
+
+// Wind data
+#proc getdata
+  delim: comma
+  file: wind.csv
+  fieldnameheader: yes
+  pf_fieldnames: legendId,windTimeStamp,windLevel,windSpeed,windDirection
+  filter: ##set newWindTimeStamp = $change(' ', '.', @@windTimeStamp)
+	  ##print @@legendId,@@newWindTimeStamp,@@windLevel,@@windSpeed,@@windDirection
+
+// Wind legend entries
+#proc legendentry
+  label: Data 1
+  sampletype: line
+  details: color=blue
+  tag: 1
+
+#proc legendentry
+  label: Data 2
+  sampletype: line
+  details: color=red
+  tag: 2
+
+// Draw the windbarbs
+#proc vector
+  xfield: windTimeStamp
+  yfield: windLevel
+  linedetails: color=black
+  magfield: windSpeed
+  dirfield: windDirection
+  colorfield: legendId
+  type: barb
+  constantlen: 0.25
+
+// Draw dots at the points of the windbarbs
+#proc scatterplot
+  xfield: windTimeStamp
+  yfield: windLevel
+  symbol: shape=circle radius=0.005 style=fill fillcolor=black
+  cluster: no
+
+#proc legend
+  location: min+0.21 min-0.65
+  //details: size=12 color=black style=B
+  sep: 1
+  format: singleline 
+
+#proc legend
+  reset
+
+

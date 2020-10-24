@@ -1,0 +1,148 @@
+<html><h1>lineplot4</h1><img src="lineplot4.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif lineplot4.htm
+This example uses proc lineplot with instancemode and accum options, 
+to count occurrances over time.  Occurrances having the same date
+are summed into one data point (groupmode).
+<hr></b>
+
+// <b> Set up plotting area using <a href="../doc/areadef.html">proc areadef</a>...</b>
+#proc areadef
+  title: Cumulative number of events
+  rectangle: 1 1 5 2
+  xscaletype: date
+  xrange: 110198 041599
+  yrange: 0 120
+  xaxis.stubs: incremental 1 month
+  xaxis.stubformat: MMMyy
+  yaxis.stubs: incremental 20
+  yaxis.grid: color=green
+
+
+// <b> <a href="../doc/getdata.html">proc getdata</a> will read data (from bottom of file)</b>
+#proc getdata
+  #intrailer
+
+// <b> Use <a href="../doc/lineplot.html">proc lineplot</a> to render curve.. </b>
+#proc lineplot
+  xfield: 2
+  instancemode: yes
+  groupmode: yes
+  linedetails: color=purple
+  accum: yes
+//  label: Total: @@YFINAL
+  lastx: 030199
+// <b> Use #endproc to mark end of
+// proc lineplot since it sets YFINAL..</b>
+#endproc
+
+// <b>now calculate percent of goal using some <a href="../doc/functions.html">functions</a></b>
+#set PCTOFGOAL = $arith(@YFINAL/1.2)
+#set PCTOFGOAL = $formatfloat(@PCTOFGOAL,%2.0f)
+
+
+// <b> Use <a href="../doc/annotate.html">proc annotate</a> to display N 
+// and % of goal near the end of the curve.. </b>
+#proc annotate
+location: @XFINAL(s) @YFINAL(s)
+textdetails: size=8 align=L adjust=0.1,0
+text: N=@YFINAL 
+	(@PCTOFGOAL% of goal)
+
+#proc trailer
+data:
+hacvi 110298                     
+aurco 110498                     
+pmfil 110598                     
+rybdu 110598                     
+hamdo 111098                     
+masha 111198                     
+delro 111298                     
+teulm 111398                     
+whire 111398                     
+triha 111698                     
+magil 111698                     
+lmwen 111798                     
+vando 111798                     
+tobpa 111898                     
+ondma 111998                     
+dogro 111998                     
+yntsa 111998                     
+dowco 112098                     
+dosha 112398                     
+hacra 112398                     
+skezi 112498                     
+robru 113098                     
+loral 120198                     
+rucoo 120198                     
+ranth 120298                     
+egavi 120298                     
+feajo 120398                     
+lagcl 120398                     
+emeba 120798                     
+sohay 120798                     
+gleyo 120798                     
+stepm 120898                     
+shemi 120998                     
+nebla 120998                     
+dclen 121098                     
+mezcm 121198                     
+carst 121498                     
+moonj 121498                     
+rarkn 121498                     
+armse 121598                     
+gekoh 121598                     
+jamen 121598                     
+milmu 121698                     
+mirle 121698                     
+rolvi 121798                     
+cofbl 121898                     
+mccne 121898                     
+holog 122198                     
+yosed 122198                     
+hofal 122398                     
+eggal 122898                     
+jawil 122898                     
+bavke 122898                     
+warse 123098                     
+heddk 010699                     
+fooel 010799                     
+lalar 011199                     
+taywi 011199                     
+gooca 011199                     
+flash 011299                     
+glahe 011299                     
+lilhl 011399                     
+price 011599                     
+bowth 011999                     
+lesbu 011999                     
+grasa 011999                     
+jpick 012099                     
+maand 012099                     
+amemc 012099                     
+daajo 012299                     
+tisrr 012599                     
+horfr 012699                     
+dotka 012799                     
+posla 012799                     
+eisei 012899                     
+catho 020199                     
+carth 020199                     
+citkc 020399                     
+linlo 020499                     
+schal 020499                     
+cawfu 020599                     
+chesf 020999                     
+hajpl 021099                     
+altil 021199                     
+camor 021199                     
+elidr 021299                     
+latro 021699                     
+davie 021699                     
+tilia 021799                     
+grimo 021799                     
+vijmi 021899                     
+belvi 021899                     
+prihx 021999                     
+klems 021999                     

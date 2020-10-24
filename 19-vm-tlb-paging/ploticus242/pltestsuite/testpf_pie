@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+DEV=$1
+OUTDIR=$2
+ARGS=$3
+if [ "$DEV" = "" ]; then
+  DEV=x11
+fi
+
+echo pie1..
+pl  -prefab pie  values=3  labels=1  data=data9  delim=tab  title="Student enrollment" \
+	-$DEV -o ${OUTDIR}pie1.$DEV $ARGS
+
+echo pie2..
+pl  -prefab pie  values=3  labels=1  data=data9  delim=tab  title="Legend option" legend=yes colors=auto \
+	-$DEV -o ${OUTDIR}pie2.$DEV $ARGS
+
+echo pie3..
+pl  -prefab pie  data=data23  delim=tab  values=2  labels=1  colorfld=3  title="Colors from data field" legend=yes \
+	-$DEV -o ${OUTDIR}pie3.$DEV $ARGS
+
+echo pie4..
+pl  -prefab pie  data=data23  delim=tab  values=2  "labelfmtstring= @1\n(@PCT%)" colorfld=3  labelback=dullyellow  firstslice=90 \
+	center="4 3" radius=1.5  \
+	-$DEV -o ${OUTDIR}pie4.$DEV $ARGS

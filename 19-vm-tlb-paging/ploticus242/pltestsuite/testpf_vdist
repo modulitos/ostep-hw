@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+DEV=$1
+OUTDIR=$2
+ARGS=$3
+if [ "$DEV" = "" ]; then
+  DEV=x11
+fi
+
+echo vdist1..
+pl -prefab vdist data=data6 y=1 \
+	-$DEV -o ${OUTDIR}vdist1.$DEV $ARGS
+
+echo vdist2..
+pl -prefab vdist data=data6 y=1 mediansym=dot dist=hist showoutliers=yes \
+	-$DEV -o ${OUTDIR}vdist2.$DEV $ARGS
+
+echo vdist3..
+pl -prefab vdist data=data6 data2=data6b y=1 y2=1 dist=hist title="Set 1" title2="Set 2" \
+	-$DEV -o ${OUTDIR}vdist3.$DEV $ARGS
+	

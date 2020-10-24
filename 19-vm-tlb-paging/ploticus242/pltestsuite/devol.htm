@@ -1,0 +1,51 @@
+<html><h1>devol</h1><img src="devol.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif devol.htm
+Uses the data file <a href="devol.dat">devol.dat</a>
+<hr></b>
+
+//<b> set page-wide attributes using <a href="../doc/page.html">proc page</a></b>
+#proc page
+#if @DEVICE in gif,png
+  scale: 0.7 0.5
+#endif
+color: gray(0.7)
+
+//<b> set up plotting area and axes using <a href="../doc/areadef.html">proc areadef</a></b>
+#proc areadef:
+// rectangle: 1 1 6 5
+title: Number of inquiries per month
+titledetails: size=18 align=C adjust=0,0.1 color=black
+xscaletype: date mm/yy
+xrange: 12/86 06/89
+yrange: 0 2000
+
+xaxis.stubs: inc 1 month
+xaxis.stubformat: M
+xaxis.autoyears: 'yy
+xaxis.grid: width=0.5
+xaxis.stubrange: 01/87 05/89
+xaxis.label: Month and year
+xaxis.labeldetails: adjust=0,-0.15
+
+yaxis.stubs: inc 200
+yaxis.grid: width=0.5
+
+//<b> read in data set using <a href="../doc/getdata.html">proc getdata</a></b>
+#proc getdata:
+file:	devol.dat
+
+//<b> do stairstep line plot using <a href="../doc/lineplot.html">proc lineplot</a></b>
+#proc lineplot:
+yfield:		2
+xfield:		1
+linedetails: width=2 color=purple
+stairstep: yes
+numbers: color=purple
+lastseglen: 30(s)
+
+#proc annotate
+backdim: 11/87(s) 400(s) 1.2 0.7
+ellipse: yes
+outline: color=red

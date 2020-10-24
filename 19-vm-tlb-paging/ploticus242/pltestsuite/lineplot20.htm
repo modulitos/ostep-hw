@@ -1,0 +1,120 @@
+<html><h1>lineplot20</h1><img src="lineplot20.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif lineplot20.htm
+
+
+#proc getdata
+data:
+	120301	0
+	120401	12
+	120501	0
+	120601	10
+	120701	9
+	120801	14
+	120901	13
+	121001	-
+	121101  18
+	121201	19
+	121301	17
+	121401	15
+	121501	18
+	121601	20
+	121701	17
+	121801	22
+
+
+#for COL in 1,2,3,4
+
+  #if @COL = 1
+     #set XLEFT = 0.2
+     #set GAPMISSING = no
+  #elseif @COL = 2
+     #set XLEFT = 2.2
+     #set GAPMISSING = yes
+  #elseif @COL = 3
+     #set XLEFT = 4.2
+     #set GAPMISSING = small
+  #else
+     #set XLEFT = 6.2
+     #set GAPMISSING = autozero
+  #endif
+
+  // ------- set templates.. 
+  #procdef areadef
+  title: 
+  box: 1.8 0.7
+  xautorange: datafield=1
+  yautorange: datafield=2
+  areacolor: gray(0.8)
+  #saveas: A
+
+  #procdef lineplot
+  xfield: 1
+  yfield: 2
+  gapmissing: @GAPMISSING
+  linedetails: color=red width=0.5
+  lastseglen: 0.1
+  #saveas: L
+
+  #proc areadef
+  #clone A
+  #if @COL = 1
+    title: standard 
+  #elseif @COL = 2
+    title: gapmissing: yes
+  #elseif @COL = 3
+    title: gapmissing: small
+  #else
+    title: gapmissing: autozero
+  #endif
+  location: @XLEFT 4
+  
+  #proc lineplot
+  #clone L
+  
+  // -------------------------
+  #proc areadef
+  #clone A
+  #if @COL = 1
+    title: stairstep
+  #endif
+  location: @XLEFT 3
+  
+  #proc lineplot
+  #clone L
+  stairstep: yes
+  
+  // -------------------------
+  #proc areadef
+  #clone A
+  #if @COL = 1
+    title: filled 
+  #endif
+  location: @XLEFT 2
+  
+  #proc lineplot
+  #clone L
+  fill: pink
+
+  #proc lineplot
+  #clone L
+
+  // -------------------------
+  #proc areadef
+  #clone A
+  #if @COL = 1
+    title: stairstep filled 
+  #endif
+  location: @XLEFT 1
+  
+  #proc lineplot
+  #clone L
+  fill: pink
+  stairstep: yes
+
+  #proc lineplot
+  #clone L
+  stairstep: yes
+
+#endloop

@@ -1,0 +1,215 @@
+<html><h1>distrib</h1><img src="distrib.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif distrib.htm
+or for postscript output: pl -ps distrib.htm | lp 
+
+This is a more elaborate example that involves variables, a loop,
+automatically calculated distributions for the histograms, etc.
+<hr></b>
+
+// <b> set landscape mode and do page title using <a href="../doc/page.html">proc page</a></b>
+#proc page
+landscape: yes
+pagesize: 11 8.5
+#if @DEVICE in gif,png
+  scale: 0.5
+#endif
+title:  Distribution of Scores Over Time
+	Protocol 7 vs. Protocol B
+	06-30-99
+
+// <b> read file <a href="vf.dat">vf.dat</a> using <a href="../doc/getdata.html">proc getdata</a></b>
+#proc getdata
+file: vf.dat
+
+
+
+// <b> set some variables.. </b>
+
+
+// I will be our loop counter..
+#set I = 1
+
+// make a list of the data fields to use for each left member of pair ..
+// (rt member will be +1)
+#set FIELDLIST = 7,9,11,13   
+
+// make a list of X left locations for each pair in inches..
+#set XPOSLIST = 1,3.5,6,8.5
+
+// make a list of labels for each pair
+#set LABELLIST = "Baseline,1_yr_visit,2_yr,3_yr"
+
+
+// <b> loop, once for each pair.. </b>
+#loop
+
+  // get parameters from lists..
+  #set FLD = $nmember(@I,@FIELDLIST)
+  #if $strlen(@FLD) < 1
+    #break
+  #endif
+  #set XPOS = $nmember(@I,@XPOSLIST)
+  #set LABEL = $nmember(@I,@LABELLIST)
+  #set LABEL = $change( "_", " ", @LABEL )
+  
+  //////////////////////////
+  // first do left of pair..
+  //////////////////////////
+
+
+  // <b> set up plotting area for histogram (left member of pair) using <a href="../doc/areadef.html">proc areadef</a></b>
+  #proc areadef
+  box: 1 2.5
+  location: @XPOS 4
+  xrange: 0 40
+  yrange: 0 100
+  #saveas A
+  
+  // <b> if the leftmost pair, do a Y axis using <a href="../doc/axis.html">proc yaxis</a></b>
+  #if @I = 1
+    #proc yaxis
+    stubs: inc 10
+    label: Score
+    labeldistance: 0.7
+    stubslide: -2.5(s)
+    ticlen: 0 0
+  #endif
+
+  // <b> if the rightmost pair, do a Y axis using <a href="../doc/axis.html">proc yaxis</a></b>
+  #if @I = 4
+    #proc yaxis
+    location: 10.2
+    label: Score
+    labeldistance: -0.7
+    stubs: inc 10
+    stubdetails: adjust=0.5,0
+    stubslide: -2.5(s)
+    ticlen: 0 0
+  #endif
+
+  // <b> render label above pair using <a href="../doc/annotate.html">proc annotate</a></b>
+  #proc annotate
+  location: max-0.2 max+0.2
+  textdetails: align=C
+  text: @LABEL
+  
+  // <b> compute distribution for histogram using <a href="../doc/tabulate.html">proc tabulate</a></b>
+  #proc tabulate
+  axis1: y
+  datafield1: @FLD
+  rangespec1: 0 5 95
+  percents: yes
+  select: @@4 = B
+  showrangelowonly: yes
+  #saveas: T
+  
+  // <b> we cannot do a histogram if N is too low.. find N using <a href="../doc/transform.html">proc processdata</a></b>
+  // (the variable TOTALS will be set)..
+  #proc processdata
+  action: total
+  fields: 2
+  #endproc
+
+
+  // only do the histogram if we have > 10 cases..
+  #if @TOTALS > 10
+
+    // <b> render histogram using <a href="../doc/bars.html">proc bars</a></b>
+    #proc bars
+    horizontalbars: yes
+    locfield:  1
+    lenfield:  3
+    barwidth: 0.08
+    #saveas B
+
+  #endif
+
+  // <b> now set up plotting area for rangebars using <a href="../doc/areadef.html">proc areadef</a></b>
+  #proc areadef
+  box: 1 2
+  location: @XPOS 1
+  xrange: 0 1
+  yrange: 0 100
+  #saveas A2
+
+  // <b> if leftmost pair do a Y axis using <a href="../doc/axis.html">proc yaxis</a></b>
+  #if @I = 1
+    #proc yaxis
+    stubs: inc 10
+    label: Score
+    labeldistance: 0.7
+  #endif
+  // <b> if rightmost pair do a Y axis using <a href="../doc/axis.html">proc yaxis</a></b>
+  #if @I = 4
+    #proc yaxis
+    location: 10.2
+    label: Score
+    labeldistance: -0.7
+    stubs: inc 10
+    stubdetails: adjust=0.5,0
+    ticlen: -0.1
+  #endif
+
+  // <b> get back to original set of data (<a href="../doc/originaldata.html">proc originaldata</a>)</b>
+  #proc originaldata
+  
+  // <b> render rangebar using <a href="../doc/rangebar.html">proc rangebar</a></b>
+  #proc rangebar
+  select: @@4 = B
+  datafield: @FLD
+  barloc: 0.25
+  mediansym: shape=circle style=filled fillcolor=0.3
+  nlocation: -10(s)
+  color: 0.9
+  #saveas R
+
+  ////////////////////////////
+  // now do right of pair.. 
+  // (repeat of procedure above)
+  ////////////////////////////
+
+  #set XPOS = $arith(@XPOS+1.0)
+
+  // do histogram..
+  #proc areadef
+  #clone A
+  location: @XPOS 4
+
+  #proc tabulate
+  #clone: T
+  select: @@4 = 7
+
+  // see if total is high enough to display histogram.. 
+  #proc processdata
+  action: total
+  fields: 2
+  #endproc
+
+
+  // only do the histogram if we have > 10 cases..
+  #if @TOTALS > 10
+
+    #proc bars
+    #clone B
+
+  #endif
+
+  // do rangebar..
+  #proc areadef
+  #clone: A2
+  location: @XPOS 1
+
+  // get back to data set originally read..
+  #proc originaldata
+  
+  #proc rangebar
+  #clone R
+  select: @@4 = 7
+  barloc: 0.15
+  datafield: @FLD
+
+  #set I = $arith(@I+1)
+
+#endloop

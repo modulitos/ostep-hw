@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+DEV=$1
+OUTDIR=$2
+ARGS=$3
+if [ "$DEV" = "" ]; then
+  DEV=x11
+fi
+
+echo vbars1..
+pl  -prefab vbars  data=data4  delim=tab  x=1  y=2  vals=yes yrange=0  yinc=20  ygrid=yes  barwidth=0.3 \
+	-$DEV -o ${OUTDIR}vbars1.$DEV $ARGS
+
+echo vbars2..
+pl -prefab vbars  data=data5  delim=tab  x=1  y=2  err=3  y2=4  err2=5  errunder=yes  ygrid=yes  \
+	barwidth=0.1 name=Treatment  name2=Control  stubvert=yes \
+	-$DEV -o ${OUTDIR}vbars2.$DEV $ARGS
+
+echo vbars3..
+pl -prefab vbars  data=data5 delim=tab  x=1  y=2  err=3  y2=4  err2=5  erronly=yes   name=Treatment \
+	name2=Control  stubvert=yes  errcolor=red  errcolor2=blue  sep=0.08  xgrid=yes  ylog=log \
+	-$DEV -o ${OUTDIR}vbars3.$DEV $ARGS
+
+echo vbars4..
+pl -prefab vbars  data=data18  x=1  y=2  crossover=0  color=blue  vals=yes \
+	-$DEV -o ${OUTDIR}vbars4.$DEV $ARGS
+
+echo vbars5
+pl -prefab vbars  data=data10h  x=1 y=2 y2=4 color=green color2=red  header=yes barwidth=0.1 \
+	-$DEV -o ${OUTDIR}vbars5.$DEV $ARGS

@@ -1,0 +1,88 @@
+<html><h1>td</h1><img src="td.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif td.htm
+Source: Steffen R et.al., Epidemiology, Etiology and Impact
+of Traveler's Diarrhea in Jamaica, JAMA 3/3/99 p. 815.
+<hr></b>
+
+//<b> set page-wide attributes appropriate for slides <a href="../doc/page.html">(proc page)</a></b>
+#proc page
+  color: white
+  backgroundcolor: darkblue
+  linewidth: 2
+  pagesize: 6.6 4.4
+  #if @DEVICE in gif,png
+    scale: 0.7
+  #endif
+
+//<b> specify data <a href="../doc/getdata.html">(proc getdata)</a></b>
+#proc getdata
+data:
+//    Mild    Moderate Classic  HA      HB
+	23	18	10	10	35
+	21	17	9	16	22
+	28	24	13	24	39
+	30	25	15	24	38
+	28	24	14	16	29
+
+//<b> set up plotting area <a href="../doc/areadef.html">(proc areadef)</a></b>
+#proc areadef
+  title: TD (Travelers Diarrhea)\nAttack Rates in Tourists 
+  titledetails: align=C size=14 adjust=0,0.3
+  //rectangle: 1 1 5 2
+  areaname: slide
+  xrange: 0 6
+  yrange: 0 40
+
+
+//<b> do filled pink curve <a href="../doc/lineplot.html">(proc lineplot)</a></b>
+#proc lineplot
+  yfield: 1
+  fill: pink
+  legendlabel: Mild TD
+
+//<b> do filled blue curve <a href="../doc/lineplot.html">(proc lineplot)</a></b>
+#proc lineplot
+  yfield: 2
+  fill: powderblue
+  legendlabel: Moderate TD
+
+//<b> do filled green curve <a href="../doc/lineplot.html">(proc lineplot)</a></b>
+#proc lineplot
+  yfield: 3
+  fill: green
+  legendlabel: Classic TD
+
+//<b> do curve w/ diamond points <a href="../doc/lineplot.html">(proc lineplot)</a></b>
+#proc lineplot
+  yfield: 4
+  pointsymbol: shape=diamond style=filled fillcolor=orange 
+  linedetails: width=0.5 color=yellow
+  legendlabel: Hotel A
+
+//<b> do curve w/ square points <a href="../doc/lineplot.html">(proc lineplot)</a></b>
+#proc lineplot
+  yfield: 5
+  pointsymbol: shape=square style=filled fillcolor=orange
+  linedetails: width=0.5 color=yellow
+  legendlabel: Hotel B
+
+
+//<b> do axes <a href="../doc/axis.html">(proc xaxis, proc yaxis)</a></b> last so they are not obliterated
+#proc xaxis
+  stubrange: 0 6
+  stubs: text
+	March\n1996
+	April\n1996
+	May\n1996
+	June\n1996
+	July\n1996
+
+#proc yaxis
+  stubs: inc 10
+
+
+//<b> render legend using labels specified above <a href="../doc/legend.html">(proc legend)</a></b>
+#proc legend
+  location: max-1 max

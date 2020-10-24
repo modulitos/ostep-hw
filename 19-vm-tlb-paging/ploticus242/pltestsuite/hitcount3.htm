@@ -1,0 +1,71 @@
+<html><h1>hitcount3</h1><img src="hitcount3.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif hitcount3.htm
+
+Uses the data file <a href="hitcount.dat">hitcount.dat</a>
+
+See also <a href="hitcount.htm">hitcount</a>.
+
+This example illustrates datetime scaling with time windowing.
+Only the hours from 8 to 18 (6pm) are shown for each day.
+<hr></b>
+
+
+#proc getdata
+file: hitcount.dat
+// the following filter strips seconds from the time value,
+// then builds a ddMmmyyyy date and connects it with the time
+// value (separated by a dot)
+pf_fieldnames: datetime nbytes
+filter: 
+ 	##set TIME = @@4
+	##set TIME = $substring(@@TIME,1,5)
+	@@3@@2@@6.@@TIME @@7
+
+// use proc processdata to sum nbytes for each unique time value
+#proc processdata
+action: count
+fields: datetime nbytes
+fieldnames: datetime nbytes
+
+// #proc print
+// label: After transform: nrecords=@NRECORDS nfields=@NFIELDS
+
+// set up plotting area with datetime in X and autorange on the y axis.
+// do x axis showing day of week and y axis
+#proc areadef
+title: Intranet web page hits 
+rectangle: 1 1 6 2.5
+xscaletype: datetime8-18 ddMmmyyyy.hh:mm
+xrange: 26Sep1999.08:00 02Oct1999.18:00
+yautorange: datafield=nbytes nearest=20000 
+xaxis.stubs: inc 1 day
+xaxis.stubformat: Www
+xaxis.stubslide: 0.4
+xaxis.minorticinc: 2 hours
+xaxis.grid: width=0.3 color=purple
+yaxis.stubs: inc 50 1000
+yaxis.label: kBytes Transferred
+yaxis.labeldistance: 0.6
+frame: yes
+
+// do a 2nd X axis with month and day
+#proc xaxis
+stubs: inc 1 day
+stubformat: Mmmdd
+stubslide: 0.4
+stubdetails: adjust=0,-0.14
+
+// use proc yaxis again to do grid lines at every 100 kB
+//#proc yaxis
+//grid: color=orange
+//gridskip: min
+//ticincrement: 100 1000
+
+// make bar graph
+#proc bars
+locfield: datetime
+lenfield: nbytes
+thinbarline: color=green
+

@@ -1,0 +1,16 @@
+Ploticus data display engine software     
+
+ploticus data display engine.  Software, documentation, and examples.  
+Copyright 1998-2008 Stephen C. Grubb  (scg@jax.org).
+Covered under GPL; see the file ./Copyright for details.
+
+For overview & complete documentation: http://ploticus.sourceforge.net
+
+If you have the source code distribution and wish to build pl executable or libploticus, 
+configure the 3 settings in the Makefile, then type:  
+
+make clean
+make
+
+
+

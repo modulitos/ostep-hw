@@ -1,0 +1,94 @@
+<html><h1>propbars1</h1><img src="propbars1.gif"><p>
+<a href="gall.using.html">How to download and try this example</a><br>
+
+<pre><b>Usage: pl -gif propbars1.htm
+Source: Artemis Simopoulos, "The Omega Plan"
+(Values interpreted from another graph and may not be exact)
+<hr></b>
+
+// <b> specify the data using <a href="../doc/getdata.html">proc getdata</a></b>
+// Each value is an individual percentage.
+
+#proc page
+  landscape: yes
+
+#proc getdata
+//      oil     lin    alph    mono    sat
+data:	Canola 	 22	10	63	5
+	Flaxseed 17	46	29	8
+	Olive	 6 	2	80	12
+	Walnut	 62	8	20	10
+	Coconut	 3	0	20	77
+	Corn	 62	1	23	14
+	Safflower 78	0	12	10
+
+// <b> define plotting area using <a href="../doc/areadef.html">proc areadef</a></b>
+#proc areadef
+  title: Fats content of various oils
+  rectangle: 1 1 4 2.7
+  xrange: 0 100
+  yrange: 0 8
+
+// <b> do y axis stubs (oil names) using <a href="../doc/axis.html">proc yaxis</a></b>
+#proc yaxis
+  stubs: datafields 1
+  grid: color=powderblue
+  axisline: none
+  tics: no
+
+// <b> do x axis stubs (percents) using <a href="../doc/axis.html">proc xaxis</a></b>
+#proc xaxis
+  stubs: inc 20
+  stubformat: %3.0f%%
+
+// <b> do light green bars using <a href="../doc/bars.html">proc bars</a></b>
+#proc bars
+  horizontalbars: yes
+  barwidth: 0.13
+  lenfield: 2
+  color: rgb(.6,.85,.8)
+  outline: no
+  legendlabel: Linolenic (omega-6)
+  #saveas: B
+
+// <b> do dark green bars </b>
+// Use stackfields to position bars beyond the first set of bars
+#proc bars
+  #clone B
+  lenfield: 3
+  stackfields: 2
+  legendlabel: Alpha-Linolenic (omega-3)
+  color: teal
+
+// <b> do pink bars </b>
+// Use stackfields to position bars beyond the first two sets of bars
+#proc bars
+  #clone B
+  lenfield: 4
+  stackfields: 2 3
+  legendlabel: Monounsaturated fats
+  color: pink
+
+// <b> do red bars  </b>
+// Use stackfields to position bars beyond the first three sets of bars
+#proc bars
+  #clone B
+  lenfield: 5
+  stackfields: 2 3 4
+  legendlabel: Saturated fats
+  color: red
+
+// <b> do legend (1st column) using <a href="../doc/legend.html">proc legend</a></b>
+// the noclear attribute must be specified otherwise the entries are removed
+// we need to keep them for the 2nd invocation, below..
+#proc legend
+  location: min+0.2 min-0.3
+  noclear: yes
+  specifyorder: Lin
+	 	alpha
+
+// <b> do legend (2nd column) using <a href="../doc/legend.html">proc legend</a></b>
+#proc legend
+  location: min+2.4 min-0.3
+  specifyorder: Mono
+	 	Satu
