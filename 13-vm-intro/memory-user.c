@@ -4,6 +4,10 @@
 #include <zconf.h>
 #include <time.h>
 
+// This is an exercise to write a program that consumes a given amount of
+// memory. Then we run the program, and run `free` (or `vm_stat` on MacOS) to
+// verify that the expected amount of memory is consumed.
+
 // accepts 2 args:
 // * memory-mb: a size, in MB, that this program will consume.
 // * duration-sec: a duration, in seconds, for how long this program will run.
