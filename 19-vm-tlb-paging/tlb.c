@@ -5,29 +5,6 @@
 #include <unistd.h>
 #include <assert.h>
 #include <stdlib.h>
-#include <fcntl.h>
-#include <sched.h>
-
-// const int PAGESIZE = 10;
-// const int PAGESIZE = getpagesize();
-// const NUMPAGES = 1;
-
-// // using a macro:
-// // taken from here: https://www.reddit.com/r/C_Programming/comments/44siua/how_to_perform_0_byte_read/
-// #define TIME_10X(exp) ({  \
-//                     struct timeval ts, te;  \
-//                     gettimeofday(&ts, NULL);\
-//                       \
-//                     int i; \
-//                     for (i = 0; i < 10; i++) { \
-//                         exp; \
-//                     } \
-//                     gettimeofday(&te, NULL); \
-//                     unsigned long long uss = ts.tv_sec * 1000000 + ts.tv_usec, \
-//                       use = te.tv_sec * 1000000 + te.tv_usec; \
-//                     printf("%lluu\t- %s\n", use - uss, #exp); \
-//                     use - uss; \
-//                   })
 
 void loopAllPagesAsArray(int num_pages, int page_size, int* arr) {
     int jump = (int) (page_size / sizeof(int)); // 1024 bytes
@@ -58,20 +35,28 @@ int main(int argc, char *argv[]) {
 
 
     int page_size = (int) sysconf(_SC_PAGESIZE);
-    // same as:
+    // this is the same as:
     // int page_size = getpagesize();
 
     // Verify that we have 4KB (4096 bytes) page sizes:
     printf("pagesize: %i\n", page_size);
 
-    // allocate our array to represent our pages. We'll need 4096 * num_pages bytes of memory for the array.
+    // Allocate our array to represent our pages. We'll need 4096 * num_pages
+    // bytes of memory for the array.
+    //
+    // If you don’t initialize the array above before accessing it, the first
+    // time you access it will be very expensive, due to initial access costs
+    // such as demand zeroing.
+    //
     // option 1:
     // int* arr = malloc((size_t) page_size * (size_t) num_pages);
     // memset(arr, 0, (size_t) page_size * (size_t) num_pages); // option 1 to initialize arr with size 0
+    //
     // option 2:
     int* arr = calloc(((size_t) page_size * (size_t) num_pages) / sizeof(int), sizeof(int));
 
     struct timeval ts, te;
+    // set the start time:
     int rc = gettimeofday(&ts, NULL);
     assert(rc == 0);
     unsigned long long nss = ts.tv_sec * 1000000000 + (ts.tv_usec * 1000);
@@ -81,6 +66,7 @@ int main(int argc, char *argv[]) {
         loopAllPagesAsArray(num_pages, page_size, arr);
     }
 
+    // set the end time:
     int rc_2 = gettimeofday(&te, NULL);
     assert(rc_2 == 0);
     unsigned long long nse = (te.tv_sec * 1000000000) + (te.tv_usec * 1000);
