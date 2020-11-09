@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 14)            # Enable c++14 standard
 
 # Add main.c file of project root directory as source file
 set(
-        SOURCE_FILES main.c cpu-limited-direct-execution/homework.c 13-vm-intro/memory-user.c 14-vm-api/null.c 14-vm-api/array-of-ints.c 14-vm-api/vector.c 19-vm-tlb-paging/tlb.c 21-vm-beyondphys/mem.c
+        SOURCE_FILES main.c cpu-limited-direct-execution/homework.c 13-vm-intro/memory-user.c 14-vm-api/null.c 14-vm-api/array-of-ints.c 14-vm-api/vector.c 19-vm-tlb-paging/tlb.c 21-vm-beyondphys/mem.c 27-threads-api/main-race.c 27-threads-api/main-deadlock-global.c 27-threads-api/main-deadlock.c 27-threads-api/main-signal-cv.c 27-threads-api/main-signal.c
 )
 
 # Add executable target with source files listed in SOURCE_FILES variable
