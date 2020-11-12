@@ -34,7 +34,7 @@ void signal_done(synchronizer_t *s) {
 void signal_wait(synchronizer_t *s) {
     Pthread_mutex_lock(&s->lock);
     while (s->done == 0)
-	Pthread_cond_wait(&s->cond, &s->lock);
+	    Pthread_cond_wait(&s->cond, &s->lock);
     Pthread_mutex_unlock(&s->lock);
 }
 
