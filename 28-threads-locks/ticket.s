@@ -3,13 +3,13 @@
 .var count
 
 .main
-.top	
+.top
 
 .acquire
 mov $1, %ax
-fetchadd %ax, ticket  # grab a ticket 
+fetchadd %ax, ticket  # grab a ticket
 .tryagain
-mov turn, %cx         # check if it's your turn 
+mov turn, %cx         # check if it's your turn
 test %cx, %ax
 jne .tryagain
 
@@ -25,6 +25,6 @@ fetchadd %ax, turn
 # see if we're still looping
 sub  $1, %bx
 test $0, %bx
-jgt .top	
+jgt .top
 
 halt

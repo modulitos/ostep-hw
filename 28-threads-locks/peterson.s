@@ -3,7 +3,7 @@
 # access flag[] with 0(%fx,%index,4)
 # where %index is a register holding 0 or 1
 # index reg contains 0 -> flag[0], if 1->flag[1]
-.var flag   2     
+.var flag   2
 
 # global turn variable
 .var turn
@@ -27,7 +27,7 @@ mov %cx, turn           # turn       = 1 - self
 
 .spin1
 mov 0(%fx,%cx,4), %ax   # flag[1-self]
-test $1, %ax            
+test $1, %ax
 jne .fini               # if flag[1-self] != 1, skip past loop to .fini
 
 .spin2                  # just labeled for fun, not needed

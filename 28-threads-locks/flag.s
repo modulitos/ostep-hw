@@ -1,3 +1,4 @@
+# these variables are global!
 .var flag
 .var count
 
@@ -21,7 +22,7 @@ mov  $0, flag       # clear the flag now
 # see if we're still looping
 sub  $1, %bx
 test $0, %bx
-jgt .top	
+jgt .top
 
 halt
 

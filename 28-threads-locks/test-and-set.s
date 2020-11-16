@@ -2,10 +2,10 @@
 .var count
 
 .main
-.top	
+.top
 
 .acquire
-mov  $1, %ax        
+mov  $1, %ax
 xchg %ax, mutex     # atomic swap of 1 and mutex
 test $0, %ax        # if we get 0 back: lock is free!
 jne  .acquire       # if not, try again
@@ -21,6 +21,6 @@ mov  $0, mutex
 # see if we're still looping
 sub  $1, %bx
 test $0, %bx
-jgt .top	
+jgt .top
 
 halt
