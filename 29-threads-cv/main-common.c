@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
 	thread_id++;
     }
     for (i = 0; i < consumers; i++) {
-	Pthread_create(&cid[i], NULL, consumer, (void *) (long long) thread_id); 
+	Pthread_create(&cid[i], NULL, consumer, (void *) (long long) thread_id);
 	thread_id++;
     }
 
