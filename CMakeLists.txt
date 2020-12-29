@@ -29,3 +29,4 @@ add_executable(30_two-cvs-while-extra-unlock 30-threads-cv/main-two-cvs-while-ex
 add_executable(30_two-cvs-while 30-threads-cv/main-two-cvs-while.c)
 add_executable(31_fork-join 31-threads-sema/fork-join.c)
 add_executable(31_rendezvous 31-threads-sema/rendezvous.c)
+add_executable(31_barrier 31-threads-sema/barrier.c)
