@@ -1,29 +1,43 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "common_threads.h"
+#include "lightswitch.h"
 
 //
 // Your code goes in the structure and functions below
 //
 
 typedef struct __rwlock_t {
+    Lightswitch_t lightswitch;
+    Zem_t room_empty;
+    Zem_t turnstile;
 } rwlock_t;
 
 
 void rwlock_init(rwlock_t *rw) {
+    Zem_Init(&rw->turnstile, 1);
+    Zem_Init(&rw->room_empty, 1);
+    Lightswitch_Init(&rw->lightswitch);
 }
 
 void rwlock_acquire_readlock(rwlock_t *rw) {
+    Zem_wait(&rw->turnstile);
+    Zem_post(&rw->turnstile);
+    Lightswitch_Lock(&rw->lightswitch, &rw->room_empty);
 }
 
 void rwlock_release_readlock(rwlock_t *rw) {
+    Lightswitch_Unlock(&rw->lightswitch, &rw->room_empty);
 }
 
 void rwlock_acquire_writelock(rwlock_t *rw) {
+    Zem_wait(&rw->turnstile);
+    Zem_wait(&rw->room_empty);
+    Zem_post(&rw->turnstile);
 }
 
 void rwlock_release_writelock(rwlock_t *rw) {
+    Zem_post(&rw->room_empty);
 }
 
 //
@@ -40,6 +54,7 @@ void *reader(void *arg) {
     for (i = 0; i < loops; i++) {
 	rwlock_acquire_readlock(&lock);
 	printf("read %d\n", value);
+        sleep(1);
 	rwlock_release_readlock(&lock);
     }
     return NULL;
