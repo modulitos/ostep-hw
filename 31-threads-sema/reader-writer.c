@@ -10,8 +10,9 @@
 // different data structure accesses might require different kinds of locking.
 
 // Although a reader/writer lock sounds cool, they are complex, and complex
-// means slow. Sometimes a big ole lock works best because they are simple to
-// implement and fast ("big and dumb is better")
+// means slow. Having to handle starvation is one example. So they don't end up
+// speeding up performance as compared to just using simple and fast locking
+// primitives.
 
 typedef struct __rwlock_t {
     Zem_t room_empty;
