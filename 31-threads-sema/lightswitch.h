@@ -3,6 +3,13 @@
 #ifndef HOMEWORK_LIGHTSWITCH_H
 #define HOMEWORK_LIGHTSWITCH_H
 
+// The first thread into a section locks a semaphore and the last one out
+// unlocks it.
+
+// This pattern is so common that it has its own name: Lightswitch, by analogy
+// with the pattern where the first person into a room turns on the light (locks
+// the mutex) and the last one out turns it off (unlocks the mutex).
+
 typedef struct Lightswitch_t {
     int counter;
     Zem_t mutex;
