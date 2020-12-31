@@ -2,9 +2,6 @@
 
 #ifndef HOMEWORK_ZEMAPHORE_H
 #define HOMEWORK_ZEMAPHORE_H
-
-#endif // HOMEWORK_ZEMAPHORE_H
-
 typedef struct Zem_t {
   int value;
   pthread_cond_t cond;
@@ -38,3 +35,5 @@ void Zem_post(Zem_t *s) {
   Cond_signal(&s->cond);
   Mutex_unlock(&s->lock);
 }
+
+#endif // HOMEWORK_ZEMAPHORE_H

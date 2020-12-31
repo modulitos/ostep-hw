@@ -3,8 +3,6 @@
 #ifndef HOMEWORK_LIGHTSWITCH_H
 #define HOMEWORK_LIGHTSWITCH_H
 
-#endif // HOMEWORK_LIGHTSWITCH_H
-
 typedef struct Lightswitch_t {
     int counter;
     Zem_t mutex;
@@ -39,3 +37,4 @@ void Lightswitch_Unlock(struct Lightswitch_t *l, struct Zem_t *s) {
     }
     Zem_post(&l->mutex);
 }
+#endif // HOMEWORK_LIGHTSWITCH_H
