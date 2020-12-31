@@ -4,48 +4,55 @@
 #include "zemaphore.h"
 #include "lightswitch.h"
 
-//
-// Your code goes in the structure and functions below
-//
+// Reader/writer is a special type of lock that allows for many lookups (reads)
+// to proceed concurrently as long as we can guarantee that no insert is
+// on-going. This represents a more flexible locking primitive that admits that
+// different data structure accesses might require different kinds of locking.
+
+// Although a reader/writer lock sounds cool, they are complex, and complex
+// means slow. Sometimes a big ole lock works best because they are simple to
+// implement and fast ("big and dumb is better")
 
 typedef struct __rwlock_t {
-    // int readers;
-    // Zem_t mutex;
     Zem_t room_empty;
 
-    // alternative impl using Lightswitch:
     Lightswitch_t lightswitch;
+
+    // Alternative implementation before we used the Lightswitch pattern:
+    // int readers;
+    // Zem_t mutex;
 } rwlock_t;
 
 
 void rwlock_init(rwlock_t *rw) {
-    // Zem_Init(&rw->mutex, 1);
-    // rw->readers = 0;
     Zem_Init(&rw->room_empty, 1);
 
     Lightswitch_Init(&rw->lightswitch);
+
+    // Zem_Init(&rw->mutex, 1);
+    // rw->readers = 0;
 }
 
 void rwlock_acquire_readlock(rwlock_t *rw) {
+    Lightswitch_Lock(&rw->lightswitch, &rw->room_empty);
+
     // Zem_wait(&rw->mutex);
     // rw->readers++;
     // if (rw->readers == 1) {
     //     Zem_wait(&rw->room_empty);
     // }
     // Zem_post(&rw->mutex);
-
-    Lightswitch_Lock(&rw->lightswitch, &rw->room_empty);
 }
 
 void rwlock_release_readlock(rwlock_t *rw) {
+    Lightswitch_Unlock(&rw->lightswitch, &rw->room_empty);
+
     // Zem_wait(&rw->mutex);
     // rw->readers--;
     // if (rw->readers == 0) {
     //     Zem_post(&rw->room_empty);
     // }
     // Zem_post(&rw->mutex);
-
-    Lightswitch_Unlock(&rw->lightswitch, &rw->room_empty);
 }
 
 void rwlock_acquire_writelock(rwlock_t *rw) {
