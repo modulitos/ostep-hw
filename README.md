@@ -76,3 +76,8 @@ Chapter | What To Do
 [Distributed Intro](http://www.cs.wisc.edu/~remzi/OSTEP/dist-intro.pdf) | Write some code
 [NFS](http://www.cs.wisc.edu/~remzi/OSTEP/dist-nfs.pdf) | Write some analysis code
 [AFS](http://www.cs.wisc.edu/~remzi/OSTEP/dist-afs.pdf) | Run [afs.py](dist-afs)
+
+# C-programming tips and lessons learned
+ - ch 39, `myls.c`: uses the `getopt` command from `unistd.h` to parse commandline args.
+ - ch 39, `myls.c`: using `stdbool.h` for the `bool` type
+ - ch 39, `myls.c`: using `strlen`, `strncpy`, `strncmp`, and `strncat` from `string.h`

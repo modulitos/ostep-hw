@@ -1,0 +1,4016 @@
+Man Page -*- mode: org -*-
+* Linux/Unix:
+** archlinux
+*** pacman
+# list foreign packages
+pacman -Qm
+# show local package details (like dependencies):
+pacman -Qi <package>
+# show more package details:
+pacman -Qii <package>
+# list packages associated with file
+pacman -Qo </path/to/file>
+# list files associated with package:
+pacman -Ql <package-name>
+# uninstall with pacman
+sudo pacman -Rns spideroak
+# list whether a package is required by other packages,
+# then look at "required by" section:
+pacman -Qi dolphinpart4
+# get all packages:
+pacman -Qi will provide this for Arch, dpkg --list will provide similar for Debian & Co (cron it to run daily)
+ # pacman -Qq -e -f
+
+**** cleaning the package cache
+useful when old packages are taking up too much disk space:
+https://wiki.archlinux.org/index.php/Pacman#Cleaning_the_package_cache
+
+clear the cache, saving the last 3 versions of each package:
+paccache -r
+**** conflicting files issue
+Check whether there are associated packages. If not, run
+pacman -S --force <package-name>
+NOTE: --force flag does not overwrite conflicting directories, only files. Delete the files if they have no associated packages, then force sync again. All should be good after that.
+source: http://unix.stackexchange.com/questions/240252/pacman-exists-on-filesystem-error/240256#240256
+**** xmonad / haskell / ghc issues
+try running `sudo pacman -Syu` again to see if it was resolved.
+verify packages with `ghc-pkg describe <package`
+ie `ghc-pkc describe xmonad-0.11.1`
+
+#+BEGIN_SRC text
+(116/196) upgrading harfbuzz-icu                                           [##########################################] 100%
+ghc-pkg: cannot find package data-default-class-0.0.1
+error: command failed to execute correctly
+(117/196) upgrading haskell-data-default-class                             [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package data-default-instances-base-0.0.1
+error: command failed to execute correctly
+(118/196) upgrading haskell-data-default-instances-base                    [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package data-default-instances-containers-0.0.1
+error: command failed to execute correctly
+(119/196) upgrading haskell-data-default-instances-containers              [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package dlist-0.7.1.2
+error: command failed to execute correctly
+(120/196) upgrading haskell-dlist                                          [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package data-default-instances-dlist-0.0.1
+error: command failed to execute correctly
+(121/196) upgrading haskell-data-default-instances-dlist                   [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package old-locale-1.0.0.7
+error: command failed to execute correctly
+(122/196) upgrading haskell-old-locale                                     [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package data-default-instances-old-locale-0.0.1
+error: command failed to execute correctly
+(123/196) upgrading haskell-data-default-instances-old-locale              [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package data-default-0.5.3
+error: command failed to execute correctly
+(124/196) upgrading haskell-data-default                                   [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package extensible-exceptions-0.1.1.4
+error: command failed to execute correctly
+(125/196) upgrading haskell-extensible-exceptions                          [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package mtl-2.2.1
+error: command failed to execute correctly
+(126/196) upgrading haskell-mtl                                            [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package old-time-1.1.0.3
+error: command failed to execute correctly
+(127/196) upgrading haskell-old-time                                       [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package random-1.1
+error: command failed to execute correctly
+(128/196) upgrading haskell-random                                         [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package utf8-string-1
+error: command failed to execute correctly
+(129/196) upgrading haskell-utf8-string                                    [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package X11-1.6.1.2
+error: command failed to execute correctly
+(130/196) upgrading haskell-x11                                            [##########################################] 100%
+Reading package info from stdin ... done.
+ghc-pkg: cannot find package X11-xft-0.3.1
+error: command failed to execute correctly
+(131/196) upgrading haskell-x11-xft                                        [##########################################] 100%
+Reading package info from stdin ... done.
+
+(194/196) upgrading xmobar                                                 [##########################################] 100%
+ghc-pkg: cannot find package xmonad-0.11.1
+error: command failed to execute correctly
+(195/196) upgrading xmonad                                                 [##########################################] 100%
+Reading package info from stdin ... done.
+xmonad-0.11.1: Warning: haddock-interfaces: /usr/share/doc/x86_64-linux-ghc-7.10.3/xmonad-0.11.1/html/xmonad.haddock doesn't exist or isn't a file
+xmonad-0.11.1: Warning: haddock-html: /usr/share/doc/x86_64-linux-ghc-7.10.3/xmonad-0.11.1/html doesn't exist or isn't a directory
+ghc-pkg: cannot find package xmonad-contrib-0.11.4
+error: command failed to execute correctly
+(196/196) upgrading xmonad-contrib                                         [##########################################] 100%
+Reading package info from stdin ... done.
+xmonad-contrib-0.11.4: Warning: haddock-interfaces: /usr/share/doc/x86_64-linux-ghc-7.10.3/xmonad-contrib-0.11.4/html/xmonad-contrib.haddock doesn't exist or isn't a file
+xmonad-contrib-0.11.4: Warning: haddock-html: /usr/share/doc/x86_64-linux-ghc-7.10.3/xmonad-contrib-0.11.4/html doesn't exist or isn't a directory
+
+#+END_SRC
+
+*** aurman
+https://github.com/polygamma/aurman
+aurman -Syu
+*** pacaur:
+PACAUR IS NO LONGER BEING DEVELOPED!
+# update all aurs:
+pacaur --update --devel --needed
+# install a new aur:
+pacaur --sync newpackage
+
+*** install AUR manually:
+cd ~/aur-builds/
+# downloaded from the "Download snapshot" on the https://aur.archlinux.org/packages/<name> site:
+tar -xvzf my-package.tar
+# make package and auto install deps with pacman
+cd my-package/ && makepkg -s
+# install with pacman
+sudo pacman -U /path/to/my-package.tar.xz
+**** gpg keys issues on aur builds:
+https://wiki.archlinux.org/index.php/Makepkg
+https://bbs.archlinux.org/viewtopic.php?id=152337
+"To accept public keys from arch devs, add "keyring /etc/pacman.d/gnupg/pubring.gpg" to the end of ~/.gnupg/gpg.conf." - not sure if it works...
+
+Or just use pacman's keyrings instead of yours when building:
+GNUPGHOME=/etc/pacman.d/gnupg makepkg -s
+(from here: https://bbs.archlinux.org/viewtopic.php?pid=1695349#p1695349)
+*** Arch install:
+# upload from commandline to online bin:
+cat ~/.xinitrc | curl -F 'sprunge=<-' http://sprunge.us
+# to read:
+articles related to X, desktop environments, window managers, startx,
+systemd, dbus, … it’s not trivial at the first time.
+# tty issue
+https://wiki.archlinux.org/index.php/Getty
+
+
+http://snott.net/linux/thinkparch-archlinux-on-a-thinkpad/
+https://docs.google.com/document/d/1hFTArhNbmpmEBRkwRg0DMbEzLBCl43F1HXoXtJ8cm0k/edit#
+
+https://wiki.archlinux.org/index.php/Start_X_at_login
+
+https://wiki.archlinux.org/index.php/Beginners%27_guide#Prepare_the_latest_installation_medium
+
+# file transfer
+rsync -av 192.168.1.110:~/class ~/ --exclude-from=~/backup/exclude-list.txt --progress
+
+** bootloader
+*** systemd-boot
+# install (assuming boot partition is mounted to /boot):
+bootctl --path=/boot install
+configure bootloader entries:
+https://wiki.archlinux.org/index.php/Systemd-boot#Configuration
+
+blog with examples:
+https://fhackts.wordpress.com/2016/09/09/installing-archlinux-the-efisystemd-boot-way/
+** bluetooth
+bluetoothctl
+
+power on
+# see what's on:
+show
+
+scan on
+devices
+
+# using bluetoothctl instead of this GUI:
+blueman-manager
+** windows stuff
+zamzar.com
+** Databases:
+*** databases:
+  cat /etc/*-release
+
+
+# Launching Mongo locally
+mongod --dbpath /home/lucas/data/mongodb --fork --logpath /home/lucas/data/log/mongodb/ecometrix_site-api.log
+mongod --dbpath /home/lucas/projects/ecostartup/nodetest2/data/ --fork --logpath /home/lucas/data/log/mongodb/mongodb_nodetest2.log
+
+# Launching Mongo on GCC instance
+mongod --dbpath /home/lucas/node/ecometrix_site-api/data --fork --logpath /home/lucas/data/log/ecometrix.log
+
+** dependencies/package managers
+# autoupdates on ubuntu:
+dpkg-reconfigure -plow unattended-upgrades
+# centos:
+sudo yum groupinstall 'Development Tools'
+** export monitor/video
+# view connections:
+xrandr
+# export video to device examples:
+xrandr --output HDMI-0 --auto --left-of eDP-0
+xrandr --output HDMI-0 --off
+** filesystem:
+*** renaming files
+# renaming .html to .txt:
+rename .html .txt *.html
+*** filesystem status
+# list all partitions layout on all block devices (with filesystem types)
+parted -l
+# list hard drives to be mounted
+fdisk -l
+# list filesystem disk space
+df -kh
+# list block devices
+lsblk
+*** finding files and folders:
+# find file containing text "foo bar"
+grep -rnw 'directory' --exclude-dir="_site" -e "pattern"
+grep -rn . -e center --exclude-dir={dist,libs} --exclude={default.css,config.yml}
+# only look in *.scss files, for matches with "avatar":
+ag -G .scss avatar
+# find a file, ignore case:
+find /path/to/dir/ -type f -iname "seth"
+find . -name place-detail.html
+# only output file names:
+grep -rnl . -e center --exclude-dir={dist,libs} --exclude={default.css,config.yml}
+# count matches in a file:
+grep -o "US:ST:[A-Z]\{2\}:PL:[0-9]\{5\}\": {" locales-pretty.json | wc -l
+# grep and uniquify matches in a file:
+cat brfss-observations.tsv | awk '{print $2}'|grep ':PL:'|sort -u > brfss-locales-uniq.txt
+# REMEMBER - can't use lists with length 1 in grep!
+# count files in directory:
+ls -1 | wc -l
+# count file in directory, excluding links (note the 'L', not '1' this time on 'ls'):
+ls -l | grep -v ^l | wc -l
+# find 10 largest files in path:
+find /path/to/search/ -type f -printf '%s %p\n'| sort -nr | head -10
+*** execute any command on files/dirs via regex:
+# eg: echo all files ending with a non-dot and 'jpg':
+find . -type f -regex ".*[^.]jpg$" -exec echo {} \;
+# then remove it like so:
+find . -type f -regex ".*[^.]jpg$" -exec rm {} \;
+# remove dirs via regex:
+find . -type d -regex "\./img.*" -exec rm -rf {} \;
+# get file checksum for all files in a folder:
+find /path/to/dir/ -type f -name "*.py" -exec md5sum {} + | awk '{print $1}' | sort | md5sum
+*** find/replace
+# only works on linux, but can use `gsed` in macos:
+# https://stackoverflow.com/a/4247319/1884158
+ag -rl 'myRegex' . | xargs sed -i 's/myRegex/newRegex/g'
+# might want to test it beforehand just to be sure:
+ag -rl 'myRegex' .
+ag -r 'myRegex' .
+
+*** pdfs
+# decrypt pdf:
+qpdf --password=YOURPASSWORD-HERE --decrypt input.pdf output.pdf
+# concat pdf's:
+concat-pdfs final_signed.pdf pg1.pdf pg2.pdf
+** images
+*** create a gif:
+convert -delay 20 -loop 0 *.jpg myimage.gif
+
+*** processing pictures in batch:
+# image info:
+identify <file-name>
+identify -format "%f,%w,%h" 0530151022a.jpg
+# batch process
+for file in *.jpg; do convert $file -resize 500 $file; echo converting file $file; done
+for file in rats/*; do convert $file -resize 500 $file; echo converting file $file; done
+** Partitioning and mounting file systems:
+arch install vid: https://www.youtube.com/watch?v=Wqh9AQt3nho
+use wifi-menu to connect
+*** installing arch on new partiiton:
+# mount root partition to drive (ie usb boot)
+mount /dev/sda2 /mnt
+# mount other partitions too if you use them:
+mount /dev/sda1 /mnt/boot
+mount /dev/sda4 /mnt/home
+# use pacstrap to install arch base, where /mnt is location of new root:
+# https://wiki.archlinux.org/index.php/Installation_guide
+# will need to plug in an ethernet cord beforehand!
+pacstrap /mnt base base-devel
+# then:
+arch-chroot /mnt
+# after exiting arch-chroot, genfstab (shortcut for manually copying the GUID's):
+# ensure all partitions are mounted
+# details here: https://wiki.archlinux.org/index.php/Installation_guide
+genfstab /mnt >> /mnt/etc/fstab
+# then passwd, vim /etc/locale.gen,  etc
+umount /mnt
+
+*** labeling partitions:
+https://linuxgeekoid.wordpress.com/2011/06/17/25/
+
+# ext:
+# to list a partition's label:
+sudo e2label /dev/sdb1
+# creating new label (for ext2/3/4):
+sudo e2label /dev/sdc1 my_label
+
+# for FAT32:
+# check label:
+sudo fatlabel /dev/sdb1
+# new label:
+sudo fatlabel /dev/sdb1 gparted
+# or using mlabel:
+sudo mlabel -i /dev/sdc1 ::"my_label"
+# for NTFS:
+sudo ntfslabel /dev/sdc1 my_label
+# for exFAT:
+sudo exfatlabel /dev/sdc1 my_label
+
+*** partitioning:
+**** using cfdisk (better interface)
+
+cfdisk /dev/nvme0n1
+
+**** using fdisk and mkfs.ext4 and mkswp:
+# might want to wipe the filesystem (and existing signatures) beforehand:
+wipefs -a /dev/nvme0n1
+
+http://www.howtogeek.com/106873/how-to-use-fdisk-to-manage-partitions-on-linux/
+sudo fdisk -l /dev/sdb
+sudo fdisk /dev/sdb
+n, <default- p>,
+# creating a 100G partition after selecting starting block:
++100G
+**** partition types:
+(note: types don't matter all that much)
+# creating EFI System Partition for booting:
+https://wiki.archlinux.org/index.php/EFI_System_Partition
+`EFI (FAT-12/16/32)` (or `EFI System`) type, size of 512M, mounted to /boot, toggled as bootable
+format here: mkfs.fat -F32 /dev/sdxY
+(bootable toggle not needed w/ gpt though)
+# swap partitions:
+https://wiki.archlinux.org/index.php/Swap
+**** formatting
+# this needs to be done to make the partition mountable!
+mkfs.ext4 /dev/sda2
+mkfs.ext4 /dev/sda4
+mkfs.fat -F32 /dev/sda1       <----- the /boot partition needs
+# to utilize swap:
+mkswap /dev/sda3
+# formatting sdcard to mountable FAT32:
+select 'W95 FAT32 (LBA) (option 'c') from the partition type table
+# https://wiki.archlinux.org/index.php/NTFS-3G :
+mkfs.ntfs -Q -L diskLabel /dev/sdXY <-- 'Q' speeds up formatting by not zeroing or checking for bad sectors
+**** Fstab GUID setup:
+# Get GUID's for all paritions:
+lsblk -f
+# OR:
+blkid /dev/sdba
+# or gdisk
+# edit fstab like so:
+vim /etc/fstab
+# might be helpful to backup and cat guid's into fstab:
+cp /etc/fstab /etc/fstab.old
+lsblk -f >> /etc/fstab
+**** labeling paritions
+sudo 2label /dev/sdb1
+sudo e2label /dev/sdb1 my-label # only ext
+sudo ntfslabel /dev/sdb1
+sudo ntfslabel /dev/sdb1 my-label # for ntfs
+*** mounting:
+http://superuser.com/questions/296157/mount-usb-devices-in-arch-linux
+# list devices that have been plugged/unplugged:
+dmesg
+
+# Know where/if these devices are being mounted
+mount
+
+sudo fdisk -l
+lsblk -l
+mkdir /media/usb
+mount /dev/sdb1 /media/usb
+lsof /dev/sdb1
+
+sudo mount /dev/sda1 /media/kingston
+sudo mount /dev/sda /media/kingston -t auto
+sudo mount /dev/sda /media/kingston -t vfat
+
+udisksctl mount -b /dev/sdb1
+
+**** Android:
+***** jmtpfs
+****** mount
+# if mounting in ~/temp/lg, we should start cd into ~/temp
+# select on phone: storage -> usb/pc connection -> mtp connection
+jmtpfs lg
+cd lg/Internal\ Storage
+# keep terminal running inside this folder to keep the mtp connection going
+
+# NOTE: hitting `jmtpfs` will just lose the device connection, then yyou must start over
+
+******* details:
+Run jmtpfs with a directory as a parameter, and it will mount to that directory
+the first MTP device it finds. You can then access the files on the device as
+if it were a normal disk.
+
+[jason@colossus ~]$ jmtpfs ~/mtp
+Device 0 (VID=04e8 and PID=6860) is a Samsung GT-P7310/P7510/N7000/I9100/Galaxy Tab 7.7/10.1/S2/Nexus/Note.
+Android device detected, assigning default bug flags
+[jason@colossus ~]$ ls ~/mtp
+Internal Storage
+[jason@colossus ~]$ ls ~/mtp/Internal\ Storage/
+Android  burstlyImageCache  DCIM  Music  Notifications  Pictures  testdir
+[jason@colossus ~]$ df -h ~/mtp/Internal\ Storage
+Filesystem      Size  Used Avail Use% Mounted on
+jmtpfs           14G  3.1G   11G  23% /home/jason/mtp
+[jason@colossus ~]$ cd ~/mtp/Internal\ Storage/
+[jason@colossus Internal Storage]$ ls
+Android  burstlyImageCache  DCIM  Music  Notifications  Pictures  testdir
+[jason@colossus Internal Storage]$ cat > test.txt
+Hello Android!
+[jason@colossus Internal Storage]$ ls
+Android            DCIM   Notifications  testdir
+burstlyImageCache  Music  Pictures       test.txt
+[jason@colossus Internal Storage]$ cat test.txt
+Hello Android!
+[jason@colossus Internal Storage]$ rm test.txt
+[jason@colossus Internal Storage]$
+
+Pass the -l option will list the attached MTP devices.
+
+[jason@colossus ~]$ workspace/jmtpfs/src/jmtpfs -l
+Device 0 (VID=04e8 and PID=6860) is a Samsung GT-P7310/P7510/N7000/I9100/Galaxy Tab 7.7/10.1/S2/Nexus/Note.
+Available devices (busLocation, devNum, productId, vendorId, product, vendor):
+2, 19, 0x6860, 0x04e8, GT-P7310/P7510/N7000/I9100/Galaxy Tab 7.7/10.1/S2/Nexus/Note, Samsung
+
+You can choose which device to mount with the -device option.
+
+[jason@colossus ~]$ workspace/jmtpfs/src/jmtpfs -device=2,19 ~/mtp
+Device 0 (VID=04e8 and PID=6860) is a Samsung GT-P7310/P7510/N7000/I9100/Galaxy Tab 7.7/10.1/S2/Nexus/Note.
+Android device detected, assigning default bug flags
+[jason@colossus ~]$ ls ~/mtp
+Internal Storage
+
+****** unmount
+Unmount with fusermount.
+
+[jason@colossus ~]$ ls ~/mtp
+Internal Storage
+[jason@colossus ~]$ fusermount -u ~/mtp
+[jason@colossus ~]$ ls ~/mtp
+[jason@colossus ~]$
+
+*** unmounting
+# use 'sudo' when you get: 'umount: it seems /dev/sdb1 is mounted multiple times':
+umount /dev/sdb1
+# Or use udisksctl:
+http://stackoverflow.com/questions/13224509/linux-ubuntu-safely-remove-usb-flash-disk-via-command-line
+**** unmounting with busy drive error:
+# get process on that device:
+fuser -m /dev/sdb1
+# get and kill the process(es) on that device:
+fuser -km /dev/sdb1
+# then unmount as usual, ie:
+udiskctl -b /dev/sdb1
+** mouse/trackpad:
+vim /etc/X11/xorg.conf.d/50-synaptics.conf
+# view current and possible settings:
+synclient -l
+** networking
+# on arch, when all else fails, connect with:
+wifi-menu
+
+journalctl -e
+journalctl -f -n 1000
+*** configuring wifi
+https://wiki.archlinux.org/index.php/Wireless_network_configuration#wireless_management
+ip link
+ip link set wlp4s0 up
+# get name of device:
+iw dev
+# verify it's connected:
+iw dev wlp4s0 link
+
+# check network driver is loaded:
+lsmod
+
+*** dhcp:
+# This config is updated automatically by the resolve service, but restarting systemd-resolved.service might be needed:
+/etc/resolv.conf
+# static DNS config (this is the one that matters, I think):
+etc/systemd/resolved.conf.d/resolv.conf
+# interface DNS (avoid using DHCP's DNS):
+/etc/systemd/network/*.network
+[DHCP]
+UseDNS=false
+# for more info:
+man systemd-resolvd
+man resolved.conf
+man resolv.conf
+
+# this might have to be disabled:
+systemctl status dhcpcd.service
+
+**** debugging:
+/etc/nsswitch.conf - 'hosts' line should include 'resolve' if using dhcpcd
+if so, check `systemd-resolve --status` for DNS server summary
+if not, check /etc/resolv.conf contents
+systemd-resolve google.com
+
+# start dhcpcd with (maybe?):
+sudo dhcpcd wlp4s0
+
+*** captive portals (coffee shops)
+try naving to:
+http://cvlxmbktrzdhswfn.neverssl.com/online
+
+this should redirect appropriately
+
+note: this may require using dnsmasq instead of systemd-resolved
+
+*** systemd-networkd
+https://wiki.archlinux.org/index.php/Systemd-networkd#Usage_with_containers
+https://gist.github.com/holomorph/9655261
+# view all unit files
+systemctl list-unit-files | less
+systemctl disable netctl-auto@.service netctl-ifplugd@.service
+systemctl stop netctl-auto@.service netctl-ifplugd@.service
+systemctl enable systemd-networkd.service
+systemctl start systemd-networkd.service
+# display status of all interfaces
+networkctl
+# set up systemd-resolvd for (?)
+sudo mv /etc/resolv.conf /etc/resolv.conf.old
+systemctl enable systemd-resolved.service
+systemctl start systemd-resolved.service
+*** wpa_supplicant
+# NOTE: dhcpcd wlp4s0 is not needed, because we have started the systemd-networkd and ssytemd-resolved services
+
+# troubleshooting:
+systemctl status wpa_suppliant@wlp4s0
+systemctl restart wpa_suppliant@wlp4s0
+journalctl -u wpa_supplicant@wlp4s0
+
+**** initial setup:
+https://wiki.archlinux.org/index.php/WPA_supplicant
+https://gist.github.com/holomorph/9655261
+# fill out initial /etc/wpa_supplicant/example.conf:
+ctrl_interface=/run/wpa_supplicant
+update_config=1
+# start wpa_supplicant:
+(sudo) wpa_supplicant -B -i interface -c /etc/wpa_supplicant/example.conf
+# start dhcpcd:
+(sudo) dhcpcd wpl58s0
+# start systemd's (maybe?)
+sudo systemctl start systemd-networkd
+sudo systemctl start systemd-resolved
+
+**** basics
+vim /etc/wpa_supplicant/wpa_supplicant.conf
+https://wiki.netbsd.org/tutorials/how_to_use_wpa_supplicant/
+https://gist.github.com/holomorph/9655261
+https://rtl8192cu.googlecode.com/hg-history/bdd3a2265bdd6a92f24cef3d52fa594b2844c9c1/document/wpa_cli_with_wpa_supplicant.pdf
+# tell wpa_supplicant to reread config:
+wpa_cli reconfigure
+# for unicode SSID copy/paste, or scanning networks:
+sudo iw wlp4s0 scan | grep SSID
+sudo iw wlp4s0 scan | grep "SSID\|signal"
+# wpa_cli commands:
+wpa_cli -i wlp4s0
+> scan
+> scan_results
+> add_network
+0
+# What if ssid has unicode or is really long to type???
+> set_network 0 ssid "MYSSID"
+# if password:
+> set_network 0 psk "passphrase"
+# if no password (ESS?):
+> set_network 0 key_mgmt NONE
+> enable_network 0
+> set update_config 1
+> save_config
+# connect to a hidden network:
+http://unix.stackexchange.com/a/266583/59802
+in header:
+wpa_ap_scan=1
+in network block:
+scan_ssid=1
+**** wep network
+network={
+        ssid="MYWLAN"
+        scan_ssid=1
+        key_mgmt=WPA-PSK
+        psk="MySecretPassphrase"
+}
+
+*** mac addys
+https://wiki.archlinux.org/index.php/MAC_address_spoofing
+# list devices mac addys:
+ip link show
+#+BEGIN_SRC bash
+# will need to run with root:
+sudo ip link set dev enp0s25 down
+sudo macchanger -e enp0s25
+sudo ip link set dev enp0s25 up
+
+sudo ip link set dev wlp4s0 down
+sudo macchanger -e wlp4s0
+sudo ip link set dev wlp4s0 up
+# To return to original hardware value:
+macchanger -p interface
+#+END_SRC
+*** wireless ad-hoc
+
+https://wiki.archlinux.org/index.php/Wireless_network_configuration#Manual_setup
+https://wiki.archlinux.org/index.php/Ad-hoc_networking#WPA_supplicant
+
+using isc-dhcp-server:
+https://www.raspberrypi.org/forums/viewtopic.php?t=19517&p=190855
+http://lcdev.dk/2012/11/18/raspberry-pi-tutorial-connect-to-wifi-or-create-an-encrypted-dhcp-enabled-ad-hoc-network-as-fallback/
+
+other resources:
+# best bet here (?):
+http://stackoverflow.com/questions/15423325/raspberry-pi-ad-hoc-networking
+
+http://elinux.org/RPI-Wireless-Hotspot
+http://spin.atomicobject.com/2013/04/22/raspberry-pi-wireless-communication/
+http://www.novitiate.co.uk/?p=183
+http://raspberrypi.stackexchange.com/questions/1074/how-can-i-setup-a-wireless-access-point-or-and-ad-hoc-network
+*** gathering wifi info
+# get ip addr:
+ip addr show wlp4s0
+ip addr show
+# get ip dev info:
+ip link show
+# password location:
+/etc/NetworkManager/systemconnections/theworldisfun
+# packet sniffing:
+aircrack - wpa, wep
+*** rfkill
+rfkill list
+rfkill unblock 1
+
+*** http
+**** curl
+
+# Must put url in "quotes" to enable query params!!!
+# Use -L to follow redirects - necessary when querying from CloudFront
+
+***** examples:
+# simple POST with body:
+curl --header "Content-Type: application/json" \
+     --request POST \
+     --data '{"username":"lucas"}' \
+     http://localhost:3000/api/v1/user
+
+# GET with auth header:
+curl -X GET --header "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNWFmZGNkNzNiNjEwZWMzZjFlYzdiNjdlIiwiaWF0IjoxNTMwOTEwNjg0fQ.OU6PVnSISaX9-bAaViOqZLIHWmv9r2XzG1ofngCrd4I" localhost:8088/team/active/dataset?q=cso
+# header only:
+curl -X GET --header "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNTgxMmM2YTFiNjEwZWM2MGExNDc4ZmRlIn0.cYZQkdPZfrLFhZJs1q6XGhX8CoVP14G3YeduQOm71nE" localhost:8088/team/active/dataset?q=cso -I
+# test
+curl -X GET --header "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNTgxMmM2YTFiNjEwZWM2MGExNDc4ZmRlIn0.cYZQkdPZfrLFhZJs1q6XGhX8CoVP14G3YeduQOm71nE" localhost:8088/location/active/team/active
+# with body:
+curl -X PUT -H "Content-Type: application/json" --header "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNTgxMmM2YTFiNjEwZWM2MGExNDc4ZmRlIn0.cYZQkdPZfrLFhZJs1q6XGhX8CoVP14G3YeduQOm71nE" -d '{"locations":{"US:ST:CO":"US:ST:WA:CO:033","US:ST":"US:ST:WA"}, "isDefault": false}' localhost:8088/location/user/active/team/active
+
+curl -X PUT -H "Content-Type: application/json" --header "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNTgxMmM2YTFiNjEwZWM2MGExNDc4ZmRlIn0.cYZQkdPZfrLFhZJs1q6XGhX8CoVP14G3YeduQOm71nE" -d '{"locations":{"UG:DIST":"UG:DIST:111"}, "isDefault": true}' localhost:8088/location/user/active/team/active
+curl -X PUT -H "Content-Type: application/json" --header "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNTgxMmM2YTFiNjEwZWM2MGExNDc4ZmRlIn0.cYZQkdPZfrLFhZJs1q6XGhX8CoVP14G3YeduQOm71nE" -d '{"locations":{"UG:DIST":"UG:DIST:111"}, "isDefault": false}' localhost:8088/location/user/active/team/active
+
+# include header dump, written to stdout:
+# (note that -I sends a HEAD request, which is different)
+curl -D - localhost:3002/login
+
+# example with cookie:
+curl -X PUT \
+--header "Host: localhost:8001" \
+--header "User-Agent: Mozilla/5.0 (X11; Linux i686; rv:62.0) Gecko/20100101 Firefox/62.0" \
+--header "Accept: application/json, text/javascript, */*; q=0.01" \
+--header "Accept-Language: en-US,en;q=0.5" \
+--header "Accept-Encoding: gzip, deflate" \
+--header "Referer: http://localhost:8000/" \
+--header "Content-Type: application/json" \
+--header "Content-Length: 661" \
+--header "Origin: http://localhost:8000" \
+--header "Cookie: csrftoken=133FitZ558FZw7dACUncs0dcxtMRSpAg; sessionid=69rlcpt90sqb7imolp6s39kg1k68snj7; sa-api-sessionid=69rlcpt90sqb7imolp6s39kg1k68snj7" \
+--header "DNT: 1" \
+--header "Connection: keep-alive" \
+-d '{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.1700286865,47.532559803]},"properties":{"attachments":[],"updated_datetime":"2018-08-08T21:12:42.950618+00:00","submission_sets":{},"dataset":31,"visible":true,"datasetSlug":"demo","location_type":"complaint","datasetId":"demo","description":"yayu","title":"test complaint 4","url":"http://localhost:8001/api/v2/smartercleanup/datasets/demo/places/3874","id":3874,"submitter":{"username":"smartercleanup","provider_id":null,"name":"","avatar_url":"","id":1,"provider_type":""},"created_datetime":"2018-08-08T21:12:42.950294+00:00","type":"place","submitter_name":"","private-submitter_email":""}}' \
+http://localhost:8001/api/v2/smartercleanup/datasets/demo/places/3874
+
+*** nslookup
+nslookup -type=TXT  rubadove.com
+
+*** vpn
+
+# start:
+sudo openvpn --log /var/log/openvpn.log --config /path/to/config --daemon
+# stop:
+sudo killall -9 openvpn
+# tor:
+https://airvpn.org/tor/
+**** DNS resolution through openvpn:
+https://wiki.archlinux.org/index.php/OpenVPN#DNS
+solution when using systemd-resolved and "resolve" in nsswitch.conf:
+# add this to config:
+script-security 2
+setenv PATH /usr/bin
+up /etc/openvpn/scripts/update-systemd-resolved
+down /etc/openvpn/scripts/update-systemd-resolved
+down-pre
+
+# script here, which should update /etc/resolv.conf via systemd-resolved:
+https://github.com/jonathanio/update-systemd-resolved
+# airvpn dns servers:
+10.4.0.1 and 10.5.0.1
+
+*** find IP
+ifconfig | grep inet
+** NVIDIA driver issues:
+*** quick commands:
+**** Does not detect external monitor:
+# Downgrade workaround until bug is fixed:
+sudo dpkg -i ~/Development/ubuntu-drivers-common_0.2.91.5_amd64.deb nvidia-common_0.2.91.5_amd64.deb
+sudo apt-mark hold ubuntu-drivers-common
+sudo apt-mark hold nvidia-common
+sudo apt-get purge nvidia* bumblebee*
+sudo apt-get install nvidia-331-updates nvidia-settings nvidia-prime
+# Reverting downgrade (assuming bug is fixed):
+sudo apt-mark unhold ubuntu-drivers-common
+sudo apt-mark unhold nvidia-common
+sudo apt-get purge nvidia* bumblebee*
+sudo apt-get install nvidia-331-updates nvidia-settings nvidia-prime
+*** Viewing current driver/package status:
+dpkg --get-selections | grep hold
+# package version info:
+dpkg --status nvidia-current | grep Version
+dpkg --status nvidia-331-updates | grep Version
+Version: 331.113-0ubuntu0.0.4
+# all nvidia packages:
+dpkg -l | grep nvidia
+ii  nvidia-331-updates                                    331.38-0ubuntu7.1                                   amd64        NVIDIA binary driver - version 331.38
+ii  nvidia-libopencl1-331-updates                         331.38-0ubuntu7.1                                   amd64        NVIDIA OpenCL Driver and ICD Loader library
+ii  nvidia-opencl-icd-331-updates                         331.38-0ubuntu7.1                                   amd64        NVIDIA OpenCL ICD
+ii  nvidia-prime                                          0.6.2                                               amd64        Tools to enable NVIDIA's Prime
+ii  nvidia-settings                                       331.20-0ubuntu8                                     amd64        Tool for configuring the NVIDIA graphics driver
+# nvidia driver version:
+cat /proc/driver/nvidia/version
+NVRM version: NVIDIA UNIX x86_64 Kernel Module  331.113  Mon Dec  1 21:08:13 PST 2014
+GCC version:  gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1)
+# nvidia chip info:
+nvidia-smi
+#+BEGIN_SRC bash
+nvidia-smi
+# [lucas-ThinkPad-W520]/home/lucas$ nvidia-smi
+Wed Nov 19 09:39:30 2014
++------------------------------------------------------+
+| NVIDIA-SMI 331.38     Driver Version: 331.38         |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  Quadro 1000M        Off  | 0000:01:00.0     N/A |                  N/A |
+| N/A   43C  N/A     N/A /  N/A |    185MiB /  2047MiB |     N/A      Default |
++-------------------------------+----------------------+----------------------+
+
++-----------------------------------------------------------------------------+
+| Compute processes:                                               GPU Memory |
+|  GPU       PID  Process name                                     Usage      |
+|=============================================================================|
+|    0            Not Supported                                               |
++-----------------------------------------------------------------------------+
+#+END_SRC
+
+*** holding packages:
+sudo apt-mark hold ubuntu-drivers-common
+sudo apt-mark unhold ubuntu-drivers-common
+dpkg --get-selections | grep hold
+*** remove and install NVIDIA/Prime
+sudo apt-get purge nvidia* bumblebee*
+sudo apt-get install nvidia-331-updates nvidia-settings nvidia-prime
+
+** permissions and access
+# Basic setups:
+http://www.codelitt.com/blog/my-first-10-minutes-on-a-server-primer-for-securing-ubuntu/
+# update visudo editor:
+sudo update-alternatives --config editor
+*** users:
+# add a user using unix tool:
+adduser geoserver
+# add new user to multiple groups with lower level tool:
+# http://www.tecmint.com/add-users-in-linux/
+useradd -s /bin/bash -m -d /home/duwamish -G adm,sudo mapseed
+passwd mapseed
+
+# if sudo is not a group, you can add existing user to sudo with 'visudo'
+visudo
+
+#+BEGIN_SRC
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+mapseed ALL=(ALL)      ALL
+#+END_SRC
+# to ssh in, don't forget to copy the ssh keys!
+
+# delete user:
+deluser geoserver
+# on local:
+ssh-keygen -t rsa -C "comment here"
+# then add the key via web management interface or command-line
+# verify user and groups:
+id duwamish
+# change user's default shell:
+chsh -s /usr/local/bin/bash username
+*** groups
+# add new user to multiple groups
+useradd -G foo,bar,ftp tom
+# add existing user to multiple groups
+sudo usermod -a -G adm,sudo duwamish
+gpasswd -a <username> <group>
+# edit groups file manually
+sudo vipw
+sudo vipw -g
+sudo vigr
+# change primary usergroup:
+sudo usermod -g sudo myuser
+# login to a groups without logging out:
+newgrp <existing-group-that-user-is-not-a-part-of>
+*** ssh
+# better practices:
+https://blog.0xbadc0de.be/archives/300
+**** enable ssh'ing into a server:
+# to control which users can access via ssh, open this file and add this line:
+sudo vim /etc/ssh/sshd_config
+AllowUsers duwamish geoserver
+# to allow plaintext password ssh login:
+sudo vim /etc/ssh/sshd_config
+PasswordAuthentication yes
+# you will have to restart ssh daemon:
+sudo service ssh restart
+# restart ssh - http://www.cyberciti.biz/faq/howto-restart-ssh/
+# debug ssh:
+ssh -vv
+
+# Adding a public key:
+# on our host (or wherever our public key is found):
+scp -i ~/.ssh/duwamish-aws.pem ~/.ssh/duwamish-aws.pub dev-air-trees:~/
+# then on our server:
+cat ~/duwamish-aws.pub >> ~/.ssh/authorized_keys
+**** ssh key forwarding
+add this to the host's ~/.ssh/config:
+ForwardAgent yes
+
+add this to the client's /etc/ssh/sshd_config:
+AllowAgentForwarding yes
+
+**** ssh into ongoing account:
+# first login, adding to host
+ssh -i ~/path/to/key.pub -o UserKnownHostsFile=~/.ssh/known_hosts user@my_ip
+# everytime after that:
+ssh user@my_ip
+# if you get the nasty message, do this:
+ssh-keygen -f "/home/lucas/.ssh/known_hosts" -R flavors.lukeswart.net
+** ports and servers:
+# view process running on port:
+netstat -tulpn | grep :portId #(ie grep :3002)
+# search for open local ip addr ports:
+nmap -p 22 --open -sV 192.168.0.* -Pn
+nmap -p 22 --open -sV 10.0.0.255 -Pn
+# kill process running on port:
+kill -9 $(lsof -t -i:3000 -sTCP:LISTEN)
+*** firewalls:
+# Find PID and process of port:
+fuser portId/protocol (ie 3002/tcp)
+ls -l /proc/PID/exe (ie /proc/12262/exe)
+
+# see ip tables nat status:
+sudo iptables -L -t nat
+# see ip tables status:
+iptables -L
+# delete all ip tables configs:
+iptables -F
+
+iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
+iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
+iptables -A INPUT -p tcp --tcp-flags ALL ALL -j DROP
+
+# NOTE: may need to sudo these to insmod any new tables
+iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080
+iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 8080
+# iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j DNAT --to 192.168.1.2:8080
+# iptables -A FORWARD -p tcp -d 192.168.1.2 --dport 8080 -j ACCEPT
+# save ip table configurations
+iptables-save > /etc/iptables.conf
+iptables-restore < /etc/iptables.conf
+
+# check whether a port is accessible from the "outside":
+http://www.yougetsignal.com/tools/open-ports/
+# dont forget to check you AWS "firewall"!
+
+*** port forwarding
+http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html
+# FIRST: you must configure the remote server for port forwarding:
+sudo vim /etc/ssh/sshd_config
+GatewayPorts yes
+# restart ssh (or sshd):
+sudo service ssh restart
+**** remote port forwarding:
+ssh -R <remote-host-port>:<local-IP>:<local-host-port> <user>@<remote-host-IP>
+# ex: access my pc's localhost port 3000 from remote port 3002
+ssh -R 3002:localhost:3000 lucas@dev.heyduwamish.org
+ssh -i ~/.ssh/duwamish-aws.pem -nNt -g -R 0.0.0.0:8009:localhost:8008 duwamish@52.26.50.222
+ssh -i ~/.ssh/duwamish-aws.pem -nNt -g -R 0.0.0.0:8009:localhost:8001 duwamish@52.27.246.213
+ssh -i ~/.ssh/duwamish-aws.pem -nNt -g -R 0.0.0.0:8012:localhost:8000 dev-air-georgetowngreen
+# or without any shell prompt:
+ssh -R 3002:localhost:3000 -f lucas@dev.heyduwamish.org -N
+ssh -R 8002:localhost:8000 -f lucas@dev.heyduwamish.org -N
+ssh -nNt -g -R :11465:0.0.0.0:8000 user@example.com
+
+# to stop the following warning:
+# Warning: remote port forwarding failed for listen port 8011
+sudo netstat -tulpn
+kill <pid>
+
+**** local port forwarding:
+# so now we can access imgur.com:80 from localhost:9000
+ssh -L 9000:imgur.com:80 user@example.com
+*** DNS
+AWS ROUTE 53
+  Domain Name:lukeswart.net.
+  Hosted Zone ID:Z3FZM1Z75WZG4Q
+  Record Set Count:2
+  Comment:
+  Delegation Set *:
+  ns-640.awsdns-16.net
+  ns-6.awsdns-00.com
+  ns-1345.awsdns-40.org
+  ns-1973.awsdns-54.co.uk
+
+GODADDY INFO
+  DNS - OLD
+  NS31.DOMAINCONTROL.COM
+  NS32.DOMAINCONTROL.COM
+  MX
+  mailstore1.secureserver.net
+  smtp.secureserver.net
+  UN
+  eartheaterrr
+  PsW
+  A***1***4
+
+*** test connections
+ip addr sho
+# ping a port:
+nmap -p 80 onofri.org
+# ping a local port (will get an error if not open)
+telnet localhost 80
+** print/scan
+# scan image
+scanimage -L
+scanimage --format=png > ~/Documents/taxes/test.png
+scanimage --device hpaio:/usb/Photosmart_2570_series?serial=MY5AB2300704B8 --format=png > ~/Documents/sole-proprietorship/taxes/receipts/20150522-01_pycon.png
+** pulseaudio:
+# pony boy ponymix PA cli:
+https://github.com/falconindy/ponymix
+# restart pulseaudio (it should start back up):
+killall pulseaudio
+*** record loopback
+with audacity:
+https://manual.audacityteam.org/man/tutorial_recording_computer_playback_on_linux.html
+*** pactl
+pactl list short sinks
+# 0       alsa_output.pci-0000_00_03.0.hdmi-surround      module-alsa-card.c      s16le 6ch 44100Hz       SUSPENDED
+# 1       alsa_output.pci-0000_00_1b.0.analog-stereo      module-alsa-card.c      s16le 2ch 44100Hz       RUNNING
+pactl set-sink-volume 1 +10%
+pactl -- set-sink-volume 1 -10%
+pactl set-sink-volume 1 +5000
+pactl -- set-sink-volume 1 -5000
+pactl set-sink-mute 1 toggle
+*** tomty89 help:
+
+<tomty89> lswart: although i don't like the pony boy, we have ponymix here
+<tomty89> pactl could also do the job, but the floating-point and limitless
+          thing might be anonying
+<tomty89> lswart: btw from pactl --help but seems not the man page: "The
+          special names @DEFAULT_SINK@, @DEFAULT_SOURCE@ and @DEFAULT_MONITOR@
+          can be used to specify the default sink, source and monitor."
+** security
+*** ssh known hosts
+http://www.thegeekstuff.com/2010/04/how-to-fix-offending-key-in-sshknown_hosts-file/
+# if logging in for the first time, and don't want key added to ssh key list:
+ssh -o 'StrictHostKeyChecking no' user@host
+# if you get the scary warning and want to remove your key from the known hosts file:
+# (which deletes the key stored at line 122 in the known_hosts files)
+# (check the message for details on key location)
+sed -i '1122d' ~/.ssh/known_hosts
+# or:
+vim ~/.ssh/known_hosts
+122 G dd
+
+*** gpg
+# best practices:
+https://help.riseup.net/en/security/message-security/openpgp/best-practices
+
+# dirmng
+info gnupg
+**** refresh keys:
+# this should be done over hkps, not hkp, and using a server pool:
+gpg --refresh-keys
+# but it's better to do this using something like parcimonie:
+https://aur.archlinux.org/packages/parcimonie-sh-git
+**** creating keys:
+https://fedoraproject.org/wiki/Creating_GPG_Keys
+**** encryption
+# encrypting a file:
+gpg -e --recipient <key ID or username> secretfile.org
+# ie:
+gpg -e --recipient luke.swart@gmail.com secretfile.org
+# decrypt a file:
+gpg -d blah.pgp > ~/temp/something.file
+**** importing keys:
+# when receiving/downloading a key, display its fingerprint before downloading:
+gpg --with-fingerprint <keyfile>
+# import public key
+gpg --import publicKey.key
+# receive public key
+gpg --recv-keys `<fingerprint>`
+gpg --recv-keys 462225C3B46F34879FC8496CD605848ED7E69871
+# receiving a key by its fingerprint, via a key server:
+gpg --keyserver pool.sks-keyservers.net --recv-keys 2E1AC68ED40814E0
+**** exporting keys
+# export public key (`-a` means ascii export instead of gpg bytes)
+gpg --export -a "luke.swart@gmail.com" > lukeGmail.key
+gpg --export-secret-keys -a "luke.swart@gmail.com" > lukeGmail.key
+
+**** expiration date
+# enter into the key edit menu:
+gpg --edit-key <hash>
+
+>list
+# 0 or do nothing to select primary key:
+>key 0
+# or select an index for a sub key:
+>key 1
+# set the expire date
+>expire
+# 2 years from now:
+>2y
+# save the changes
+save
+
+**** fingerprints
+
+# display fingerprints of all my secret keys (useful when at a key-signing party):
+gpg --with-fingerprint --list-secret-key
+# display gpg key fingerprint:
+gpg --with-fingerprint <keyfile>
+# compare sig file and iso file w/ gpg:
+gpg --keyid-format 0xlong --verify tails-i386-2.3.iso.sig tails-i386-2.3.iso
+*** ssl
+# The OpenSSL command-line utility can be used to inspect certificates (and private keys, and many other things). To see everything in the certificate, you can do:
+openssl x509 -in CERT.pem -noout -text
+openssl x509 -noout -fingerprint -text < nick.cer
+# To get the SHA256 fingerprint, you'd do:
+openssl x509 -in CERT.pem -noout -sha256 -fingerprint
+# verify cert
+openssl verify nick.pem
+
+# check cert from url:
+openssl s_client -showcerts -connect some_server:server_port
+echo | openssl s_client -connect www.google.com:443 2>/dev/null | openssl x509 -noout -dates
+
+*** ssh
+# auto enter key password:
+# start ssh-agent password:
+ssh-agent
+# add your key to the agent:
+ssh-add ~/.ssh/my-key
+# get fingerprints:
+ssh-keygen -E md5 -lf <file-name>
+# create a new key:
+ssh-keygen -b 4096 -t rsa -f ~/.ssh/modulitos-github
+
+starting ssh-ageint
+eval "$(ssh-agent -s)"
+
+** system info:
+# get temp:
+sensors
+
+# get distro info:
+cat /etc/*-release
+# get kernal info:
+uname -a
+
+# timezone
+https://wiki.archlinux.org/index.php/Time
+timedatectl list-timezones
+timedatectl set-timezone <tab>
+eg: timedatectl set-timezone Europe/Madrid
+eg: timedatectl set-timezone America/Los_Angeles
+eg: timedatectl set-timezone America/New_York
+
+or manually:
+ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
+(or use tzselect to set it interactively)
+# timezone in arch or raspberry pi (inspiration: https://www.raspberrypi.org/forums/viewtopic.php?f=8&t=4977):
+vim /etc/rc.conf
+
+** systemd
+# add scripts here to be fired on sleep:
+/usr/lib/systemd/system-sleep/
+** transfer data
+*** burn iso to dvd
+# Burn a cd:
+growisofs -dvd-compat -Z /dev/sr0=linuxmint-17.2-xfce-64bit.iso
+*** rsync/scp:
+**** between servers:
+# from remote host to local (preserves permissions, not ownership) - followed by dry-run
+rsync -e 'ssh -i /home/lucas/.ssh/duwamish-aws.pem' -avzh --progress --dry-run duwamish-api:~/PG_shareabouts_v2.23-November-2015.dmp duwamish-production_20151123.dmp
+rsync -e 'ssh -i /home/lucas/.ssh/duwamish-aws.pem' -avzh --progress raingardens-api:~/postgres_data/ raingardens-db-backup
+# and with a more strict full backup, include ACL permissions, and only within the filesystem:
+rsync -e 'ssh -i /home/lucas/.ssh/duwamish-aws.pem' -aAXvzhx --progress --dry-run duwamish-api:~/PG_shareabouts_v2.23-November-2015.dmp duwamish-production_20151123.dmp
+# from local to remote:
+rsync -e 'ssh -i /home/lucas/.ssh/duwamish-aws.pem' -avzh --progress --dry-run visioning-data_gis geoserver@geoserver-dev:~/geoserver_data/shapefiles/visioning-data
+# remember to have the right usernames and file permissions!!!
+scp -i ~/.ssh/id_lucas.pub ~/.ssl/nick.pem lucas@ec2-54-187-221-250.us-west-2.compute.amazonaws.com:~/nick.pem
+# use ssh config to make things faster:
+scp backups/duwamish-production_20150504.dump.out duwamish-api:~/
+# scp between remote hosts:
+# NOTE: the -3 is needed to authenticate through localhost, although it disables the progress meter
+# NOTE: If destination is sym link, the source folder must have appropriate permissions
+scp -v -r -3 -p lucas@smarter-cleanup-dev:~/geoserver_data/logs duwamish@duwamish-production:~/geoserver_data
+scp -r -3 -p lucas@smarter-cleanup-dev:~/geoserver_data/logs duwamish@duwamish-production:~/geoserver_data
+rsync -avzh --dry-run geoserver@heyduwamish.org:~/geoserver_data/* geoserver@dev.heyduwamish.org:~/geoserver_data
+rsync -avzh --dry-run geoserver_data geoserver@heyduwamish.org:~/geoserver_data/logs
+# from remote host to remote host (prefix 'sudo' to override file permissions):
+rsync -e 'ssh -i /home/lucas/.ssh/duwamish-team-key' -avzh --dry-run geoserver@heyduwamish.org:~/geoserver_data/logs geoserver_data
+rsync -e 'ssh -i /path/to/ssh/key' -avzh user@IP:~/file file
+**** ssh droid transfer:
+# with port (for android phone root@192.168.1.141:2222
+scp ~/pictures/sshdroid root@192.168.1.141:/storage/sdcard0/DCIM/Camera/0710150003.jpg -P 2222
+# photos:
+rsync -e 'ssh -p 2222' -avzh --dry-run --progress root@192.168.1.141:/storage/self/primary/DCIM/Camera/*.jpg ~/pictures/sshdroid/
+# storage:
+rsync -e 'ssh -p 2222' -avzh --dry-run --progress root@192.168.1.141:/storage/emulated/0/Pictures/*.jpg ~/pictures/sshdroid/
+# inshot:
+rsync -e 'ssh -p 2222' -avzh --dry-run --progress root@192.168.1.141:/storage/emulated/0/inshot/*.mp4 ~/videos/sshdroid/
+# capture:
+rsync -e 'ssh -p 2222' -avzh --dry-run --progress root@192.168.1.141:/storage/self/primary/Capture+/*.jpg ~/pictures/sshdroid/
+# music:
+rsync -e 'ssh -p 2222' -avzh --dry-run --progress *.mp3 root@192.168.1.141:/storage/self/primary/Music/
+# old:
+rsync -e 'ssh -p 2222' -avzh --dry-run --progress root@192.168.1.141:/storage/sdcard0/DCIM/Camera/*.jpg ~/pictures/sshdroid/
+# scp
+scp ~-P 2222 root@192.168.1.141:/storage/sdcard0/DCIM/Camera/*.jpg ~/pictures/sshdroid/
+# US Topo Maps app imports:
+rsync -e 'ssh -p 2222' -avzh --dry-run --progress root@192.168.1.141:/storage/emulated/0/Android/data/com.atlogis.northamerica.free/files/Tracks/ ~/Downloads/
+/storage/emulated/0/Android/data/com.atlogis.northamerica.free/files/Tracks/Track_*
+**** backups:
+https://wiki.archlinux.org/index.php/Full_system_backup_with_rsync
+rsync -aAX --info=progress2 --dry-run /home/lucas/DRCC-data /media/kingston-16/lucas/
+rsync -aAXv --info=progress2 --dry-run --delete -H --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"} / /path/to/backup/folder
+rsync -aAXvx --info=progress2 --dry-run --delete -H / /path/to/backup/folder
+
+# don't use the -X (extended attributes) flag when backup up from other filesystems (OSX or Windows)
+*** backups
+**** clonezilla
+#+BEGIN_SOURCE yaml
+PS Next time you can run this command directly:
+/usr/sbin/ocs-onthefly -g auto -e1 auto -e2 -r -j2 -f sda -t sdb
+this command is also saved as this file name for later use if necessary: /tmp/ocs-onthefly-2015-03-22-07-03
+#+END_SOURCE
+**** restoring image to/from UNMOUNTED device:
+# determine device location:
+sudo fdisk -l
+# dd the image to a local image file, using gzip for compression:
+sudo dd bs=4M if=/dev/sdb | gzip > /home/your_username/image`date +%d%m%y`.gz
+sudo dd bs=4M if=/dev/sdb | gzip > /home/your_username/image`date +%y%m%d`.gz
+# restore backup on another external device:
+sudo gzip -dc /home/your_username/image.gz | sudo dd bs=4M of=/dev/sdb
+# between partitions (ensure /dev/sdb1 has more space than /dev/sda1)
+dd if=/dev/sda1 of=/dev/sdb1
+
+**** backing up to mounted external hard drive
+http://www.basicallytech.com/blog/archive/73/Using-a-USB-external-hard-disk-for-backups-with-Linux/
+copy keys over to usb thumb just to be safe
+get package manager packages
+http://www.linuxlinks.com/article/20090105114152803/Backup.html
+**** rsync backups
+after restoring via rsync on root partition:
+update uuid's in fstab, "root=" in boot/loader/entries/arch.conf
+
+should be booting then...
+
+***** when the network device has changed:
+# move file to correct device name:
+/etc/wpa_supplicant/wpa_supplicant-wlp4s0.conf
+
+# start the wpa_supplicant service for the new device
+systemctl start wpa_supplicant@wlp58s0.service
+
+
+
+*** wiping disk with random data:
+dd if=/dev/urandom of=/dev/sda bs=1M
+*** add os images onto another drive (pi):
+installing rpi os image onto a micro sd:\\
+http://raspberrypi.stackexchange.com/questions/931/how-do-i-install-an-os-image-onto-an-sd-card
+raspbian downloads:
+https://www.raspberrypi.org/downloads/raspbian/
+
+example:
+#+BEGIN_SRC bash
+sha1sum the-image.zip
+unzip the-image.zip
+# onto a specific partition (ensure device is not mounted)
+sudo umount /dev/mymmcblk0
+# we may want to do this directly to mmcblk0 instead of specific partition:
+sudo dd status='progress' bs=1M if=2016-03-18-raspbian-jessie.img of=/dev/mmcblk0p2
+sudo dd status='progress' bs=1M if=2016-05-27-raspbian-jessie.img of=/dev/mmcblk0
+sudo dd status='progress' bs=4M if=windows7.iso of=/dev/sdb
+# overwriting all partitions:
+sudo dd status='progress' bs=1M if=debian6-19-04-2012.img of=/dev/sdx
+#+END_SRC
+verbose instructions for installing os on rpi:
+#+BEGIN_QUOTE
+    1. Insert your SD card into your computer.
+    2. Locate the device, by running sudo fdisk -l. It will probably be the only disk about the right size. Note down the device name; let us suppose it is /dev/sdx. If you are in any doubt, remove the card, run sudo fdisk -l again and note down what disks are there. Insert the SD card again, run sudo fdisk -l and it is the new disk.
+    3. Unmount the partitions by running sudo umount /dev/sdx*. It may give an error saying the disk isn't mounted - that's fine.
+
+    4. Copy the contents of the image file onto the SD card by running
+
+        sudo dd bs=1M if=debian6-19-04-2012.img of=/dev/sdx
+
+    Warning There is a significant risk of damage to your filesystem if you use the wrong /dev/sdx. Make sure you get it right!
+#+END_QUOTE
+
+*** torrents
+**** magnet links:
+# /bin/download_magnet_link:
+#+BEGIN_SRC bash
+#!/bin/bash
+
+## usage: ./download_magnet_url.sh "magnet_link"
+## magnet link should be enclosed in quotes.
+
+cd ~/bittorrent/watch # set your watch directory here
+[[ "$1" =~ xt=urn:btih:([^&/]+) ]] || exit;
+echo "d10:magnet-uri${#1}:${1}e" > "meta-${BASH_REMATCH[1]}.torrent"
+#+END_SRC
+
+
+# magnet2torrent (https://github.com/danfolkes/Magnet2Torrent):
+python Magnet_To_Torrent2.py <magnet link> [torrent file]
+# set up for rtorrent
+mv test.torrent ~/bittorent/watch/
+# begin download:
+rtorrent
+
+** xbindkeys
+# refresh from config:
+xbindkeys
+# get key code:
+xbindkeys -k
+xev
+* macos
+
+take a screenshot:
+shift-command 5
+
+https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unidentified-developer-mh40616/mac
+bypass warning to open app, because it hasn't been signed:
+right click > open
+
+instead of vmstat, use iostat for disk/cpu/load average.
+
+instead of swapon, to get swap usage:
+sysctl vm.swapusage
+
+** xcode
+checking the xcode version:
+
+/usr/bin/xcodebuild -version
+
+** get ip addy:
+ifconfig | grep "inet" | grep -v 127.0.0.1
+it's the address just to the right of "inet"
+** shell
+opening zshell:
+zsh
+
+change shell:
+chsh -s /bin/zsh
+** mounting an ext4 filesystem
+https://www.jeffgeerling.com/blog/2017/mount-raspberry-pi-sd-card-on-mac-read-only-osxfuse-and-ext4fuse
+
+diskutil list
+
+sudo ext4fuse /dev/disk3s1 ~/mount -o allow_other
+
+sudo umount ~/mount
+
+diskutil eject /dev/disk3
+
+** updating software:
+softwareupdate --list
+softwareupdate --install -a
+
+** restart
+sudo shutdown -r now
+
+** enable gdb permissions w/ keychain cert
+https://dev.to/jasonelwood/setup-gdb-on-macos-in-2020-489k
+
+https://gist.github.com/danisfermi/17d6c0078a2fd4c6ee818c954d2de13c
+
+OR
+just use lldb, which has some limitations like not following a forked process, but it otherwise much easier to use.
+** get wifi password
+
+security find-generic-password -ga "Stcharles2.5"
+
+** installing valgrind
+https://stackoverflow.com/a/61359781/1884158
+
+brew tap LouisBrunner/valgrind
+brew install --HEAD LouisBrunner/valgrind/valgrind
+
+* dtrace
+https://8thlight.com/blog/colin-jones/2015/11/06/dtrace-even-better-than-strace-for-osx.html
+
+# get all syscalls:
+sudo dtrace -ln 'syscall:::entry'
+
+# using dtruss like strace:
+sudo dtruss -t open_nocancel -p $PID
+
+sudo dtrace -qn 'syscall::write:entry, syscall::sendto:entry /pid == $target/ { printf("(%d) %s %s", pid, probefunc, copyinstr(arg1)); }' -p $SERVER_PID
+
+# built-in dtrace scripts:
+ls /usr/bin/*.d
+
+# For example, filebyproc.d traces for files being opened, by process:
+sudo filebyproc.d
+
+* blog
+:PROPERTIES:
+:ORDERED:  t
+:END:
+** blog.lukeswart.net/wordpress:
+  ps aux | grep apache2
+  /etc/apache2
+* IRC commands
+** znc bouncer:
+irc.lukeswart.net:5005
+*** setup ssl:
+http://www.oftc.net/NickServ/CertFP/#AddCertFPtoNS
+http://wiki.znc.in/Cert
+https://freenode.net/certfp/
+scp -i ~/.ssh/lucas-instance.pem nick.pem znc:~/nick.pem
+# inside znc server:
+mv nick.pem /home/znc-admin/.znc/users/zncuser/networks/freenode/moddata/cert/nick.pem
+# add nick.pem fingerprint to nickserv
+/msg nickserv cert [list | add | del]
+# module to auth via ssl clients:
+http://wiki.znc.in/Certauth
+
+*** znc irc bouncer:
+data dir: ~/docker-znc/znc-data
+relevant dirs and files:
+znc.pem
+users
+configs
+
+# setup SSL on IRC client:
+http://www.oftc.net/NickServ/CertFP/#AddCertFPtoNS
+# Setup ZNC:
+https://www.digitalocean.com/community/tutorials/how-to-install-znc-an-irc-bouncer-on-an-ubuntu-vps
+# znc unix user:
+znc-admin
+# znc port:
+5000
+# znc username:
+zncuser
+# znc un pw:
+1****4
+
+lswart
+# ident:
+saintlucas
+# real name:
+joeblow
+
+# znc web admin:
+http://irc.lukeswart.net:5005/
+http://ec2-54-187-221-250.us-west-2.compute.amazonaws.com:5005/
+http://54.187.221.250:5005/
+curl -Is http://localhost:5005
+wget -p http://localhost:5005
+# restart server:
+su znc-user
+cd .znc/
+znc
+
+[ ** ]To connect to this ZNC you need to connect to it as your IRC server
+[ ** ]using the port that you supplied.  You have to supply your login info
+[ ** ]as the IRC server password like this: user/network:pass.
+[ ** ]
+[ ** ]Try something like this in your IRC client...
+[ ** ]/server <znc_server_ip> 5005 zncuser:<pass>
+[ ** ]And this in your browser...
+[ ** ]http://<znc_server_ip>:5005/
+
+# Emacs client setup:
+http://www.emacswiki.org/emacs/ErcZNC
+# host
+ec2-54-187-221-250.us-west-2.compute.amazonaws.com
+# port
+5005
+# network slug
+irc.freenode.net
+
+*** adding modules to znc:
+wget https://raw.githubusercontent.com/FooBarWidget/znc/master/modules/channel_away.cpp
+mv channel_away.cpp /usr/local/src/znc-1.4/modules/
+cd /usr/local/src/znc-1.4
+sudo make
+sudo make install
+# kill znc process
+znc
+# log into admin, add/save module, then restart
+*** bip proxy server:
+# online guide:
+  https://flexion.org/posts/2014-04-bip-irc-proxy.html
+  http://nerderati.com/2010/11/29/perpetual-irc-the-proxy-edition/
+  # un:
+  bipuser
+  # pw:
+  1***24
+  # pw hash:
+  51f7ad3f65b84ecddf7fb636f296a9bada09b9cb
+  02f91a32b0463f1ca408da5c184e12f09b8e25de
+  20bd354ca2738a88184929bfd27a95318c84ea9b
+  # (taken from bipmkpw bipuser)
+
+  logging onto bip from erc:
+  bipuser:1*24:freenode
+  lswart:a****24:freenode
+  lswart:1****24:freenode
+
+  # to change config:
+  sudo vim /etc/bip.conf
+  # for bip.conf info:
+  man bip.conf
+  # start bip server:
+  sudo /etc/init.d/bip start
+  sudo /etc/init.d/bip stop
+
+** basic authentication:
+pizzabrasi12324@#
+# register
+/msg nickserv register YOURPASSWORD YOUREMAIL
+# register multiple nicks to group:
+/msg nickserv group MAIN_NICK PASSWORD
+# drop current nick from group:
+/msg nickserv ungroup
+# drop a nick:
+/msg nickserv drop MAIN_NICK PASSWORD
+# switch to nick:
+/nick lswart
+# nickserv:
+/msg NickServ info <nick>
+# freenode/mozilla login:
+/msg NickServ IDENTIFY <account> <password>
+/msg NickServ IDENTIFY lswart <password>
+# oftc login:
+/msg NickServ IDENTIFY <password> <account>
+/msg NickServ IDENTIFY <password> modulitos
+** ssl
+# ssl
+/msg NickServ cert add fingerprint
+# remove old version of you that network thinks is still connected:
+/msg Nickserv GHOST nickname password
+** sasl
+http://wiki.znc.in/Sasl
+# set username and password for sasl auth (save as plaintext on server!):
+/msg *sasl Set <username> [<password>]
+** basic status stuff:
+# describe user:
+/whois lswart
+# join channel:
+/join #gslug
+# get users on channel:
+/names
+# leave channel:
+/part
+
+** logs:
+# shell suggestion:
+http://wiki.znc.in/Shell
+** Running a channel
+# renew ops:
+/msg chanserv op #mapseed
+# check if the channel exists:
+/mode #mapseed
+# register the channel:
+/msg chanserv register #mapseed
+/msg chanserv register #smartercleanup
+# Channel topic: (overhead banner)
+/topic #mapseed Plant a map, grow a community -- mapseed.org
+# Channel entry message: (channel greeting, for what doesn't usually fit in the topic)
+/msg ChanServ SET #mapseed ENTRYMSG Plant a map, grow a community! mapseed.org
+
+* version control
+** git
+# commit only part of file:
+git add -p file.txt
+# unstaging
+git reset -- <path>
+# removing all untracked files - this will delete files!
+git clean -f <path>
+*** reflog
+git reflow show
+git checkout HEAD@{1}
+*** collaborative rebasing (instead of merging):
+**** rebasing on feature branch, then rebase on public branch:
+http://randyfay.com/content/rebase-workflow-git
+# Check out the "public" branch:
+git checkout 7.x-1.x
+# Get the latest version from remote:
+git pull
+# topical branch:
+git checkout -b comment_broken_links_101026
+# do stuff here.. Make commits.. test...
+# Update your repository's origin/ branches from remote repo:
+git fetch origin
+# Plop our commits on top of everybody else's:
+git rebase origin/7.x-1.x
+# Switch to the local tracking branch:
+git checkout 7.x-1.x
+# This won't result in a merge commit:
+git pull
+# Pull those commits over to the "public" branch:
+git rebase comment_broken_links_101026
+(do a 'git pull --rebase' here?)
+# Push the public branch back up, with my stuff on the top:
+git push
+
+# *** for pull requests:
+# http://www.mattsnider.com/using-git-interactive-rebase-with-feature-branches/
+# # update your feature branch (once per day)
+# git fetch origin master
+# git rebase origin/master
+# # when feature is ready, squash commits as needed
+# git rebase -i origin/master
+# # Next, go back to master and merge the MyFeature branch:
+# git checkout master
+# git rebase origin/master
+# git merge MyFeature
+# # Lastly, push your changes to the upstream:
+# git push origin master
+
+*** reverting commits and changes:
+# Revert a commit:
+http://stackoverflow.com/questions/4114095/revert-to-a-previous-git-commit
+# Undo a commit and redo:
+git commit
+git reset --soft HEAD~1
+(edit)
+git add
+git commit -c ORIG_HEAD
+# redo last commit message:
+git cm --amend
+git cm --amend -m "New commit message"
+# If you want to revert changes made to your working copy, do this:
+git checkout .
+# If you want to revert changes made to the index (i.e., that you have added), do this:
+git reset
+# If you want to revert a change that you have committed, do this:
+git revert <commit>
+git revert <commit>^..<commit> (inclusive)
+# reverting merged commit:
+git revert -m 1 <merge-commit>
+# delete commits up to commit x:
+# look at the output of git log, find the commit id of the commit you want to back up to, and then do this:
+# BE SURE TO STASH, as this DELETES THE WORKING DIRECTORY!
+git reset --hard <sha1-commit-id>
+
+*** Add remote and tracking remote branch
+# first add the remote
+git remote add my-remote git:my-remote-url
+git fetch my-remote
+git checkout -b remotes/my-remote/my-branch
+git branch -u remotes/my-remote/my-branch
+git push my-branch HEAD:<remote-branch-name>
+*** rebasing commits between branches:
+git rebase --onto <destination-branch> <shaid-parent-of-oldest-commit> <newest-commit>
+git rebase HEAD <destination-branch>
+http://stackoverflow.com/questions/1994463/how-to-cherry-pick-a-range-of-commits-and-merge-into-another-bran
+*** tracking branches
+# set current branch to track the remote branch:
+git branch -u origin/master
+# set branch foo to track the remote branch:
+git branch -u origin/master foo
+# other:
+git branch branch_name --set-upstream-to hub/master
+*** deleting remote branches
+# to delete remote branches:
+git push origin --delete <branchName>
+# Remove the local branch if its corresponding remote branch is removed
+git pull --prune
+# (or just run `git branch -D <branchName>`)
+
+*** showing changes:
+git diff --names-only <..>..<..>
+*** cherry-pick
+# cherry-pick a single commit onto current branch:
+git cherry-pick 64af9054
+# note: '('=inclusive, '['=exclusive
+# charry pick a range of commmits [<hash-1>, <hash-2>):
+git cherry-pick <hash-1>..<hash-2>
+# charry pick a range of commmits (<hash-1>, <hash-2>):
+git cherry-pick <hash-1>^..<hash-2>
+*** view a file on another branch:
+git show branch:file
+git show branch:file > exported_file
+*** force pull
+# update index to our branch:
+git checkout lukeswart/updates
+#
+git reset --hard origin/lukeswart/updates
+*** tags
+# show a specific tag:
+git show <tag_name>
+# checkout a specific tag:
+git checkout tags/<tag_name>
+# list tags on remote repo
+git ls-remote --tags origin | more
+git tag --list <optional-pattern>
+# git tag
+git tag <tag_name> <commit_id>
+# pushing tags:
+git push origin --tags
+# pushing tags and commits simultaneously:
+git push origin --follow-tags
+**** how to update/change an existing tag on remote:
+git tag -d <tagname>
+git push origin :refs/tags/<tagname>
+git tag <tagname> <commitId>
+git push --tags
+*** changing commit times
+http://stackoverflow.com/questions/454734/how-can-one-change-the-timestamp-of-an-old-commit-in-git
+# This changes the date (timestamp) for the last commit, in PST:
+# spring - fall:
+git commit --amend --date "Fri Feb 26 18:21:46 2019 -0700"
+# fall-spring:
+git commit --amend --date "Sat Feb 03 13:08:18 2019 -0800"
+
+# can also update non-tip commit times by interactive rebasing
+*** update commit author
+use update-commit-author script, or manually run:
+git rebase -i HEAD~4 -x "git commit --amend --author 'Author Name <author.name@mail.com>' --no-edit"
+
+update commit author script:
+(this can also be used to change other properties, like author name.)
+#+BEGIN_SRC bash
+git filter-branch -f --env-filter '
+OLD_EMAIL="username@users.noreply.github.com"
+CORRECT_EMAIL="modulitos@users.noreply.github.com"
+if [ "$GIT_COMMITTER_EMAIL" = "$OLD_EMAIL" ]
+then
+    export GIT_COMMITTER_EMAIL="$CORRECT_EMAIL"
+fi
+if [ "$GIT_AUTHOR_EMAIL" = "$OLD_EMAIL" ]
+then
+    export GIT_AUTHOR_EMAIL="$CORRECT_EMAIL"
+fi
+' --tag-name-filter cat -- --branches --tags
+#+END_SRC
+
+*** editing commit authors:
+https://stackoverflow.com/a/8434756/1884158
+
+git rebase -i HEAD~6 # as required
+
+# then add 'exec' lines after the commits you want to edit:
+
+pick abcd Someone else's commit
+pick defg my bad commit 1
+exec git commit --amend --author="New Author Name <email@address.com>" -C HEAD
+pick 1234 my bad commit 2
+exec git commit --amend --author="New Author Name <email@address.com>" -C HEAD
+
+*** reference revisions
+https://www.kernel.org/pub/software/scm/git/docs/gitrevisions.html
+*** alpine
+# set timezone
+http://wiki.alpinelinux.org/wiki/Setting_the_timezone
+*** submodule
+git submodule init
+git submodule update
+# to update a specific submodule, this *might* work (haven't tested):
+git submodule update my module
+*** resolve merge conflicts
+git-resolve-[ours,theirs]
+** mercurial
+# git -> mercurial tips
+https://mercurial.selenic.com/wiki/GitConcepts?highlight=%2528gitconcepts%2529
+# pull:
+hg pull
+# "stage" chunks - interactive CLI
+hg record
+
+* k8s
+debugging deployment issues:
+kubectl describe deployment api
+kubectl describe deployment http
+kubectl describe deployment mapi
+k describe pod <pod>
+
+Look for "Image" to see what image they're deployed at.
+Don't use k8s-pending.
+
+get images of all pods running wh:
+kubectl get pods -l=app=wh -o=custom-columns='DATA:spec.containers[*].image'
+this might be more accurate:
+kubectl get pods -o=custom-columns='DATA:spec.containers[*].image' | grep wh
+
+
+* docker:
+https://github.com/docker-library/docs/tree/master/postgres
+** install:
+# install docker/git:
+from here: https://github.com/discourse/discourse/blob/master/docs/INSTALL-cloud.md
+wget -qO- https://get.docker.com/ | sh
+
+# install into ubuntu from here:
+https://docs.docker.com/engine/installation/linux/ubuntu/#install-using-the-repository
+# Debian:
+$ curl -sSL https://get.docker.com/ | sh
+# CentOS:
+https://docs.docker.com/installation/centos/
+sudo yum update
+curl -sSL https://get.docker.com/ | sh
+sudo service docker start
+sudo docker run hello-world
+*** Use docker without sudo:
+# Add the docker group if it doesn't already exist.
+sudo groupadd docker
+# Add the connected user "${USER}" to the docker group. Change the user name to match your preferred user.
+sudo gpasswd -a ${USER} docker
+
+# Restart the Docker daemon:
+sudo service docker restart
+# Either do a `newgrp docker` or log out/in to activate the changes to groups.
+
+# or:
+# do this then restart:
+sudo usermod -aG docker <username>
+
+*** Docker-compose
+https://docs.docker.com/compose/install/
+pip install -U docker-compose==1.5.0rc1
+** info
+# local storage location:
+/var/lib/docker
+** commands
+*** attaching to container:
+# run one-off container with bash cli:
+docker run --rm=true -e POSTGRES_PASSWORD=mysecretpassword --name "livestories-postgres-9.5" -i -t postgres:9.3 bash
+# or:
+docker run --rm=true --name "test" -i -t smartercleanup/platform-data:release-0.7.3 bash
+# or:
+docker exec -it <container-name> bash
+# or (not sure if this works):
+docker attach <container-id>
+*** run:
+# docker run -t -i lukeswart/geoserver bash
+docker run -i -t geoserver /bin/bash
+# postgis run container
+docker run --name "postgis" -d -t kartoza/postgis
+docker run --rm=true --name "postgis" -d -t kartoza/postgis
+*** container/image management:
+# stop all containers:
+docker stop $(docker ps -a -q)
+# delete all containers:
+docker rm $(docker ps -a -q)
+# force stop a container:
+docker rm -f <container-name>
+# remove dangling images (often better after deleting unused containers):
+docker rmi $(docker images -f "dangling=true" -q)
+# get container's ip address:
+docker inspect container_name | grep IPAddress
+# View docker logs:
+docker logs $CONTAINER_ID | head
+# image cleanup script:
+#!/bin/bash
+
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+docker rmi $(docker images -a -q)
+
+*** copying files:
+# copy file from host to container:
+docker cp foo.txt mycontainer:/foo.txt
+
+# copy from container to host:
+docker cp geoserver:/usr/local/tomcat/conf/web.xml /home/lucas/docker-geoserver/resources
+# copy to/from container and host via local file system:
+sudo cp ~/docker-geoserver/resources/conf/web.xml /var/lib/docker/devicemapper/mnt/2b303a40f74fc700aacb3b9a6a10b11c763f3c47df4882b32f900ced187c95f5/rootfs/usr/local/tomcat/conf/web.xml
+/var/lib/docker/devicemapper/mnt/2b303a40f74fc700aacb3b9a6a10b11c763f3c47df4882b32f900ced187c95f5/rootfs/usr/local/tomcat/conf/web.xml
+# getting image info:
+sudo cat /var/lib/docker/repositories-aufs | python -mjson.tool
+*** logs
+# View container logs
+sudo docker logs -f <containerID>
+
+*** Build:
+# build from a Dockerfile in current directory:
+docker build -f docker-data-container/Dockerfile -t smartercleanup/platform-data:release-0.7.3 .
+# with no cache:
+docker build --no-cache -t ...etc
+** scripts
+# get the containers working directory (should be `/` if empty):
+docker inspect --format '{{ .ContainerConfig.WorkingDir }}' [image id]
+** networking
+# could not find an available predefined network
+https://github.com/docker/libnetwork/issues/779
+** run django example:
+cat > /etc/apt/sources.list
+deb http://archive.ubuntu.com/ubuntu trusty main universe multiverse
+
+apt-get update
+apt-get install python-pip
+
+pip install virtualenv
+# this did not work ("you have held broken packages"):
+# apt-get install libpda3ab2a8-3059-4a99-afcc-72268ffc746aq-dev python-dev
+
+mkdir docker_django && cd docker_django
+virtualenv --no-site-packages venv
+source venv/bin/activate
+pip install django-toolbelt
+django-admin.py startproject docker_django .
+Run the Django server
+python manage.py runserver 0.0.0.0:8000
+** data container
+# inside the data's folder, build the image (note that the container's folder is named and mounted via VOLUME command inside the Dockerfile):
+docker build -t zncdata .
+# then build the container:
+docker create -v /znc-data --name zncdata lukeswart/dotznc /bin/true
+# Mounting the data container:
+docker run -d -p 5005:6667 --volumes-from zncdata --name znc jimeh/znc
+# backing up data container:
+https://docs.docker.com/userguide/dockervolumes/
+# (note that 'zncdata' container and  `/znc-data` have to match)
+# creates a `backup.tar` file in your $(pwd) directory - but kills any containers that are linked to 'zncdata
+docker run --volumes-from zncdata -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /znc-data
+# create new data container with new mount volume:
+docker run -v /znc-data --name zncdata2 ubuntu /bin/bash
+docker run --volumes-from zncdata2 -v $(pwd):/backup ubuntu cd /znc-data && tar xvf /backup/backup.tar
+** change image directory
+https://docs.docker.com/articles/systemd/
+https://wiki.archlinux.org/index.php/Systemd#editing-provided-unit-files
+** docker compose docs:
+# good notes:
+http://tuxknight-notes.readthedocs.org/en/latest/docker/docker_compose.html
+** setting timezone in images/containers
+http://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
+Or put this in startup script:
+#+BEGIN_SRC bash
+# Relocate the timezone file
+mkdir -p /config/etc && mv /etc/timezone /config/etc/ && ln -s /config/etc/timezone /etc/
+# Set timezone as specified in /config/etc/timezone
+dpkg-reconfigure -f noninteractive tzdata
+# Set the time zone
+echo "$TZ" > /config/etc/timezone
+#+END_SRC
+** container with cron job:
+https://forums.docker.com/t/how-to-run-a-cron-job-inside-a-container-alpine/7759
+https://www.ekito.fr/people/run-a-cron-job-with-docker/
+* vim
+see all keybindings:
+:map
+
+* emacs
+# Super emacs setup docs:
+http://doc.rix.si/org/fsem.html#sec-8
+.dir-locals.el
+https://stackoverflow.com/a/33064091/1884158
+** Commandline:
+# run bash shell commands:
+M-!
+** debug
+M-x toggle-debug-on-error RET
+C-x C-e to 'eval-last-sexp (put point at end of exp, and eval it)
+** dired
+# common commands:
+【u】	unmark
+【U】	unmark all marked
+【% m】	mark by pattern (regex)
+【g】	refresh dir listing
+【^】	go to parent dir
+【Enter ↵】	Open the file
+【q】	Close the dir
+【C】	Copy file
+【R】	Rename/move file
+【D】	Delete file
+【+】	create a new dir
+【Z】	compress/decompress the file by gzip
+# dired plus
+M-x dired-plus-help
+M-g - grep (use -r tag for folders)
+** elisp:
+
+** elpy
+docs:
+http://elpy.readthedocs.org/en/latest/ide.html#navigation
+troubleshooting tips:
+http://stackoverflow.com/questions/14846048/python-3-3-in-emacs-ropemacs-support/32017278#32017278
+** emacs editor commands
+# define macro
+C-x ( - start macro
+C-x ) - end macro
+C-x e - execute macro
+C-u 37 C-x e - execute macro 37 times
+# save file into write protected directory ("directory write protected" error)
+if you're sure, save it as `/sudo::/filename` instead
+# auto format line breaks for text overflow:
+M-x fill-region
+M-x set-fill-column
+** ERC IRC client:
+*** M-x customize-group RET znc RET
+# Configure znc bouncer and ssl connector (erc-tls)
+*** M-x customize-variable RET tls-program RET
+**** default settings, with new setting appended:
+Hide Tls Program: Value Menu Choose commands:
+Set:
+[ ] gnutls-cli --x509cafile /etc/ssl/certs/ca-certificates.crt -p %p %h
+[ ] gnutls-cli --x509cafile /etc/ssl/certs/ca-certificates.crt -p %p %h --protocols ssl3
+[ ] openssl s_client -connect %h:%p -CAfile /etc/ssl/certs/ca-certificates.crt -no_ssl2 -ign_eof
+[ ] gnutls-cli -p %p %h
+[ ] gnutls-cli -p %p %h --protocols ssl3
+[ ] openssl s_client -connect %h:%p -no_ssl2 -ign_eof
+Other:
+INS DEL String: gnutls-cli --insecure -p %p %h
+INS DEL String: gnutls-cli --insecure -p %p %h --protocols ssl3
+INS DEL String: openssl s_client -connect %h:%p -no_ssl2 -ign_eof
+INS DEL String: openssl s_client -connect %h:%p -no_ssl2 -ign_eof -CAfile ~/.ssl/spi_ca.pem -cert ~/.ssl/erc_nick.pem
+INS
+    State : SAVED and set.
+   List of strings containing commands to start TLS stream to a host. Hide
+   Each entry in the list is tried until a connection is successful.
+   %h is replaced with server hostname, %p with port to connect to.
+   The program should read input on stdin and write output to
+   stdout.
+
+   See `tls-checktrust' on how to check trusted root certs.
+
+   Also see `tls-success' for what the program should output after
+   successful negotiation.
+Groups: Tls
+
+** evil-mode
+# turn off evil mode:
+(evil-set-initial-state 'calendar-mode 'emacs)
+** docs / getting help:
+# go to docs
+C-h i d
+C-h i h
+n/p, [/], SPC/DEL, l, m, C-u 0 c
+# list minor modes:
+M-x describe-mode
+C-h m
+# interactive mode (ie repl)
+M-x ielm
+# check *Messages* for logging info
+** gnus
+http://bradyt.com/#sec-5
+** gpg
+# encrypting a file:
+gpg -e --recipient <key ID or username> secretfile.org
+http://emacs-fu.blogspot.com/2011/02/keeping-your-secrets-secret.html
+# header:
+-*- mode: org -*- -*- epa-file-encrypt-to: ("luke.swart@gmail.com") -*-
+** hooks
+*** add/remove hook configs:
+how to remove hooks that have lambdas (and using defun's instead of lambda's):
+http://emacs.stackexchange.com/questions/18885/how-to-unbind-a-mode-hook-without-restarting/18887#18887
+#+BEGIN_SRC elisp
+(defun my-mode-config ()
+  (local-set-key (kbd "C-c l") 'some-fancy-function))
+(add-hook 'my-mode-hook 'my-mode-config)
+
+(remove-hook my-mode-hook 'my-mode-config)
+#+END_SRC
+
+** js2-mode
+# show parse errors:
+js2-next-error
+moves to next error. It's bound to C-c C-` by default
+** language input:
+set-input-method
+spanish-[post][pre]?
+korean-hangul
+한극
+** Markdown mode
+# regular export:
+C-c C-c C-e
+# render in default browser (not working):
+C-c C-c p
+** org-mode
+http://orgmode.org/worg/org-tutorials/org4beginners.html
+*** Exporting:
+org-html-export-to-html
+#+INFOJS_OPT: view:overview toc:true
+*** general key bindings:
+M-up/down – move a headline up or down
+M-left/right – promote or demote a headline
+M-RET – insert a new headline
+C-S-RET - insert TODO org-insert-todo-header
+M-S-RET - insert TODO org-insert-todo-header-respect-content
+# source code folding:
+#+BEGIN_SRC bash
+blah blah blah
+more bash code
+#+END_SRC
+# emphasize character - italics, bold, etc
+1. Mark you region
+2. Click C-c C-x C-f * for bold, C-c C-x C-f / for italic etc.
+(org-emphasize &optional CHAR)
+*** Tables:
+# escape \vert characters for |
+M-x org-toggle-pretty-entities
+**** creation:
+# To convert region to table:
+# specify delimeter:
+zu - universal argument (if int, => number of whitespaces to denote col delimeter)
+# create the table from region, or empty table(auto-read TAB, csv):
+C-c | => create-table-or-convert-from-region
+# create table from scratch:
+|Name|Phone|Age <RET> |- <TAB>
+# table alignment and char limits:
+|            File | TD | FD | MF | Notes:               |
+|-----------------+----+----+----+----------------------|
+|           <r15> |    |    |    | <l20>                |
+| /data/capture=> |    |    |    |                      |
+**** operations/navigation:
+# insert col (left of cursor)
+M-S-<right>
+# delete current col
+M-S-<left>
+# insert new row
+M-S-<down>
+# Table navigation
+S<TAB> / <TAB>: next/previous field
+M-a/e - move to beginning/end of field
+# export table (csv as default)
+org-table-export
+http://orgmode.org/manual/Built_002din-table-editor.html
+# visualize rows/cols:
+C-c }
+# sort table - point position indicated sort col
+C-c ^
+**** formulas
+# field and range:
+http://orgmode.org/manual/Field-and-range-formulas.html#Field-and-range-formulas
+# column formulas:
+http://orgmode.org/manual/Column-formulas.html#Column-formulas
+*** Task management:
+# cycle workflow:
+S-left/right
+# Add more states to the TODO's:
+#+TODO: TODO IN-PROGRESS WAITING DONE
+# Insert a new TODO entry below the current one:
+S-M-<RET>     (org-insert-todo-heading)
+*** babel / org structure templates
+# insert src blocks:
+http://emacs.stackexchange.com/questions/12841/quickly-insert-source-blocks-in-org-mode
+just press `<s TAB`! (enabled by requiring org-tempo first)
+or: C-c C-,
+or: M-x org-insert-structure-template
+
+#+BEGIN_SRC
+
+#+END_SRC
+** python
+# useful keybindings:
+http://python.about.com/b/2007/09/24/emacs-tips-for-python-programmers.htm
+*** running scripts:
+# -*- mode: ${1:mode} -*-
+# run a python file on currently saved file (only works without arguments)
+:s !python % (or just ':!python %' in emacs-evil mode)
+# open interactive shell with script imported
+C-c C-c
+ie:
+>>> main()
+** regex
+# delete all lines not starting with '<' (useful for irc copy/paste):
+:g!/^</d
+:g!/^\/graphql/d
+** tern
+*** troubleshoot
+`M-x list-processes` to view tern processes
+*** default config:
+In the tern file from the repo under bin/tern, I edited the default plugins here:
+#+BEGIN_SRC js
+var defaultConfig = {
+  libs: [],
+  loadEagerly: false,
+  plugins: {"commonjs":{}, "node":{}, "requirejs":{}, "node_resolve":{}},
+  ecmaScript: true,
+  ecmaVersion: 6,
+  dependencyBudget: tern.defaultOptions.dependencyBudget
+};
+#+END_SRC
+
+** pdf tools
+https://github.com/politza/pdf-tools
+# jump to page:
+M-g g
+
+** TRAMP
+C-x C-f /ssh:lucas@my.ip.net:~/path/to/file
+M-x tramp-cleanup-all-connections
+/ssh:mapseed-flavors-pod0:~/
+** vim editor commands
+`%` means 'select all'
+%!python -m json.tool
+(and just hit 'u' to undo those results)
+*** define macro
+# start macro:
+q
+# define register for macro ('a' in example here):
+a
+# define macro itself:
+asdflkjaweofiawj
+# end macro recording:
+q
+# execute macro anytime ('a' in example):
+@ a
+
+*** saving to a read-only file:
+:w !sudo tee %
+# breakdown:
+:w = Write a file.
+!sudo = Call shell sudo command.
+tee = The output of the vi/vim write command is redirected using tee.
+% = Triggers the use of the current filename.
+Simply put, the ‘tee’ command is run as sudo and follows the vi/vim command on the current filename given.
+
+*** output shell command into buffer at point:
+:read !ls -la
+# macros:
+qd	start recording to register d
+...	your complex series of commands
+q	stop recording
+@d	execute your macro
+@@	execute your macro again
+*** html navigation:
+# You can jump between tags using visual operators, in example:
+
+# Place the cursor on the tag.
+Enter visual mode by pressing v.
+Select the outer tag block by pressing a+t or i+t for inner tag block.
+Your cursor should jump forward to the matching closing html/xml tag. To jump backwards from closing tag, press o or O to jump to opposite tag.
+
+Now you can either exit visual by pressing Esc, change it by c or copy by y.
+*** case
+# toggle, to-lower, to-upper:
+<g~, gu, gU> + <movement>
+*** regex subs
+**** subbing only within a visual selection:
+http://vim.wikia.com/wiki/Search_and_replace_in_a_visual_selection
+The substitute command (:s) applies to whole lines, however the \%V atom will restrict a pattern so that it matches only inside the visual selection. This works with characterwise and blockwise selection (and is not needed with linewise selection).
+For example, put the cursor on this line:
+
+music amuse fuse refuse
+
+In normal mode, type ^wvee to visually select "amuse fuse" (^ goes to first nonblank character, w moves forward a word, v enters visual mode, e moves forward to end of next word). Then press Escape and enter the following command to change all "us" to "az" in the last-selected area within the current line:
+
+:s/\%Vus/az/g
+
+The result is:
+
+music amaze faze refuse
+
+** flycheck
+M-x flycheck-verify-setup
+to select/enable individual checkers, and check for issues
+** dir-local variable
+M-x add-dir-local-variable
+
+((python-mode
+  (flycheck-checker . python-mypy)))
+
+https://www.gnu.org/software/emacs/manual/html_node/emacs/Directory-Variables.html
+* Jetbrains IDE's
+# IdeaVim freezes:
+killall -9 ibus-x11
+
+https://stackoverflow.com/questions/11416111/how-to-automatically-navigate-to-the-current-class-in-intellij-idea-project-tool
+to navigate to current file in project window:
+alt+f1, <enter>
+
+** rust projects
+settings -> languages & frameworks -> rust
+check "run external linter to analyze code on the fly"
+
+enable external 'cargo check' linter
+ - can be resource consuming for large projects
+
+commenting indentation?
+
+* IAAS
+** AWS
+login: https://<uid>.signin.aws.amazon.com/console
+*** aws cli:
+# get account no:
+aws iam get-user | awk '/arn:aws:/{print $2}'
+**** using awscli with multiple profiles
+http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+# configure additional named profiles:
+aws configure --profile user2
+# set a specific profile that is already configured:
+export AWS_DEFAULT_PROFILE=user2
+# or just use a flag:
+aws ec2 describe-instances --profile user2
+
+**** dynamodb:
+# GET:
+aws dynamodb get-item --table-name redir_urls --key file://key.json
+#+BEGIN_SRC json
+{
+  "token": { "S": "asdf" }
+}
+#+END_SRC
+where "token" is our primary key
+
+# POST:
+aws dynamodb put-item --table-name redir_urls --item file://dynamo-test.json --return-consumed-capacity TOTAL
+# where dynamo-test.json is as follows:
+#+BEGIN_SRC json
+{
+  "token": { "S": "asdf" },
+  "destination_url": { "S": "http://community-iq-demo.s3-website-us-west-2.amazonaws.com/report?selectedLocaleId=US%3A24009&contrastIndicatorId=HIW%3A296&desiredSimilarLocales=5&similarityIndicatorIds=HIW%3A13&similarityIndicatorIds=HIW%3A83&similarityIndicatorIds=HIW%3A296" }
+}
+#+END_SRC
+and "token" is our primary key
+**** aws s3
+# delete all contents from bucket:
+aws --profile livestories s3 rm s3://livestories-iq-screenshots-dev/ --recursive
+# include/exclude:
+aws --profile livestories s3 --region us-west-2 rm s3://iq-dev.livestories.com/ --recursive --exclude "*" --include "f*"
+# delete a folder from a bucket:
+AWS_DEFAULT_PROFILE=livestories aws s3 rm s3://apps-staging.livestories.com/mybucket --recursive
+
+*** install everything and set up a server:
+
+*** mount EBS
+# docs
+http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-using-volumes.html
+http://www.question-defense.com/2012/06/02/create-and-mount-amazon-aws-ec2-ebs-storage-to-aws-ec2-linux-instance
+# determine whether file is formatted with '-s':
+sudo file -s /dev/xvdf
+# backup fstab:
+sudo cp /etc/fstab /etc/fstab.orig
+# To mount this EBS volume on every system reboot, add an entry for the device to the /etc/fstab file (followed by example):
+device_name  mount_point  file_system_type  fs_mntops  fs_freq  fs_passno
+/dev/xvdf       /data   ext4    defaults,nofail        0       2
+# test by mounting everything again:
+# note that you may need to format the filesystem beforehand (ie `mkfs -t ext4 /dev/xvdg`)
+sudo mount -a
+# unmount
+sudo umount -d /dev/xvdf
+
+
+*** s3 bucket permissions
+Allow anyone to view the bucket:
+#+BEGIN_SRC js
+{
+        "Version": "2012-10-17",
+        "Statement": [
+                {
+                        "Sid": "AddPerm",
+                        "Effect": "Allow",
+                        "Principal": {
+                                "AWS": "*"
+// Doesn't work for some reason...
+//				"AWS": "arn:aws:iam::800628757259:user/Lucas"
+                        },
+                        "Action": "s3:GetObject",
+                        "Resource": "arn:aws:s3:::<bucket-name-here>/*"
+                }
+        ]
+}
+#+END_SRC
+old:
+#+BEGIN_SRC js
+{
+        "Version": "2008-10-17",
+        "Id": "Policy1357935677554",
+        "Statement": [
+                {
+                        "Sid": "Stmt1357935647218",
+                        "Effect": "Allow",
+                        "Principal": {
+                                "AWS": "arn:aws:iam::800628757259:user/Lucas"
+                        },
+                        "Action": "s3:ListBucket",
+                        "Resource": "arn:aws:s3:::smartercleanup-api"
+                },
+                {
+                        "Sid": "Stmt1357935676138",
+                        "Effect": "Allow",
+                        "Principal": {
+                                "AWS": "arn:aws:iam::800628757259:user/Lucas"
+                        },
+                        "Action": "s3:PutObject",
+                        "Resource": "arn:aws:s3:::smartercleanup-api/*"
+                },
+                {
+                        "Sid": "Stmt1357935676138",
+                        "Effect": "Allow",
+                        "Principal": {
+                                "AWS": "arn:aws:iam::800628757259:user/Lucas"
+                        },
+                        "Action": "s3:GetObject",
+                        "Resource": "arn:aws:s3:::smartercleanup-api/*"
+                }
+        ]
+}
+#+END_SRC
+
+** gcloud
+# in addition to setting a k8s cluster, we need to set the gcloud project:
+gcloud config set project dev-wse
+
+# list projects:
+gcloud config list project
+
+** google cloud compute
+*** Firewalls:
+# add tags to instances
+gcloud compute instances add-tags smarter-cleanup --tags smarter-cleanup
+gcloud compute instances add-tags smarter-cleanup-flavors --tags smarter-cleanup-flavors
+gcloud compute instances list
+# add firewall rules, which can be tag specific
+gcloud compute firewall-rules create <rule-name> --allow tcp:8001 --target-tags=<name-of-your-tag> --description="<your-description-here>" --source-ranges=0.0.0.0/0
+gcloud compute firewall-rules create open-flavors --allow tcp:8010 tcp:8011 --target-tags=smarter-cleanup-flavors --source-ranges=0.0.0.0/0
+gcloud compute firewall-rules update duwamish-api --allow tcp:8001 --description="duwamish-api deployment" --source-ranges=0.0.0.0/0
+# update to allow all instances for the rule:
+gcloud compute firewall-rules update duwamish-api --target-tags
+gcloud compute firewall-rules list
+*** Account:
+# public and elastic ip:
+162.222.183.162
+# key:
+google_compute_engine
+
+*** keys
+# add keys to a GCE project:
+echo user1:$(cat ~/.ssh/key1.pub) > /tmp/a
+echo user2:$(cat ~/.ssh/key2.pub) >> /tmp/a
+gcloud compute project-info add-metadata --metadata-from-file sshKeys=/tmp/a
+*** Mounting a persistent disk:
+https://cloud.google.com/compute/docs/disks/persistent-disks#attachdiskcreation
+# TLDR;
+# Attach disk to instance:
+gcloud compute instances attach-disk INSTANCE_NAME --disk DISK_NAME --zone <ZONE-OF-DISK>
+# Create your disk mount point, if it does not already exist:
+sudo mkdir -p MOUNT_POINT
+# Determine the device location of your persistent disk:
+ls -l /dev/disk/by-id/google-*
+# Format and mount your persistent disk:
+sudo /usr/share/google/safe_format_and_mount -m "mkfs.ext4 -F" /dev/DEVICE_LOCATION MOUNT_POINT /path/to/desired/mount/point
+sudo /usr/share/google/safe_format_and_mount -m "mkfs.ext4 -F" /dev/sdb geoserver
+* PAAS
+# heroku deploy env variables from file:
+heroku config:set --app rightturnahead VAR=blah VAR2=blah
+* shell scripting:
+** python:
+# python shell script example/article:
+http://www.jperla.com/blog/post/a-clean-python-shell-script
+* patterns
+sandi metz: https://www.youtube.com/watch?v=OMPfEXIlTVE
+ - inheritance is for specialization, not for code re-use
+ - we can follow this recipe to infer composition from inheritance:
+    - 1. isolate the trait that varies
+    - 2. name the trait (eg: “order” and “format”)
+    - 3. define the role (eg: in-order vs shuffle for “order”, single and echo for “format”)
+    - 4. inject the players (aka pluggable dependency injection)
+ - here’s a highlight where Sandi breaks down the traits: https://www.youtube.com/watch?v=OMPfEXIlTVE&t=1644s
+ - her example was a bit of a straw man - it would be interesting to apply this in the real world
+
+* data storage
+** postgres:
+*** install:
+**** Authenticate users (change to 'md5'):
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# "local" is for Unix domain socket connections only
+local   all             all                                     peer
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+host    all             all             ::1/128                 md5
+
+**** postgres 9.3 on centOS
+# http://www.unixmen.com/configure-postgresql-django-application-centos-7/
+# http://www.postgresonline.com/journal/archives/329-An-almost-idiots-guide-to-install-PostgreSQL-9.3,-PostGIS-2.1-and-pgRouting-with-Yum.html
+# yum install postgresql93 postgresql93-server postgresql93-libs postgresql93-contrib postgresql93-devel
+http://www.cyberciti.biz/faq/installing-rhel-epel-repo-on-centos-redhat-7-x/
+http://stackoverflow.com/questions/6790088/postgresql-bash-psql-command-not-found
+export PATH=/usr/pgsql-9.3/bin:$PATH
+*** psql
+# confirm you have a connection:
+psql -U postgres -d <DBNAME> -c "SELECT postgis_version()"
+# connecting to AWS RDS:
+psql \
+   --host mapseed-dev-api-2.c8p17yo7f4lc.us-west-2.rds.amazonaws.com \
+   --port 5432 \
+   --username postgres \
+   --password
+
+**** Easier viewing of long columns:
+http://reprojected.com/
+# First… turn off the pager
+\pset pager
+# Next, turn on expanded display
+\x
+
+**** list foreign key relationships for a table:
+\d <tablename> or
+\d+ <tablename>
+# or:
+
+http://stackoverflow.com/a/1154078/1884158
+# 'stories' is the table here (just replace it with your table name, or with '<schema>.<table-name>'):
+SELECT conname, pg_catalog.pg_get_constraintdef(r.oid, true) as condef FROM pg_catalog.pg_constraint r WHERE r.confrelid = 'stories'::regclass;
+
+
+**** list column types:
+\d <tablename> or
+\d+ <tablename>
+
+# or:
+SELECT * from information_schema.columns where table_name='mytablename'
+
+
+**** output as csv
+psql -d dbname -t -A -F"," -c "select * from users;" > output.csv
+(doesn't escape commas, or stringify results, so it may be better to use the pipe operator)
+# example:
+psql -h host -p 5432 -U pgmaster -d insight -t -A -F"," -c "select distinct s.id, s.title, s.user_id, s.team_id, s.creation_date, s.publication_date from stories s join stories_versions sv on s.id = sv.story_id join stories_rows sr on sv.id = sr.version_id join stories_cells sc on sr.id = sc.row_id join stories_modules sm on sc.id = sm.cell_id where sm.type = 'liq';" > output.csv
+*** common commands:
+# view backup manifest:
+pg_restore --list nyc.backup
+# accessing psql:
+sudo su postgres
+# create user
+CREATE USER <user>;
+ALTER USER <user> with SUPERUSER CREATEDB;
+createdb
+# config (ubuntu/debian):
+/etc/postgresql/9.3/main/pg_hba.conf
+# on arch:
+/var/lib/postgres/data/pg_hba.conf
+# get postgres version (server)
+select version();
+# get postgis version (when connected to a database)
+select postgis_version();
+select postgis_full_version();
+
+# installing postgis:
+create extension postgis;
+create extension fuzzystrmatch;
+create extension postgis_tiger_geocoder;
+create extension postgis_topology;
+
+*** postgis upgrade
+select distinct probin from pg_proc where probin like '%postgis%';
+        probin
+-----------------------
+ $libdir/rtpostgis-2.1
+ $libdir/postgis-2.1
+(2 rows)
+
+s
+
+*** schema dump
+pg_dump -s -h localhost -p 5432 -U ls_user livestories > livestories.dump
+*** backups/restore
+**** rds reccomended:
+http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL.Procedural.Importing.html
+pg_dump -Fc -v -h localhost -p 5432 -U postgres shareabouts_v2 > shareabouts_v2.dump
+pg_restore -v -p 5432 -h mapseed-dev-api-2.c8p17yo7f4lc.us-west-2.rds.amazonaws.com -U postgres -d shareabouts_v2 shareabouts_v2.dump
+# tables only:
+pg_dump -U postgres --data-only --table=table_1 --table=table_2 --table=table_3 --table=... -Fc shareabouts_v2 > sharebouts_v2.rds-dump
+**** boundless recommended:
+http://workshops.boundlessgeo.com/postgis-intro/backup.html
+pg_dump -f shareabouts_v2.boundless-backup -Fc -p 5432 -U postgres -h localhost shareabouts_v2
+pg_restore -v -U postgres -h mapseed-dev-api-2.c8p17yo7f4lc.us-west-2.rds.amazonaws.com -p 5432 -d shareabouts_v2 shareabouts_v2.boundless-backup
+# for RDS migration:
+pg_dump -f shareabouts_v2.boundless-backup -Fc -p 5432 -U postgres -h localhost --schema=public shareabouts_v2
+pg_restore -U postgres -h mapseed-dev-api-2.c8p17yo7f4lc.us-west-2.rds.amazonaws.com -p 5432 -d shareabouts_v2 --disable-triggers -e --single-transaction shareabouts_v2.boundless-backup
+**** postgis recommended:
+http://postgis.net/docs/postgis_installation.html#hard_upgrade
+pg_dump -h localhost -p 5432 -U postgres -Fc -b -v -f "ms.pgis-dump" shareabouts_v2
+perl utils/postgis_restore.pl "ms.pgis-dump" | psql -h mapseed-dev-api-new.c8p17yo7f4lc.us-west-2.rds.amazonaws.com -p 5432 -U ms-user shareabouts_v2 2> errors.txt
+
+**** backup:
+# DATABASE BACKUP
+http://www.postgresql.org/docs/9.3/static/backup-dump.html
+pg_dump -U postgres -h localhost shareabouts_v2 > raingardens-production_20150807_deleted-places.dump.out
+rsync -e 'ssh -i /home/lucas/.ssh/duwamish-aws.pem' -avzh duwamish@raingardens-api:~/backups/raingardens-production_20150807.dump.out .
+rsync --progress -e 'ssh -i /home/lucas/.ssh/duwamish-aws.pem' -avzh backups/ duwamish@raingardens-api:~/backups
+# custom compressed format:
+pg_dump -U postgres -h localhost -p 25432 -i -Fc -f duwamish-production_local-trees_20151006.dmp -x -O shareabouts_v2
+pg_dump -U postgres -h localhost -p 25432 -i -Fc -f <FILE_NAME> -x -O shareabouts_v2
+# using specific schema:
+pg_dump --schema=shareabouts_v2 -U postgres -h localhost -p 25432 -i -Fc -f <FILE_NAME> -x -O shareabouts_v2
+# from dev-api:
+pg_dump -h mapseed-dev.c8p17yo7f4lc.us-west-2.rds.amazonaws.com -p 5432 -U ms_user -d shareabouts_v2 -Fc -b -v -f "ms.pgis-dump"
+**** restore:
+# delete a db:
+DROP DATABASE [IF EXISTS] <name>;
+DROP DATABASE shareabouts_v2;
+# (we need to recreate the db):
+create database shareabouts_v2
+# import from backup file:
+psql -U postgres --single-transaction --set ON_ERROR_STOP=on <dbname> < <infile>
+psql -U postgres --single-transaction --set ON_ERROR_STOP=on shareabouts_v2 < raingardens-production_20150807_2.dump.out
+psql -U postgres -h localhost -p 25432 --single-transaction --set ON_ERROR_STOP=on shareabouts_v2 < raingardens-production_20150807.dump.out
+# from custom binary backup:
+pg_restore -U postgres -h localhost -p 5432 -d shareabouts_v2 -e --single-transaction db.dmp
+pg_restore -U postgres -h postgis -p 5432 -d shareabouts_v2 -e --single-transaction db.dmp
+(we can add a `-C` flag if needed)
+# from AWS RDS (use custom binary backup)
+create role rds_user
+create role rdsadmin
+
+*** hard and soft upgrades
+http://postgis.net/docs/manual-2.2/postgis_installation.html#soft_upgrade
+*** alembic / sqlalchemy
+# docs:
+http://alembic.zzzcomputing.com/en/latest/index.html
+# show current status:
+alembic current
+# go back one migration:
+alembic downgrade -1
+# show heads (where we'll be if we run `alembic upgrade head`):
+alembic heads
+# create a new migration manually:
+alembic revision -m "create stories modules liq table"
+**** viewing history
+http://alembic.zzzcomputing.com/en/latest/tutorial.html#viewing-history-ranges
+# list last 3 migrations until current:
+alembic history -r-3:
+
+*** hstore
+# checking for empty hstore:
+WHERE fo.custom_attributes != hstore('')
+
+*** indexes
+**** checking whether an index exists:
+SELECT
+    tablename,
+    indexname,
+    indexdef
+FROM
+    pg_indexes
+WHERE
+    schemaname = 'public' and indexname = 'idx_shipping_label_request_id_shipping_labels_purchase_log'
+ORDER BY
+    tablename,
+    indexname;
+**** checking status of an index:
+
+SELECT
+  t.tablename,
+  indexname,
+  c.reltuples AS num_rows,
+  pg_size_pretty(pg_relation_size(quote_ident(t.tablename)::text)) AS table_size,
+  pg_size_pretty(pg_relation_size(quote_ident(indexrelname)::text)) AS index_size,
+  CASE WHEN indisunique THEN 'Y'
+    ELSE 'N'
+  END AS UNIQUE,
+  idx_scan AS number_of_scans,
+  idx_tup_read AS tuples_read,
+  idx_tup_fetch AS tuples_fetched
+FROM pg_tables t
+  LEFT OUTER JOIN pg_class c ON t.tablename=c.relname
+  LEFT OUTER JOIN
+    ( SELECT c.relname AS ctablename, ipg.relname AS indexname, x.indnatts AS number_of_columns, idx_scan, idx_tup_read, idx_tup_fetch, indexrelname, indisunique FROM pg_index x
+      JOIN pg_class c ON c.oid = x.indrelid
+      JOIN pg_class ipg ON ipg.oid = x.indexrelid
+      JOIN pg_stat_all_indexes psai ON x.indexrelid = psai.indexrelid )
+    AS foo
+  ON t.tablename = foo.ctablename
+WHERE t.schemaname='public'
+-- and tablename = 'shipping_labels_purchase_log' -- use this conditional to filter on a specific table
+ORDER BY 1,2;
+*** cancelling/terminating processes
+SELECT pg_cancel_backend(__pid__);
+SELECT pg_terminate_backend(__pid__);
+*** transactions
+finding "idle in transaction" causes:
+https://www.postgresql.org/message-id/1279050805.2594.23.camel%40speedy.resolution.com
+https://www.depesz.com/2008/08/28/hunting-idle-in-transactions/
+
+# transaction states
+SELECT count(*),state FROM pg_stat_activity GROUP BY 2;
+(https://techcommunity.microsoft.com/t5/azure-database-for-postgresql/connection-handling-best-practice-with-postgresql/ba-p/790883)
+
+# long running transactions:
+SELECT
+  pid,
+  now() - pg_stat_activity.query_start AS duration,
+  query,
+  state
+FROM pg_stat_activity
+WHERE (now() - pg_stat_activity.query_start) > interval '5 minutes' and state != 'idle';
+
+# transactions that are blocked:
+SELECT
+    activity.pid,
+    activity.usename,
+    activity.query,
+    blocking.pid AS blocking_id,
+    blocking.query AS blocking_query
+FROM pg_stat_activity AS activity
+JOIN pg_stat_activity AS blocking ON blocking.pid = ANY(pg_blocking_pids(activity.pid));
+
+
+** redis
+select <db number>
+info
+info keyspace
+# list all keys:
+keys *
+** mongodb
+# connect to mongo client:
+mongo localhost:27017/insight
+mongo -u user -p pass localhost:27017/insight
+# ex:
+db.<collectionName>.<method>
+# show dbs
+connect to db:
+use <db>
+# show collections in db
+show collections
+db.<TAB>
+https://docs.mongodb.com/manual/tutorial/query-documents/#query-on-arrays
+#+BEGIN_SRC python
+# query example:
+db.chart.find().pretty()
+db.chart.find({"title": "Number across County"}).pretty()
+# query by id:
+db.chart.find({ "_id": ObjectId("5a62364b00025100136e61e5") }).pretty()
+# delete example:
+db.chart.remove({"title": "Number across County"})
+# delete all docs in a collection:
+db.chart.remove({})
+# update a field in a document example:
+# https://docs.mongodb.com/manual/crud/#update-operations
+db.chart.update({"title": "Number across County"}, { $unset: { "presentation_options.bucket_colors": "" }},    {})
+db.team.update({"name": "luke swart"}, { $unset: { "deactivated": "" }})
+
+#+END_SRC
+
+*** mongoose and connection strings
+https://docs.mongodb.com/manual/reference/connection-string/
+https://github.com/Automattic/mongoose/issues/6052
+db connection string:
+const mongoUrl = "mongodb://mongoadmin:secret@localhost:27018/chatserver?authsource=admin";
+mongoose
+  .connect(mongoUrl, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+  })
+
+** elasticsearch
+# builtin gui:
+http://localhost:9200/_plugin/head/
+# query under 'stories' index, of type 'story' with id:
+curl localhost:9200/stories/story/ca49c244-d8aa-457c-b575-6c1bb338a1f8
+** prometheus
+delayed_job_error_count{queue=~".*carrier_account.*"}
+* GIMP
+** canvas:
+# reszie:
+image > canvas size
+# transparent:
+edit/rightclick > preferences > display
+** adding signature:
+# adding and scaling image:
+C-M-o: file > open as layers > (choose signature image)
+S-t: scale image to fit by C-S dragging
+m: use move tool <M> to move layer
+# adding text:
+t: text tool
+# concat pdf's:
+concat-pdfs final_signed.pdf pg1.pdf pg2.pdf
+
+** cropping and rescaling
+S-c to crop
+windows -> dockable dialogsdropbox/ -> Tool Options
+select "fixed aspect ratio" and dial in dimensions
+image -> scale image
+then scale image (now with correct aspect ratio) to the proper size
+** Creating signature from scan
+http://www.tracker-software.com/knowledgebase/225-How-do-I-create-a-transparent-signature-stamp
+crop signature - C
+In the Menu click Image -> Mode and check it is set to RGB (change if it is not).
+
+In the Menu click Layer -> Transparency -> Add Alpha Channel (Don't worry if you can't select this, it may already have an alpha channel)
+
+In the Menu click Colors -> Color to Alpha then click ok on the dialog shown. The white background should now be removed, a checked pattern will be shown in the transparent parts of your image. Click OK.
+
+If you'd like to lighten or darken your signature, in the Menu click Color -> Brightness/Contrast and adjust accordingly, once you are satisfied click ok in the dialog.
+
+Change canvas color for easier viewing - Edit -> Preferences -> Display
+
+Export as usual
+
+** making color transparent
+Layer - add alpha channel
+open tool box (C-b)
+fuzzy select tool (u) - select contiguous region of color
+delete the region
+** making a transparent gradient
+http://infofreund.de/gimp-transparent-gradient/
+create the filter layer
+add alpha channel to the layer
+key: add a "layer mask"! Add alpha channel to the mask
+** how to (de)select
+C-l to open layers panel - select/deselect from there
+C-S a
+or right click > selection > select none
+** layers
+# merge all visible layers
+C-m
+# open file as layer
+C-M-o
+** edit stroke of a selection
+edit -> stroke
+** drawing a circle
+ellipse tool (e)
+Customize color, width, etc of stroke tool (ie Pencil)
+Edit -> Stroke Selection
+(or open toolbox (C-b) and 2x click on item in toolbox to open stroke selection)
+select stroke type (ie Pencil)
+** multiple pages
+total hack, but open up layers view (C-l)
+right click a layer, and select "merge down"
+* Inkscape
+** crop
+https://inkscapetutorials.org/2014/04/22/inkscape-faq-how-do-i-crop-in-inkscape/
+using rectangle (or other tool) select area
+Select the new shape and the layer to be cropped
+Then Object > Clip > Set
+select other area and delete it
+** resize canvas area
+# If wanting to resize canvas, use C-S d and follow dialog
+C-S d
+# Make canvas fit selection:
+(C-a to select all)
+C-S-r
+with the selection, run Edit -> Resize Page to Selection
+
+** installing fonts
+https://medium.com/source-words/how-to-manually-install-update-and-uninstall-fonts-on-linux-a8d09a3853b0
+mv ~/Downloads/new-font.ttf ~/.fonts/
+fc-cache -f -v
+alias fonts by overriding fontconfig:
+https://jichu4n.com/posts/how-to-set-default-fonts-and-font-aliases-on-linux/
+** draw triangles:
+select "star" tool
+set "corners" to 3
+** rotation
+click once for object view
+click again for rotate view
+** line up layout
+Object -> Align and distribute
+keybinding:
+C-S-a
+** fill and stroke (borders)
+C-S-f
+** conversions
+# png to svg:
+https://www.youtube.com/watch?v=1cZk08x_rAI
+* GIS
+** ogr2ogr
+https://developers.google.com/kml/articles/vector#a-note-on-file-types
+ogr2ogr -f "KML" current-river-path.kml current-river-path.shp
+ogr2ogr -f "KML" -where "NBRHOOD='Telegraph Hill'" current-river-path.kml current-river-path.shp
+
+** mapshaper
+https://github.com/mbloch/mapshaper
+
+** qgis
+*** save entire map as an svg:
+https://github.com/rduivenvoorde/simplesvg
+simplesvg plugin
+web -> Save As SVG
+
+* mail server:
+# check mx records:
+http://mxtoolbox.com/
+# should return for 'lukeswart.net':
+mx.zoho.com
+mx2.zoho.com
+
+* web servers
+** nginx
+# check whether nginx.conf syntax is correct:
+/path/to/executable/nginx -c /path/to/nginx.conf -t
+*** openresty
+docs:
+https://github.com/openresty/lua-nginx-module#set_by_lua_block
+** apache
+
+* pm resources:
+https://www.penflip.com/
+https://draftin.com/
+* xmonad:
+# keybindings cheatsheet:
+https://wiki.haskell.org/wikiupload/b/b8/Xmbindings.png
+# restart xmonad:
+Mod-q
+# quit xmonad:
+Mod-Q
+# tips
+http://www.vicfryzel.com/2010/06/27/obtaining-a-beautiful-usable-xmonad-configuration
+# cabal:
+sudo pacman -S xmonad xmonad-contrib xmobar trayer dmenu scrot \
+    cabal-install
+cabal update
+cabal install yeganesh
+
+http://www.linuxandlife.com/2011/11/how-to-configure-xmonad-arch-linux.html#xmonad-basic-configurations
+https://github.com/connermcd/dotfiles
+https://media.readthedocs.org/pdf/beginners-guide-to-xmonad/latest/beginners-guide-to-xmonad.pdf
+https://wiki.haskell.org/Xmonad/xmonad_development_tutorial
+https://wiki.haskell.org/Xmonad/Frequently_asked_questions
+http://xmonad.org/xmonad-docs/xmonad-contrib/XMonad-Doc-Extending.html
+https://www.youtube.com/watch?v=63MpfyZUcrU
+http://dev.stephendiehl.com/hask/#nix
+# running xmonad locally:
+https://github.com/xmonad/xmonad-testing
+
+** using stack:
+https://github.com/commercialhaskell/stack/issues/710#issuecomment-289150630
+** dynamic compilation issue:
+https://git.archlinux.org/svntogit/community.git/tree/trunk/dynamic-compilation.patch?h=packages/xmonad
+https://github.com/xmonad/xmonad/blob/master/src/XMonad/Core.hs
+# errors with pacman -Syu:
+http://ix.io/Ag8/bash
+* SSL/TLS
+ https://letsencrypt.org/2015/09/14/our-first-cert.html
+<joepie91> lswart: depends. self-signed works if you do not have to support
+           browsers
+<Koren> digicert is nice  [03:47]
+<joepie91> otherwise, startcom and some chinese provider offer 'free' certs,
+           and Lets Encrypt will also do so soon
+<joepie91> but be aware that startcom charges a revocation fee if your
+           certificate becomes compromised
+<joepie91> the Chinese one:
+           http://lowendtalk.com/discussion/41289/free-chinese-2-year-ssl-certificate-dv-kuaissl-by-wosign-com
+<joepie91> plenty of certificate providers otherwise  [03:48]
+<joepie91> and as long as it's the same type of certificate, it's all
+           basically the same
+<joepie91> a more expensive cert isn't automatically better (although
+           insurance coverage varies, but that's unlikely to be applicable
+           anyway)
+<joepie91> really, the only reason to get a certificate from a certificate
+           authority is to make browsers stop complaining
+<joepie91> from a security POV, the CA model is really broken :(  [03:51]
+* custom scripts
+** dropbox_uploader
+http://xmodulo.com/access-dropbox-command-line-linux.html#comment-11691
+
+* web frameworks:
+** serverless
+# test functions locally (don't use slash after function's folder):
+sls function run /path/to/function/folder
+# test using serverless-serve (more thorough testing, run in project root):
+sls serve start
+# then navigate to 'localhost:1465/mapbox/landmarks'
+
+** Django
+# access shell
+./manage.py shell
+ query models with QuerySet:
+sa_models.User.objects.get(username="user1", email="joe@blow.com")
+# search for a string in model's column (JSON workaround):
+sa_models.Place.objects.filter(data__contains='"name":"test"')
+# get a model's fields:
+sa_models.User._meta.get_field('last_login')
+*** installing geogjango on centos 7:
+we need postgres 9.3 for centos 7 to work (9.2 is the default)
+
+*** models (shareabouts example):
+from sa_api_v2 import models as sa_models
+place = sa_models.Place.objects.get(id=140)
+# query models with QuerySet:
+sa_models.User.objects.get(username="user1", email="joe@blow.com")
+# get all models:
+sa_models.User.objects.all()
+# search for a string in model's column (JSON workaround):
+sa_models.Place.objects.filter(data__contains='"rain_garden_number": "2214"')
+# concrete fields:
+from sa_api_v2 import forms as forms
+>>> forms.AttachmentForm._meta.model._meta.concrete_fields
+[<django.db.models.fields.AutoField: id>,
+
+ <django.db.models.fields.DateTimeField: created_datetime>,
+ <django.db.models.fields.DateTimeField: updated_datetime>,
+ <django.db.models.fields.files.FileField: file>,
+ <django.db.models.fields.CharField: name>,
+
+ <django.db.models.fields.related.ForeignKey: thing>]
+
+*** simple get requests example:
+#+BEGIN_SRC python
+
+from django.http import HttpRequest
+from django.test import RequestFactory
+from sa_api_v2.views import base_views as sa_views
+from sa_api_v2.tests import test_views as sa_tests
+from sa_api_v2 import models as sa_models
+
+
+factory = RequestFactory()
+# needed for our auth creds:
+# use our "strange sensors" place 181 for this example:
+owner = sa_models.User.objects.get(username='smartercleanup')
+request_kwargs = {
+    'owner_username': owner.username,
+    'dataset_slug': 'duwamish',
+    'thing_id': 181
+}
+
+# small test:
+path = reverse('place-attachments', kwargs=request_kwargs)
+request = factory.get('/customer/details')
+request.user = sa_models.User.objects.get(username='swartLuke')
+response = sa_views.UserInstanceView.as_view()(request, owner_username='swartLuke')
+factory = RequestFactory()
+# end small test
+
+#+END_SRC
+
+*** shareabouts attachement examples:
+Testing attachment list view with requests:
+#+BEGIN_SRC python
+from django.http import HttpRequest
+from django.test import RequestFactory
+from sa_api_v2.views import base_views as sa_views
+from sa_api_v2.tests import test_views as sa_tests
+from sa_api_v2 import models as sa_models
+
+factory = RequestFactory()
+# needed for our auth creds:
+# use our "strange sensors" place 181 for this example:
+owner = sa_models.User.objects.get(username='smartercleanup')
+request_kwargs = {
+'owner_username': owner.username,
+'dataset_slug': 'duwamish',
+'thing_id': 181
+}
+
+# This basically returns our url: url(r'^(?P<owner_username>[^/]+)/datasets/(?P<dataset_slug>[^/]+)/places/(?P<thing_id>\d+)/attachments$'
+# which in this case is the string: '/api/v2/smartercleanup/datasets/duwamish/places/181/attachments'
+from django.core.urlresolvers import reverse
+path = reverse('place-attachments', kwargs=request_kwargs)
+# request = factory.get('/api/v2/smartercleanup/datasets/duwamish/places/302/attachments')
+
+# GET REQUEST
+request = factory.get(path)
+# DELETE REQUEST
+request = factory.delete(path)
+# to avoid a 401 "Authentication credentials were not provided", we add http authentication
+import base64
+request.META['HTTP_AUTHORIZATION'] = 'Basic ' + base64.b64encode(':'.join([owner.username, 'unicorn1234']))
+# need to implement delete in our AttachmentListView to avoid 405 "Method 'DELETE' not allowed"
+# DestroyApiView or DestroyModelMixin or RetrieveDestroyApiView?
+
+
+
+view = sa_views.AttachmentListView.as_view()
+response = view(request, **request_kwargs)
+
+response.render()
+response.status_code
+response.status_text
+
+# request = factory.delete('/api/v2/smartercleanup/datasets/duwamish/places/302/attachments')
+# resonse.data =
+# {'username': u'swartLuke',
+#  'provider_id': u'423246923',
+# 'name': u'Luke Swart',
+# 'avatar_url': u'http://pbs.twimg.com/profile_images/466092495021944832/t432VEpI_bigger.jpeg',
+# 'groups': [],
+# 'id': 2,
+# 'provider_type': u'twitter'}
+
+# or take a more basic approach:
+# request = HttpRequest()
+
+# end fun
+#+END_SRC
+Debugging the view itself:
+#+BEGIN_SRC python
+from django.http import HttpRequest
+from django.test import RequestFactory
+from sa_api_v2.views import base_views as sa_views
+from sa_api_v2.tests import test_views as sa_tests
+from sa_api_v2 import models as sa_models
+
+factory = RequestFactory()
+# needed for our auth creds:
+# use our "strange sensors" place 181 for this example:
+owner = sa_models.User.objects.get(username='smartercleanup')
+request_kwargs = {
+'owner_username': owner.username,
+'dataset_slug': 'duwamish',
+'thing_id': 94
+}
+
+# v = reverse('place-attachments', kwargs=request_kwargs)
+v = sa_views.AttachmentListView(kwargs={'thing_id':94, 'owner_username':'smartercleanup', 'dataset_slug':'duwamish'})
+
+# v = sa_views.AttachmentListView(thing_id=94, owner_username='smartercleanup', dataset_slug='duwamish')
+# v = sa_views.AttachmentListView.as_view(kwargs={'thing_id':94, 'owner_username':'smartercleanup', 'dataset_slug':'duwamish'})
+# "view only accepts args that are attributes of the class" ^
+
+#+END_SRC
+
+>>> response.content
+'{"count": 1, "next": null, "previous": null, "results": [{"created_datetime": "2015-10-03T16:36:52.965Z", "name": "my_image", "file": "https://smartercleanup-test-api.s3.amazonaws.com/attachments/PQ4OBaC-blob", "updated_datetime": "2015-10-03T16:36:52.976Z"}]}'
+>
+
+*** Translations (shareabouts):
+https://github.com/openplans/shareabouts/blob/master/doc/CONFIG.md#translating-interface-text
+*** migrations
+./manage.py makemigrations
+# keeps you from re-writing that already has data in it
+# allows it to continue, mbut makes away
+# Useful when getting errors where a table already exists
+# makes you choose to skip over tables already made
+./manage.py migrate --fake-initial
+
+# django show migrations:
+./manage.py migrate --list
+# help:
+./manage.py migrate --help
+
+# revert to an existing migration:
+./manage.py migrate sa_api_v2 0010_previous_migration
+# To reverse all migrations for an app, you can run:
+./manage.py migrate my_app zero
+
+# django 1.8+
+# show migrations:
+./manage.py showmigrations my_app
+
+
+`./manage.py runserver` will warn about unapplied migrations
+./manage.py migrate
+# then test:
+cd src && ./manage.py test
+*** testing
+# don't capture stdout flag (useful with ipdb):
+manage.py test -s
+# run a single test using django nose (https://stackoverflow.com/questions/18834188/how-to-run-a-single-test-or-single-testcase-with-django-nose):
+./src/manage.py test -s sa_api_v2.tests.test_views:TestPlaceListView.test_POST_invisible_response
+** rails
+*** migrations
+# check existing migrations:
+select * from schema_migrations;
+
+# in Rails >= 5, we don't need rake for these commands:
+./bin/rails db:migrate:status
+./bin/rails db:migrate
+./bin/rails db:rollback STEP=1
+
+# for wh:
+rails db:rollback STEP=1 RAILS_ENV=test
+
+# create a migration
+https://edgeguides.rubyonrails.org/active_record_migrations.html#creating-a-standalone-migration
+./bin/rails generate migration AddPartNumberToProducts
+
+
+*** delayed jobs
+# run all local jobs:
+bex rails jobs:workoff
+./bin/rails jobs:workoff
+
+# delete all jobs
+./bin/rails jobs:clear
+
+# count/delete all local jobs:
+Delayed::Job.count
+Delayed::Job.delete_all
+
+*** tasks
+# show all options:
+./bin/rails --tasks
+
+# reset/reseet DB
+RAILS_ENV=test bundle exec rake db:drop db:create db:schema:load db:migrate
+RAILS_ENV=development bundle exec rake db:drop db:create db:schema:load db:migrate
+RAILS_ENV=development bundle exec rake db:seed:staging
+
+
+*** querying
+https://guides.rubyonrails.org/active_record_querying.html#having
+Client.where(orders_count: [1,3,5])
+
+for dates:
+where(
+"created_at <= :creation_date", {creation_date: '2020-08-17 17:27:28'}
+)
+
+* languages
+** asdf version manager
+https://asdf-vm.com/#/core-commands
+asdf install ruby 2.6.5
+asdf install nodejs 1.12.0
+
+# list all available versions:
+asdf list-all ruby
+# list all installed versions:
+asdf list ruby
+
+asdf current ruby
+
+
+** javascript
+# code convention:
+https://google.github.io/styleguide/javascriptguide.xml
+# docs convention:
+http://usejsdoc.org/
+# install directly from github:
+npm install https://github.com/<username>/<repository>/tarball/master
+# install / upgrade npm (using w nvm doesn't require 'sudo'):
+http://stackoverflow.com/questions/6237295/how-can-i-update-node-js-and-npm-to-the-next-versions
+npm install npm -g
+npm update -g npm
+(you may need to `nvm use default`!)
+curl https://www.npmjs.com/install.sh | sh
+# list global npm packages:
+ll `npm root -g`
+# fix npm progress bar issue:
+npm set progress=false
+*** debugging
+https://nodejs.org/en/docs/guides/debugging-getting-started/
+after running with "nodemon --inspect" (or 'nodemon --inspect=9227' for alternative port)
+
+# navigate in chrome:
+chrome://inspect/#devices
+
+click "configure" to ensure your port is set up
+
+**** legacy method:
+https://nodejs.org/api/debugger.html
+# in the terminal:
+node inspect app.js
+# via websocket:
+node --inspect-brk app.js
+# in the debugger, type 'help' to get help
+# in the debugger, type 'repl' to get repl
+*** using custom repos in package.json
+in deps:
+"swayze": "github:livestories/swayze#0.0.3",
+*** d3
+# good docs:
+http://objjob.phrogz.net/d3/method/1148
+*** npm forever
+forever list
+forever stop P74P
+forever start server.js 3000
+*** resources
+https://unpm.nodesource.com/
+*** REST-client:
+Good tool: http://requestb.in
+**** using node-rest-client module:
+https://www.npmjs.com/package/node-rest-client
+or just use the http module directly!
+var Client = require('node-rest-client').Client
+var client = new Client()
+
+
+**** using http module directly:
+(or https module)
+#+BEGIN_SRC js
+var https = require('https')
+var auth = "Basic " + new Buffer(username + ":" + password).toString("base64");
+// NOTE: use querystring.stringify() for a url-encoded body
+var bodyString = JSON.stringify({ "Field1": "Joe", "Field2": "Blow" })
+var req = https.request({
+  port: 443,
+  hostname: 'haxgeo.wufoo.com',
+  path: '/api/v3/forms/z1192efi1auva4c/entries.json',
+  method: 'GET',
+  headers: {
+    'Content-type': 'application/json',
+    'Content-Length': Buffer.byteLength(bodyString)
+    "Authorization": auth
+             },
+  body: JSON.stringify(requestData)
+
+ },
+ function(res) { res.on('data',
+ function(data){console.log(data.toString())})})
+// req.write(bodyString)
+req.end(bodyString)
+#+END_SRC
+
+*** install new node
+
+** python
+# multi-threaded:
+http://chriskiehl.com/article/parallelism-in-one-line/
+# virtualenvwrapper:
+mkvirtualenv --python=python2.7 smarter-test
+# virtualenv:
+virtualenvwrapper --help
+mkvirtualenv --python=python3 livestories-insight
+*** linking modules
+pip install -e ~/projects/python-modules/social-core
+*** numpy
+convert to different base representations
+numpy.base_repr(15, 16)
+=> 0xf
+
+*** pyenv
+pyenv install 3.5.0
+# something else???
+
+*** conda
+https://conda.io/docs/config.html
+https://conda.io/docs/_downloads/conda-cheatsheet.pdf
+# sourcing conda distro:
+# script in ~/bin/python-anaconda
+source python-anaconda
+
+# common commands:
+conda create --dry-run python=2.7 -n pythonFromSpace
+conda install --file requirements.txt
+source activate pythonFromSpace
+conda info --envs
+*** jupyter
+adding a kernel (for running jupyter within a virtualenv, when using pip)
+https://help.pythonanywhere.com/pages/IPythonNotebookVirtualenvs/
+python -m ipykernel install --user --name=my-virtualenv-name
+(only needed for pip/virtualenv, not for conda)
+*** executable file:
+add this:
+#!/usr/bin/env python
+*** exception handling:
+#+BEGIN_SRC python
+from __future__ import print_function
+
+g = ''
+try:
+    float('')
+except ValueError as v:
+    g = v
+    print("error received:", v)
+    print("error message:", str(v))
+    if (not str(v) == 'could not convert string to float: '):
+        raise v
+
+
+print("and we continue")
+
+#+END_SRC
+*** config python3:
+python3
+pip3
+*** pip
+https://pip.pypa.io/en/stable/reference/pip_list/
+
+# upgrade pip
+pip install -U pip
+# install to local dir:
+pip install awscli --user --upgrade
+**** uninstalling all pip dependencies:
+pip freeze > freeze.txt
+pip uninstall -yr freeze.txt
+**** install/uninstall pip
+# debian:
+sudo apt-get install python-pip
+# or:
+easy_install pip
+
+**** requirements.txt
+https://github.com/wuub/requirementstxt
+# example:
+xyz>=1.2.3,<2.0.0
+
+*** style docs:
+# docstrings:
+https://www.python.org/dev/peps/pep-0257/
+http://sphinxcontrib-napoleon.readthedocs.org/en/latest/example_google.html
+# String literals:
+https://www.smallsurething.com/multi-line-strings-in-python/
+
+*** path, packages, modules
+export PYTHONPATH=.
+**** linking python modules
+# make sure to use full path on the source!
+ln -s /home/lucas/projects/python-modules/django-sass-processor/sass_processor ~/.virtualenvs/smartercleanup-frontend/lib/python2.7/site-packages/
+*** pdb
+# add a breakpoint:
+import ipdb
+ipdb.set_trace()
+**** start interactive console:
+http://stackoverflow.com/questions/5967241/how-to-execute-multi-line-statements-within-pythons-own-debugger-pdb
+(pdb) !import code; code.interact(local=vars())
+Python 2.6.5 (r265:79063, Apr 16 2010, 13:57:41)
+[GCC 4.4.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>>
+**** using lambda's and closure in pdb interactive:
+https://stackoverflow.com/questions/35151732/nameerror-global-name-is-not-defined-under-pdb-for-dictionary-that-does-exis
+# You can bind the local to the lambda (making it a local rather than a closure):
+max(foo, key=lambda x, foo=foo: foo[x]['extra_data']['budget'])
+
+if this doesn't work, because 'obj' is not global:
+my_fun(arg1, lambda: obj)
+then do this, to bind 'obj' to the lambda's lexical scope:
+my_fun(arg1, lambda obj=obj: obj)
+*** math
+check for NaN:
+str(x) == 'nan'
+get NaN:
+float('nan')
+*** datastructures
+*** pandas
+http://pandas-docs.github.io/pandas-docs-travis/api.html
+**** basic methods:
+# metadata:
+df.axes
+df.shape
+# querying:
+df.query('city == "buffalo"')
+# or:
+df[result.city == "buffalo"]
+
+# get item by index:
+df.iloc\[\[46307]]
+# or:
+df.iloc\[46307]
+
+**** merge two csv's:
+#+BEGIN_SRC python
+import pandas as pd
+
+# headers row: city,country,state,pop,lat,long
+left = pd.read_csv('world_cities.csv')
+right = pd.read_csv('world_cities.new.csv')
+
+df_stacked = pd.concat([right, left]).reset_index()
+result = df_stacked.groupby(['city','country','state']).first()
+result = result.reset_index()
+
+result = result.sort_values(['pop', 'city'], ascending=[False, True])
+result.drop('index', axis=1, inplace=True)
+result.lat = result.lat.apply(lambda x: "{:.3f}".format(x))
+result.long = result.long.apply(lambda x: "{:.3f}".format(x))
+result['pop'] = result['pop'].apply(lambda x: str(x) == 'nan' and x or str(int(x)))
+result.to_csv('result.csv', index=False)
+
+# left = left.set_index(['city','country','state'])
+# right = right.set_index(['city','country','state'])
+#
+# result = pd.merge(left_original, right_original, on=['city', 'country', 'state'], how='outer')
+#
+# # Finish up the join by removing our extra columns
+#
+# # This doesn't mutate the rows!
+# import math
+# for index, row in result.iterrows():
+#     if not math.isnan(row['pop_y']):
+#         # print("updating row:", row)
+#         row['pop_x'] = row['pop_y']
+#         row['lat_x'] = row['lat_y']
+#         row['long_x'] = row['long_y']
+#
+#
+# result['pop_x'][[str(results['pop_x']) == 'NaN']]
+#
+# result.rename(columns = {'pop_x':'pop', 'lat_x':'lat', 'long_x':'long'})
+# result=result.drop(['pop_y', 'lat_y', 'long_y'], axis=1)
+
+result.to_csv('result.csv')
+
+
+
+#+END_SRC
+
+*** project setup
+python setup.py develop
+resolves this error: pkg_resources.DistributionNotFound: The 'livestories' distribution was not found and is required by the application
+*** pretty print
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
+pp.pprint(myDict)
+
+*** linters
+# setup.cfg
+This is the recommended way and has the most support across all python tools.
+http://pep8.readthedocs.io/en/release-1.7.x/intro.html
+http://pep8.readthedocs.io/en/release-1.7.x/intro.html#configuration
+
+# .editorconfig - can't get this to work
+# .dir-locals.el
+
+
+# .flake8rc (can't seem to get this working...)
+http://flake8.pycqa.org/en/latest/user/options.html
+*** functional programming
+
+#+BEGIN_SRC python
+
+# map:
+set(map(lambda x: int(x), "1234 234".split(" ")))
+# "some"" in array:
+any(d['name'] == 'bob' for d in [ { 'name': 'asdf' }, {'name': 'bob' } ])
+# "find" in array, return None if not found:
+next((d for d in [ { 'name': 'asdf' }, {'name': 'bob' }] if d['name'] == 'bob' )), None)
+# "filter" in array:
+filter(lamda x: x == 'bob', [ 'bob', 'joe', 'bob'])
+# reduce
+from functools import reduce
+def do_sum(x1, x2): return x1 + x2
+reduce(do_sum, [1, 2, 3, 4])
+
+#+END_SRC
+
+** shell / bash
+https://www.gnu.org/software/bash/manual/bashref.html
+# google style guide:
+https://google.github.io/styleguide/shell.xml
+
+*** script template
+#!/usr/bin/env bash
+
+set -euo pipefail
+IFS=$'\t\n'
+*** if then statements:
+if clause flags:
+http://www.tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html
+**** AND/OR statements:
+source:
+http://bencane.com/2014/01/27/8-examples-of-bash-if-statements-to-get-you-started/
+#+BEGIN_SRC bash
+if [[ -n $1 ]] && [[ -r $1 ]]
+then
+  echo "File exists and is readable"
+fi
+if [[ -z $1 ]] || [[ ! -r $1 ]]
+then
+  echo "Either you didn't give me a value or file is unreadable"
+  exit 2
+fi
+#+END_SRC
+*** parsing commandline args:
+getopts - (doesn't support long-style flags ie `--l` or `--long-flag`)
+getopt - more buggy, but flexible
+or just use env vars
+
+`getopts` and `getopt` usage:
+http://stackoverflow.com/questions/7069682/how-to-get-arguments-with-flags-in-bash-script
+`getopt` example:
+/usr/share/doc/util-linux/getopt/getopt-parse.bash
+
+*** file descriptors and error codes
+# (note below, that `git stash pop` returns error when no stash is found)
+# redirect stderror to file
+git stash pop 2>output.txt
+<command> 2>output.txt
+# "ignore error code" by piping output to a command that always succeeds ("<command> || true")
+git stash pop || true
+*** pipe file descriptors into stdout (or another file descriptor):
+# pipes stdout from cmd into file.txt, forwarding stderr to stdout:
+cmd >>file.txt 2>&1
+
+** ruby
+# to access repl:
+irb
+# to load ruby file from repl:
+require("./test.rb")
+
+# to get local env setup info:
+gem env
+
+>INSTALLATION DIRECTORY: /Users/lucas/.asdf/installs/ruby/2.4.5/lib/ruby/gems/2.4.0
+# to get path to gem:
+gem which rails
+
+*** testing
+run a specific test:
+bex rspec ./spec/models/company_spec.rb -e 'setting default shipment dimensions'
+*** rbenv
+ruby-build is needed for `rbenv install` commands
+https://github.com/rbenv/ruby-build#usage
+# getting access after installing something new,
+# like 'gem install bundle':
+/home/lucas/projects/livestories/insight/livestories/static/js/embed-api.js
+rbenv rehash
+# list all available ruby versions to install
+rbenv install --list
+*** gems
+# list gem details:
+gem env
+gem env home
+# list gems:
+gem list
+# ininstall a gem:
+gem uninstall jekyll
+# install a gemfile:
+bundle install
+bundle exec --help
+bundle help
+bundle update
+bundle check
+# find location of gem:
+bundle show jekyll-watch
+*** debugging
+# to set a breakpoint
+binding.pry
+
+continue
+
+exit
+*** shared_examples, shared_context
+http://www.aallegranzi.com/2019/09/03/rspec-ruby-testing-shared-examples-and-shared-context/
+*** self.included
+https://stackoverflow.com/questions/45108759/self-included-including-class-methods-from-a-module-in-ruby
+https://rubymonk.com/learning/books/4-ruby-primer-ascent/chapters/48-advanced-modules/lessons/117-included-and-extend
+https://stackoverflow.com/questions/10692961/inheriting-class-methods-from-modules-mixins-in-ruby/45127350#45127350
+
+** lisp
+# setting variables:
+set
+setq
+https://www.gnu.org/software/emacs/manual/html_node/elisp/Setting-Variables.html
+# printing
+(print (format "this is variable: %s" myVar))
+(message "list1: %s" list1)
+# evaling an expression in scratch:
+C-j
+# or custom eval:
+M-;
+# or commandline eval:
+M-:
+# or C-h v to describe a varable
+
+*** if/then
+(if (eq system-type 'darwin)
+    ;; something for OS X if true
+    ;; optional something if not
+    (require 'macos-setup)
+  )
+*** compiling .el to .elc
+M-x byte-compile-file
+
+*** delete/remove an item from an alist
+# to mutate a list:
+(delete '("\\.tf*" . conf-mode) auto-mode-alist)
+# or assign it to a variable and print its output:
+(setq list1 (delete '("\\.jinja2\\'" . web-mode) auto-mode-alist))
+(message "auto-mode-list: %s" list1)
+(message "auto-mode-list: %s" auto-mode-alist)
+# don't mutate list:
+(setq list2 (remove '("\\.jinja2\\'" . web-mode) auto-mode-alist))
+(message "auto-mode-list: %s" list1)
+(message "auto-mode-list: %s" auto-mode-alist)
+
+http://stackoverflow.com/questions/11573395/emacs-lisp-how-to-remove-delete-an-element-of-a-list
+
+*** pushing item to end of an alist
+https://stackoverflow.com/questions/13359025/adding-to-the-end-of-list-in-lisp
+
+#+BEGIN_SRC lisp
+(setq test
+      (quote (
+       (:language "elisp" :ext "el" :agtype "elisp" :rgtype "elisp")
+       (:language "elisp" :ext "el.gz" :agtype "elisp" :rgtype "elisp")
+       (:language "commonlisp" :ext "lisp" :agtype "lisp" :rgtype "lisp")
+       (:language "commonlisp" :ext "lsp" :agtype "lisp" :rgtype "lisp")
+       ))
+      )
+
+(message "test is: %s" test)
+
+(push '(:language "javascript" :ext "mjs" :agtype "mjs" :rgtype "mjs") (cdr (last test)))
+#+END_SRC
+
+*** getting item from an alist
+alist mean "associated list" (or dict, map, etc)
+each item in an alist is called a "cons cell" or a "dotted pair notation"
+
+#+BEGIN_SRC lisp
+(setq my-alist
+      (quote (("css" . "\\.\\(s?css\\|css\\.erb\\)\\'")
+             ("javascript" . "\\.\\([jt]s\\|[jt]s\\.erb\\)\\'")
+             ("json" . "\\.\\(api\\|json\\|jsonld\\)\\'")
+             ("jsx" . "\\.[jt]sx\\'")
+             ("xml" . "\\.xml\\'")
+             ("html" . ".")
+             (derp . "what")
+             ))
+)
+
+
+(message "the answer is: %s" (assoc "css" my-alist))
+;; ("css" . "\\.\\(s?css\\|css\\.erb\\)\\'")
+(message "the answer is: %s" (assoc 'derp my-alist))  ;; derp is a literal here
+;; (derp . "what")
+
+(message "the cdr of the answer is: %s" (cdr (assoc 'derp my-alist)))
+;; "what"
+
+#+END_SRC
+
+** latex
+*** fonts
+# list fonts available for xelatex:
+fc-list :outline -f "%{family}\n"
+
+
+(requires xelatex or lualatex to support fontspec package fonts)
+http://tex.stackexchange.com/questions/193353/arch-linux-fontspec-does-not-find-system-fonts
+
+# update db with fonts from /usr/share/fonts/:
+luaotfload-tool --update
+# list all fonts:
+luaotfload-tool --list=*
+# then add this:
+
+**** using fonts:
+for xelatex, do this:
+#+BEGIN_SRC latex
+\usepackage{fontspec}
+\setmainfont{DejaVu Sans}
+#+END_SRC
+
+**** adding fonts:
+http://www.techrepublic.com/blog/linux-and-open-source/how-do-i-install-and-use-fonts-in-linux/
+add fonts to /usr/share/fonts/TTF or /usr/share/fonts/OTF (or even better, to the ~/.fonts/ dir)
+then `fc-cache -f -v` to load new fonts
+
+**** changing fonts
+http://tex.stackexchange.com/questions/139611/korean-characters-not-working
+this will make the first line of text in Batang, and the second line of text in Dotum font:
+#+BEGIN_SRC latex
+\documentclass{article}
+
+\usepackage{fontspec}
+\setmainfont{Batang}
+\setsansfont{Dotum}
+
+\begin{document}
+testing 안녕
+{\sffamily testing 안녕}
+\end{document}
+#+END_SRC
+
+
+*** tables
+http://tex.stackexchange.com/questions/115280/create-a-table-with-latex
+
+*** formatting
+**** whitespace:
+http://tex.stackexchange.com/questions/33172/how-to-create-whitespace-in-latex
+#+BEGIN_SRC latex
+\smallskip
+\medskip
+\bigskip
+\vspace{2cm}
+\vspace*{2cm} % \vspace starred doesn't disappear at page breaks
+#+END_SRC
+
+** java
+list of JVM's:
+/Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk
+
+manually installed JVM's:
+/private/var/folders/q_/fyry85xj36d95j6tcmw_85rh0000gn/T/AppTranslocation/7581BAF5-A15F-4032-BA54-3068672C7A82/d/Android\ Studio.app/Contents/jre/jdk/Contents/Home/bin/java -version
+
+setting JVM for gradle:
+https://stackoverflow.com/a/21212790/1884158
+** c
+https://google.github.io/styleguide/cppguide.html
+*** cmake
+****  Ignoring CMAKE_OSX_SYSROOT value:... because the directory does not exist.
+https://stackoverflow.com/a/65370407/1884158
+
+in clion:
+    Tools > CMake > Reset cache and reload project
+
+
+also consider exporting this env var:
+export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+
+*** valgrind
+report memory leaks:
+valgrind --leak-check=yes out.o
+
+*** asan
+https://stackoverflow.com/a/55778432/1884158
+ASAN_OPTIONS=detect_leaks=1 clang@9 -g -fsanitize=address  29-lock-based-concurrent-data-structures/test_linked_lists.c -o leak1
+
+note that on macos we need to install llvm@9, and run it via clang@9
+
+** sql:
+https://www.postgresql.org/docs/current/static/manage-ag-createdb.html
+*** pipe stderr to stdout
+*** compare datetime to string value
+select * from table where updated_datetime > '2019-03-11';
+** rust
+install crate
+*** testing
+cargo test --help
+# TODO: run a test for a module file under src
+cargo test some_filename_under_src
+
+# under a specific file name (at least we know this works under a sibling `tests` dir to `src):
+cargo test --test test_packing_algorithm
+
+# only run doc tests:
+cargo test --doc
+
+cargo test --lib --package rust-solutions binary_search_tree::tests::add_to_bst -- --exact
+# run tests under a specific module:
+cargo test --lib binary_tree::tests
+# run a specific test:
+cargo test --lib binary_search_tree::tests::add_to_bst -- --exact
+cargo test --bin ch4-p7_build-order build_order_complex
+# run a test without capture println's
+cargo test --bin ch4-p7_build-order -- --nocapture
+*** linking crate locally
+Add a dependency section to your executable's Cargo.toml and specify the path:
+
+#+begin_src sh
+[dependencies.my_lib]
+path = "../my_lib"
+#+end_src
+
+or the equivalent alternate TOML:
+
+#+begin_src sh
+[dependencies]
+my_lib = { path = "../my_lib" }
+#+end_src
+
+Can also link to a lib in a git repo, see here:
+https://stackoverflow.com/a/33025972/1884158
+
+
+*** docs
+https://doc.rust-lang.org/rustdoc/what-is-rustdoc.html
+
+cargo doc
+
+*** error handling/types
+https://stevedonovan.github.io/rust-gentle-intro/6-error-handling.html
+*** ? operator within closures
+https://github.com/modulitos/aoc2018/commit/a6e71319d5cd9bf813fcf4680d0e9d840102a8a9
+https://github.com/modulitos/aoc2018/commit/a1f821dfe5b90b91e6fdde668f92233d25139cfe
+*** hashmap
+# find or insert, using the Entry api:
+map.find(1).or_insert(2));
+*** total eq vs partial eq
+partial eq means it has symmetric and transitive equality, but not necessarily reflexive.
+
+total eq has partial eq plus reflexive eq.
+
+eg: numbers in js only have partial eq, not total eq, where NaN !== NaN
+
+Thus we get issues in js when sorting arrays that have null and NaN
+
+https://users.rust-lang.org/t/what-is-the-difference-between-eq-and-partialeq/15751/10
+
+
+If we need x==x to always hold, like as in a HashMap, then we'll need full Eq.
+https://stackoverflow.com/a/55130202/1884158
+** c/c++
+make
+use lldb instead of gdb on macos
+ - limitation of lldb: can't break into fork processes
+
+running valgrind:
+valgrind --leak-check=yes ./tlb.o
+
+*** gcc
+https://stackoverflow.com/questions/5765899/how-to-disable-compiler-optimizations-in-gcc
+disable optimization with -O0 (is the default)
+
+* testing
+https://github.com/testdouble/test-smells
+** rspec
+http://jakegoulding.com/presentations/rspec-structure/#slide-0
+* raspberry pi:
+# pins:
+http://www.raspberrypi-spy.co.uk/2012/06/simple-guide-to-the-rpi-gpio-header-and-pins/
+led: long lead is positive. (ie plug the shorter lead into the 'gnd' row)
+** turn off screen save / screen blanking:
+gconftool-2 --type bool --set /apps/gnome-screensaver/idle_activation_enabled "false"
+** keyboard reset:
+# set `XKBLAYOUT=”gb”` gb -> US
+sudo vi /etc/default/keybaord
+
+** set up static ip for ethernet connection
+http://elinux.org/Configuring_a_Static_IP_address_on_your_Raspberry_Pi
+http://www.suntimebox.com/raspberry-pi-tutorial-course/week-3/day-5/
+http://www.modmypi.com/blog/tutorial-how-to-give-your-raspberry-pi-a-static-ip-address
+https://wiki.archlinux.org/index.php/Network_configuration
+https://wiki.archlinux.org/index.php/Systemd-networkd#Wired_adapter_using_a_static_IP
+** set up composite vs hdmi output
+https://bhavyanshu.me/tutorials/force-raspberry-pi-output-to-composite-video-instead-of-hdmi/03/03/2014/
+hold shift until green light stops blinking
+press 1,2,3,or 4, and one of those should work!
+** add image onto microsd
+insert sd card, unmount all partitions (umount /dev/mmc0*)
+use linux dd command (look this up under 'linux > transfer data > backups' section) to copy image onto card
+
+** install opencv
+*** from source 1:
+http://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/
+
+#+BEGIN_SRC bash
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D INSTALL_PYTHON_EXAMPLES=ON \
+    -D BUILD_EXAMPLES=ON ..
+
+
+#    -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-3.1.0/modules \
+
+#+END_SRC
+*** from source 2:
+http://raspberrypi.stackexchange.com/questions/27232/installing-opencv-3-0-on-raspberry-pi-b
+
+http://robertcastle.com/2014/02/installing-opencv-on-a-raspberry-pi/
+
+
+sudo apt-get install libjpeg8 libjpeg8-dev libjpeg8-dbg libjpeg-progs \
+                               ffmpeg libavcodec-dev libavcodec53 libavformat53 \
+                               libavformat-dev libxine1-ffmpeg libxine-dev libxine1-bin \
+                               libunicap2 libunicap2-dev swig libv4l-0 libv4l-dev \
+                               python-numpy libpython2.6 python-dev python2.6-dev libgtk2.0-dev
+
+or
+**** troubleshooting
+http://raspberrypi.stackexchange.com/questions/27232/installing-opencv-3-0-on-raspberry-pi-b
+
+# used libtiff5 instead of libtiff4:
+original:
+sudo apt-get -y install build-essential cmake cmake-qt-gui pkg-config libpng12-0 libpng12-dev libpng++-dev libpng3 libpnglite-dev zlib1g-dbg zlib1g zlib1g-dev pngtools libtiff4-dev libtiff4 libtiffxx0c2 libtiff-tools
+modified:
+sudo apt-get -y install build-essential cmake cmake-qt-gui pkg-config libpng12-0 libpng12-dev libpng++-dev libpng3 libpnglite-dev zlib1g-dbg zlib1g zlib1g-dev pngtools libtiff5-dev libtiff5 libtiffxx0c2 libtiff-tools
+
+libxine2 error:
+http://ix.io/UkX
+
+# I subbed libxine with libxine2 and python2.6 with python 2.7:
+original:
+sudo apt-get install libjpeg8 libjpeg8-dev libjpeg8-dbg libjpeg-progs \
+ffmpeg libavcodec-dev libavcodec53 libavformat53 \
+libavformat-dev libxine1-ffmpeg libxine-dev libxine1-bin \
+libunicap2 libunicap2-dev swig libv4l-0 libv4l-dev \
+python-numpy libpython2.6 python-dev python2.6-dev libgtk2.0-dev
+modified:
+sudo apt-get install libjpeg8 libjpeg8-dev libjpeg8-dbg libjpeg-progs \
+ffmpeg libavcodec-dev libavcodec53 libavformat53 \
+libavformat-dev libxine2-ffmpeg libxine2-dev libxine2-bin \
+libunicap2 libunicap2-dev swig libv4l-0 libv4l-dev \
+python-numpy libpython2.6 python2.7-dev python2.7-dev libgtk2.0-dev
+
+"missing ffmpeg" output here:
+http://ix.io/Ulg
+
+
+
+
+
+
+*** precompiled:
+https://github.com/Nolaan/libopencv_24
+
+**** troubleshooting:
+
+sudo ldconfig -v
+http://ix.io/Ukn
+
+npm install opencv:
+http://ix.io/UkC
+
+** install node/nvm on pi:
+*** install nvm on pi:
+# source:
+https://www.losant.com/blog/how-to-install-nodejs-on-raspberry-pi
+#+BEGIN_SRC bash
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+# look up latest version here: https://nodejs.org/en/
+nvm install v6.2.2
+nvm alias default v6.2.2
+sudo ln -s /home/pi/.nvm/versions/node/v5.7.0/bin/node /usr/bin/node
+sudo ln -s /home/pi/.nvm/versions/node/v5.7.0/bin/npm /usr/bin/npm
+#+END_SRC
+
+May need to do this when re-installing a new node/npm:
+#+BEGIN_SRC bash
+sudo rm /usr/bin/node
+sudo rm /usr/bin/npm
+#+END_SRC
+
+*** install node on pi:
+https://learn.adafruit.com/node-embedded-development/installing-node-dot-js
+curl -sLS https://apt.adafruit.com/add | sudo bash
+sudo apt-get install node
+pi@raspberrypi ~ $ node -v
+v0.12.0
+
+** set up pi camera with nodejs
+http://thejackalofjavascript.com/rpi-video-the-intruder/
+** electron electron
+https://github.com/ngoldman/electron-hello-world
+sudo npm i -g electron-prebuilt
+
+* browsers:
+** user agents
+user agent string:
+Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0
+
+** firefox
+# disable webrtc plugin to avoid ip snooping (re-enable for webrtc):
+media.peerconnection.enabled
+# firefox stop caching:
+http://stackoverflow.com/questions/289751/turn-off-caching-on-firefox
+
+Enter "about:config" into the Firefox address bar and set:
+
+network.http.use-cache = false
+
+If developing locally, or using HTML5's new manifest attribute you may have to also set the following in about:config -
+
+browser.cache.offline.enable = false
+
+# redirect caching:
+browser.cache.check_doc_frequency
+set from 3 to 1, then visit the web page
+change value back from 1 to 3 when done visiting the page
+
+
+# firefox enable vimeo
+search: dom.ipc.plugins.enabled
+dom.ipc.plugins.enabled should be enabled
+
+Now right click, select New->Boolean then in preference name enter dom.ipc.plugins.enabled.nppl3260.dll and click OK then select false as value and press OK again.
+
+dom.ipc.plugins.enabled.nppl3260.dll
+*** fix ~10 sec freeze
+browser.sessionstore.interval
+15000 -> 60000
+
+
+* photos
+** temp image hosting:
+# deletes after first view:
+https://unsee.cc/
+# no ssl!
+http://www.tiikoni.com/tis/upload/uploaded.php?id=03b0929
+# requires holding time:
+http://postorcomment.com/?page_id=74
+# no expiration feature:
+http://anony.ws/
+# drag/drop only:
+https:img42.com
+** photo metadata:
+http://xahlee.info/img/metadata_in_image_files.html
+*** show metadata of a image file
+exiftool myPhoto.jpg
+
+# show metedata for all *jpg files in current dir
+exiftool -ext jpg
+
+# show metedata for all *jpg files in current dir and subdirs
+exiftool -r -ext jpg .
+
+*** delete metadata:
+# remove all metadata of a image file
+exiftool -all= -overwrite_original photo.jpg
+
+# remove all metadata of all *jpg files in current dir
+exiftool -all= -overwrite_original -ext jpg
+
+# remove metedata for all *jpg files in current dir and subdirs
+exiftool -all= -r -overwrite_original -ext jpg .
+exiftool -all= -r -overwrite_original -ext jpg -ext JPG -ext png -ext PNG .
+
+* ascii
+¯\(°_o)/¯
