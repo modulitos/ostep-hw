@@ -81,3 +81,8 @@ Chapter | What To Do
  - ch 39, `myls.c`: uses the `getopt` command from `unistd.h` to parse commandline args.
  - ch 39, `myls.c`: using `stdbool.h` for the `bool` type
  - ch 39, `myls.c`: using `strlen`, `strncpy`, `strncmp`, and `strncat` from `string.h`
+ - ch 39, `mytail.c`: using `handle_error` function macro to print error then exit the program
+ - ch 39, `mytail.c`: opening files with `open` from `fcntl.h`
+ - ch 39, `mytail.c`: reading/parsing files with `lseek` and `read` from `unistd.h`
+ - ch 39, `myfind.c`: regex parsing via `regex.h`
+ - ch 39, `myfind.c`: `errno` and `EACCES` via `errno.h`

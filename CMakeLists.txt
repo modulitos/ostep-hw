@@ -40,3 +40,5 @@ add_executable(32_vector-avoid-hold-and-wait 32-threads-bugs/vector-avoid-hold-a
 add_executable(32_vector-nolock 32-threads-bugs/vector-nolock.c)
 add_executable(39_files-stat 39-file-files-and-directories/stat.c)
 add_executable(39_files-ls 39-file-files-and-directories/myls.c)
+add_executable(39_files-tail 39-file-files-and-directories/mytail.c)
+add_executable(39_files-find 39-file-files-and-directories/myfind.c)
