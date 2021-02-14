@@ -4,23 +4,37 @@
 // if it works as expected.
 
 #include "checksums.h"
-#include "common.h"
 #include <stdlib.h> // exit
+#include <assert.h>
 
 int main(int argc, char * argv[]) {
     char * pathname = "";
 
-    if (argc != 2) {
-        fprintf(stderr, "Usage: %s [filepath]\n", argv[0]);
+    if (argc != 1) {
+        fprintf(stderr, "Usage: %s\n", argv[0]);
         return(EXIT_FAILURE);
     }
 
-    pathname = argv[1];
-    double t = Time_GetSeconds();
-    char xor = check_xor(pathname);
+    char xor = 0;
 
-    printf("Time (seconds): %f\n", Time_GetSeconds() - t);
-    printf("XOR-based checksum: %d\n", xor);
+    // a: 0b1100001
+    // b: 0b1100010
+    // c: 0b1100011
+    // d: 0b1100100
+    pathname = "ab.txt";
+    xor = check_xor(pathname);
+    assert(xor == 3);
+
+
+    pathname = "abd.txt";
+    xor = check_xor(pathname);
+    // printf("xor: %d\n", xor);
+    assert(xor == 103);
+
+
+    pathname = "abcd.txt";
+    xor = check_xor(pathname);
+    assert(xor == 4);
 
     return(EXIT_SUCCESS);
 }
