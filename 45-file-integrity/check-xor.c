@@ -18,7 +18,7 @@ int main(int argc, char * argv[]) {
     double t = Time_GetSeconds();
     char xor = check_xor(pathname);
 
-    printf("Time (seconds): %f\n", Time_GetSeconds() - t);
+    printf("XOR Time (seconds): %f\n", Time_GetSeconds() - t);
     printf("XOR-based checksum: %d\n", xor);
 
     return(EXIT_SUCCESS);

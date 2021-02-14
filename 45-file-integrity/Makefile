@@ -1,5 +1,5 @@
 
-ALL = check-xor test-xor-fletcher
+ALL = check-xor test-xor-fletcher check-fletcher
 COMMON = common.h checksums.h
 
 all: $(ALL)
@@ -10,6 +10,9 @@ clean:
 #check-xor: check-xor.c $(COMMON)
 check-xor: check-xor.c $(COMMON)
 	gcc -o check-xor.o check-xor.c -Wall -pthread -O
+
+check-fletcher: check-fletcher.c $(COMMON)
+	gcc -o check-fletcher.o check-fletcher.c -Wall -pthread -O
 
 test-xor-fletcher: test-xor-fletcher.c $(COMMON)
 	gcc -o test-xor-fletcher.o test-xor-fletcher.c -Wall -pthread -O

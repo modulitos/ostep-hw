@@ -3,8 +3,7 @@
 // it works.
 
 #include <stdlib.h> // exit
-#include "common.h"
-#include "check-fletcher.h"
+#include "checksums.h"
 
 int main(int argc, char * argv[]) {
     char * pathname = "";
@@ -14,12 +13,14 @@ int main(int argc, char * argv[]) {
         return(EXIT_FAILURE);
     }
 
+    Fletcher_t fletcher;
     pathname = argv[1];
     double t = Time_GetSeconds();
-    char xor = check_xor(pathname);
+    fletcher = check_fletcher(pathname);
 
-    printf("Time (seconds): %f\n", Time_GetSeconds() - t);
-    printf("XOR-based checksum: %d\n", xor);
+    printf("Fletcher Time (seconds): %f\n", Time_GetSeconds() - t);
+    printf("fletcher a: %d\n", fletcher.fletcher_a);
+    printf("fletcher b: %d\n", fletcher.fletcher_b);
 
     return(EXIT_SUCCESS);
 }
