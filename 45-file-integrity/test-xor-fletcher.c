@@ -16,6 +16,7 @@ int main(int argc, char * argv[]) {
     }
 
     char xor = 0;
+    Fletcher_t fletcher;
 
     // a: 0b1100001
     // b: 0b1100010
@@ -23,18 +24,32 @@ int main(int argc, char * argv[]) {
     // d: 0b1100100
     pathname = "ab.txt";
     xor = check_xor(pathname);
+
+    // ./checksum.py -D 97,98 -c
     assert(xor == 3);
+    fletcher = check_fletcher(pathname);
+    assert(fletcher.fletcher_a == (97 + 98));
+    assert(fletcher.fletcher_b == 37);
 
 
     pathname = "abd.txt";
     xor = check_xor(pathname);
     // printf("xor: %d\n", xor);
+
+    // ./checksum.py -D 97,98,100 -c
     assert(xor == 103);
+    fletcher = check_fletcher(pathname);
+    assert(fletcher.fletcher_a == 40);
+    assert(fletcher.fletcher_b == 77);
 
 
+    // ./checksum.py -D 97,98,99,100 -c
     pathname = "abcd.txt";
     xor = check_xor(pathname);
     assert(xor == 4);
+    fletcher = check_fletcher(pathname);
+    assert(fletcher.fletcher_a == 139);
+    assert(fletcher.fletcher_b == 215);
 
     return(EXIT_SUCCESS);
 }
