@@ -1,29 +1,33 @@
-//
-// Created by greene machine on 2/15/21.
-//
-
 #include "UDP-lib.h"
-#include <stdio.h>
 
 int main(int argc, char *argv[]) {
-    // int sd = UDP_Open(20000);
-    int sd = UDP_Open(20000);
-    struct sockaddr_in addrSnd, addrRcv;
-    // int rc = UDP_FillSockAddr(&addrSnd, "localhost", 10000);
-    int rc = UDP_FillSockAddr(&addrSnd, "cs.wisc.edu", 10000);
-    printf("rc fill sockaddr: %d\n", rc);
-    if (rc != 0)
-        return EXIT_FAILURE;
-    char message[BUFFER_SIZE];
-    sprintf(message, "hello world");
-    printf("sending message!\n");
-    rc = UDP_Write(sd, &addrSnd, message, BUFFER_SIZE);
-    printf("rc udp write: %d\n", rc);
-    if (rc > 0) {
-        rc = UDP_Read(sd, &addrRcv, message, BUFFER_SIZE);
-        printf("rc udp read: %d\n", rc);
-        if (rc != 0)
-            return EXIT_FAILURE;
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s host\n", argv[0]);
+        exit(EXIT_FAILURE);
     }
-    return 0;
+
+    int sfd = UDP_Open(argv[1], "10000", 0);
+    ssize_t nread;
+    char buf[BUFFER_SIZE] = "first hello";
+
+    for(size_t i = 0; i < 2; i++) {
+        printf("Send: %s\n", buf);
+        if (UDP_Write(sfd, buf, strlen(buf), NULL, 0) != strlen(buf)) {
+            fprintf(stderr, "partial/failed write\n");
+            exit(EXIT_FAILURE);
+        }
+
+        nread = UDP_Read(sfd, buf, NULL, 0);
+        if (nread == -1) {
+            perror("read");
+            exit(EXIT_FAILURE);
+        }
+
+        printf("Received %zd bytes: %s\n", nread, buf);
+        strncpy(buf, "hello", 6);
+    }
+
+    close(sfd);
+    closeSem();
+    exit(EXIT_SUCCESS);
 }
